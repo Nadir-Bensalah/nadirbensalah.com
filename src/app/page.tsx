@@ -4,12 +4,32 @@ import React, { useState, useEffect } from 'react';
 
 type Lang = 'fr' | 'en' | 'ar';
 
+const skillDefinitions: Record<string, Record<Lang, string>> = {
+  'React': { fr: 'Bibliothèque JavaScript pour construire des interfaces utilisateur interactives et réactives. Développée par Facebook, elle utilise un DOM virtuel pour des performances optimales.', en: 'JavaScript library for building interactive and reactive user interfaces. Developed by Facebook, it uses a virtual DOM for optimal performance.', ar: 'مكتبة JavaScript لبناء واجهات مستخدم تفاعلية ومتجاوبة. طورتها Facebook، تستخدم DOM افتراضي للأداء الأمثل.' },
+  'React Native': { fr: 'Framework pour créer des applications mobiles natives iOS et Android avec JavaScript et React. Permet un développement cross-platform avec une seule codebase.', en: 'Framework for creating native iOS and Android mobile apps with JavaScript and React. Enables cross-platform development with a single codebase.', ar: 'إطار عمل لإنشاء تطبيقات جوال أصلية لنظامي iOS و Android باستخدام JavaScript و React. يتيح التطوير عبر المنصات بقاعدة كود واحدة.' },
+  'Node.js': { fr: 'Environnement d\'exécution JavaScript côté serveur. Permet de créer des applications backend performantes, des APIs REST et des microservices.', en: 'Server-side JavaScript runtime environment. Enables building high-performance backend applications, REST APIs and microservices.', ar: 'بيئة تشغيل JavaScript من جانب الخادم. تمكن من بناء تطبيقات خلفية عالية الأداء وواجهات برمجية REST وخدمات مصغرة.' },
+  'TypeScript': { fr: 'Superset de JavaScript qui ajoute le typage statique. Améliore la maintenabilité du code et réduit les bugs en production.', en: 'JavaScript superset that adds static typing. Improves code maintainability and reduces production bugs.', ar: 'مجموعة فائقة من JavaScript تضيف الكتابة الثابتة. تحسن قابلية صيانة الكود وتقلل الأخطاء في الإنتاج.' },
+  'Next.js': { fr: 'Framework React pour le rendu côté serveur (SSR) et la génération de sites statiques (SSG). Optimisé pour le SEO et les performances.', en: 'React framework for server-side rendering (SSR) and static site generation (SSG). Optimized for SEO and performance.', ar: 'إطار عمل React للعرض من جانب الخادم (SSR) وتوليد المواقع الثابتة (SSG). محسّن لتحسين محركات البحث والأداء.' },
+  'MongoDB': { fr: 'Base de données NoSQL orientée documents. Stocke les données au format JSON, idéale pour les applications modernes et scalables.', en: 'Document-oriented NoSQL database. Stores data in JSON format, ideal for modern and scalable applications.', ar: 'قاعدة بيانات NoSQL موجهة نحو المستندات. تخزن البيانات بتنسيق JSON، مثالية للتطبيقات الحديثة والقابلة للتطوير.' },
+  'PostgreSQL': { fr: 'Système de gestion de base de données relationnelle open-source. Puissant, fiable et conforme aux standards SQL.', en: 'Open-source relational database management system. Powerful, reliable and SQL standards compliant.', ar: 'نظام إدارة قواعد بيانات علائقية مفتوح المصدر. قوي وموثوق ومتوافق مع معايير SQL.' },
+  'Firebase': { fr: 'Plateforme de développement d\'applications mobiles et web de Google. Offre base de données temps réel, authentification, hébergement et plus.', en: 'Google\'s mobile and web application development platform. Offers real-time database, authentication, hosting and more.', ar: 'منصة Google لتطوير تطبيقات الجوال والويب. توفر قاعدة بيانات في الوقت الفعلي والمصادقة والاستضافة والمزيد.' },
+  'Supabase': { fr: 'Alternative open-source à Firebase. Base de données PostgreSQL avec authentification, stockage et APIs temps réel intégrés.', en: 'Open-source alternative to Firebase. PostgreSQL database with built-in authentication, storage and real-time APIs.', ar: 'بديل مفتوح المصدر لـ Firebase. قاعدة بيانات PostgreSQL مع مصادقة مدمجة وتخزين وواجهات برمجية في الوقت الفعلي.' },
+  'Git': { fr: 'Système de contrôle de version distribué. Permet de suivre les modifications du code et de collaborer efficacement en équipe.', en: 'Distributed version control system. Tracks code changes and enables efficient team collaboration.', ar: 'نظام التحكم في الإصدارات الموزع. يتتبع تغييرات الكود ويتيح التعاون الفعال للفريق.' },
+  'Docker': { fr: 'Plateforme de conteneurisation. Permet d\'empaqueter des applications avec toutes leurs dépendances pour un déploiement cohérent.', en: 'Containerization platform. Packages applications with all dependencies for consistent deployment.', ar: 'منصة الحاويات. تحزم التطبيقات مع جميع التبعيات للنشر المتسق.' },
+  'Tailwind': { fr: 'Framework CSS utility-first. Permet de créer des interfaces modernes rapidement avec des classes utilitaires.', en: 'Utility-first CSS framework. Enables rapid modern interface creation with utility classes.', ar: 'إطار عمل CSS يعتمد على الأدوات المساعدة. يتيح إنشاء واجهات حديثة بسرعة باستخدام فئات الأدوات المساعدة.' },
+  'WordPress': { fr: 'CMS le plus populaire au monde. Permet de créer des sites web et blogs avec une interface d\'administration intuitive.', en: 'World\'s most popular CMS. Creates websites and blogs with an intuitive admin interface.', ar: 'نظام إدارة المحتوى الأكثر شعبية في العالم. ينشئ مواقع الويب والمدونات بواجهة إدارة بديهية.' },
+  'Figma': { fr: 'Outil de design d\'interface collaboratif en ligne. Permet de créer des maquettes, prototypes et systèmes de design.', en: 'Collaborative online interface design tool. Creates mockups, prototypes and design systems.', ar: 'أداة تصميم واجهة تعاونية عبر الإنترنت. تنشئ نماذج بالحجم الطبيعي ونماذج أولية وأنظمة تصميم.' },
+  'REST API': { fr: 'Architecture pour créer des services web. Utilise HTTP pour la communication entre client et serveur de manière standardisée.', en: 'Architecture for creating web services. Uses HTTP for standardized client-server communication.', ar: 'هندسة معمارية لإنشاء خدمات الويب. تستخدم HTTP للاتصال الموحد بين العميل والخادم.' },
+  'GraphQL': { fr: 'Langage de requête pour APIs. Permet aux clients de demander exactement les données dont ils ont besoin, rien de plus.', en: 'Query language for APIs. Lets clients request exactly the data they need, nothing more.', ar: 'لغة استعلام لواجهات برمجة التطبيقات. تتيح للعملاء طلب البيانات التي يحتاجونها بالضبط، لا أكثر.' },
+};
+
 const translations: Record<Lang, {
   title: string; disponibilite: string; disponibiliteLabel: string;
   profil: string; profilBold: string[]; openToWork: string;
   sectionProfil: string; sectionExp: string; sectionReal: string;
   sectionForm: string; sectionPortfolio: string; siteLabel: string;
   sectionComp: string; sectionAtouts: string;
+  contactSectionTitle: string; contactSectionDesc: string; contactBtn: string;
   experiences: { title: string; company: string; date: string; bullets: string[] }[];
   realisations: { title: string; stack: string[]; desc: string; accent: 'blue' | 'teal' | 'purple' }[];
   formations: { degree: string; school: string; year: string; desc: string }[];
@@ -19,10 +39,13 @@ const translations: Record<Lang, {
   fr: {
     title: 'Développeur Full Stack Web & Mobile',
     disponibilite: 'Immédiate', disponibiliteLabel: 'Disponibilité',
-    openToWork: 'Open to work', siteLabel: 'Site & projets',
+    openToWork: 'Contacter', siteLabel: 'Site & projets',
     sectionProfil: 'Profil', sectionExp: 'Expériences', sectionReal: 'Réalisations',
     sectionForm: 'Formations', sectionPortfolio: 'Portfolio',
     sectionComp: 'Compétences', sectionAtouts: 'Atouts',
+    contactSectionTitle: 'Intéressé par mon profil ?',
+    contactSectionDesc: 'N\'hésitez pas à me contacter pour discuter de votre projet. Je suis disponible pour des missions en freelance, CDI ou CDD.',
+    contactBtn: 'Me contacter',
     profil: "Développeur Full Stack spécialisé React, React Native & Node.js, je conçois des applications web et mobiles orientées produit - de l'architecture backend à l'expérience utilisateur. Autonome sur l'ensemble du cycle de vie d'un projet : conception, développement, déploiement et maintenance. Disponible en CDI, CDD ou mission freelance.",
     profilBold: ['React, React Native & Node.js', 'CDI, CDD ou mission freelance'],
     experiences: [
@@ -50,10 +73,13 @@ const translations: Record<Lang, {
   en: {
     title: 'Full Stack Web & Mobile Developer',
     disponibilite: 'Immediate', disponibiliteLabel: 'Availability',
-    openToWork: 'Open to work', siteLabel: 'Site & projects',
+    openToWork: 'Contact', siteLabel: 'Site & projects',
     sectionProfil: 'Profile', sectionExp: 'Experience', sectionReal: 'Projects',
     sectionForm: 'Education', sectionPortfolio: 'Portfolio',
     sectionComp: 'Skills', sectionAtouts: 'Strengths',
+    contactSectionTitle: 'Interested in my profile?',
+    contactSectionDesc: 'Feel free to contact me to discuss your project. I am available for freelance missions, permanent or fixed-term contracts.',
+    contactBtn: 'Contact me',
     profil: "Full Stack Developer specializing in React, React Native & Node.js - I build product-focused web and mobile applications, from backend architecture to user experience. Fully autonomous across the entire project lifecycle: design, development, deployment and maintenance. Available for permanent, fixed-term or freelance contracts.",
     profilBold: ['React, React Native & Node.js', 'permanent, fixed-term or freelance'],
     experiences: [
@@ -81,10 +107,13 @@ const translations: Record<Lang, {
   ar: {
     title: 'مطوّر Full Stack ويب وموبايل',
     disponibilite: 'فوري', disponibiliteLabel: 'التوفر',
-    openToWork: 'متاح للعمل', siteLabel: 'الموقع والمشاريع',
+    openToWork: 'اتصل', siteLabel: 'الموقع والمشاريع',
     sectionProfil: 'الملف الشخصي', sectionExp: 'الخبرات', sectionReal: 'المشاريع',
     sectionForm: 'التعليم', sectionPortfolio: 'المحفظة',
     sectionComp: 'المهارات', sectionAtouts: 'المزايا',
+    contactSectionTitle: 'مهتم بملفي الشخصي؟',
+    contactSectionDesc: 'لا تتردد في الاتصال بي لمناقشة مشروعك. أنا متاح لمهام العمل الحر والعقود الدائمة أو محددة المدة.',
+    contactBtn: 'اتصل بي',
     profil: "مطوّر Full Stack متخصص في React وReact Native وNode.js - أبني تطبيقات ويب وموبايل موجهة نحو المنتج، من بنية الخادم إلى تجربة المستخدم. مستقل تمامًا في دورة حياة المشروع الكاملة: التصميم والتطوير والنشر والصيانة. متاح للعمل الدائم أو المؤقت أو كمستقل.",
     profilBold: ['React وReact Native وNode.js', 'دائم أو مؤقت أو كمستقل'],
     experiences: [
@@ -126,18 +155,39 @@ const accentColors = {
 
 type ThemeColors = typeof themes.dark;
 
-function Tag({ label, color = 'gray', th }: { label: string; color?: keyof typeof tagColors; th: ThemeColors }) {
+function Tag({ label, color = 'gray', th, onClick }: { label: string; color?: keyof typeof tagColors; th: ThemeColors; onClick?: () => void }) {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const hasDefinition = skillDefinitions[label];
   const baseC = tagColors[color] || tagColors.gray;
   const c = color === 'gray'
     ? { bg: th.tagGrayBg, color: th.tagGrayColor, border: th.tagGrayBorder }
     : baseC;
   return (
-    <span style={{
-      fontSize: 12.5, padding: '4px 10px', borderRadius: 3, fontWeight: 400,
-      background: c.bg, color: c.color, border: `1px solid ${c.border}`,
-      display: 'inline-block',
-    }}>
+    <span 
+      className="skill-tag"
+      onMouseEnter={() => hasDefinition && setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}
+      onClick={() => hasDefinition && onClick && onClick()}
+      style={{
+        fontSize: 12.5, padding: '4px 10px', borderRadius: 3, fontWeight: 400,
+        background: c.bg, color: c.color, border: `1px solid ${c.border}`,
+        display: 'inline-block', position: 'relative' as const,
+        cursor: hasDefinition ? 'pointer' : 'default',
+        transition: 'all 0.2s',
+      }}>
       {label}
+      {showTooltip && hasDefinition && (
+        <span style={{
+          position: 'absolute' as const, bottom: '100%', left: '50%', transform: 'translateX(-50%)',
+          marginBottom: 8, padding: '6px 12px', background: th.floatBg, 
+          border: `1px solid ${th.floatBorder}`, borderRadius: 6,
+          fontSize: 10, color: th.floatText, whiteSpace: 'nowrap' as const,
+          boxShadow: '0 4px 12px rgba(0,0,0,0.2)', zIndex: 1000,
+          pointerEvents: 'none' as const
+        }}>
+          En savoir plus
+        </span>
+      )}
     </span>
   );
 }
@@ -243,6 +293,8 @@ export default function HomePage() {
   const [theme, setTheme] = useState<Theme>('dark');
   const [langOpen, setLangOpen] = useState(false);
   const [toasts, setToasts] = useState<ToastItem[]>([]);
+  const [modalSkill, setModalSkill] = useState<string | null>(null);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
   const toastIdRef = React.useRef(0);
 
   useEffect(() => {
@@ -314,6 +366,8 @@ export default function HomePage() {
         .lang-opt { padding: 10px 16px; font-size: 13px; cursor: pointer; color: ${th.floatText}; transition: background 0.12s; border-bottom: 1px solid ${th.floatBorder}; }
         .lang-opt:last-child { border-bottom: none; }
         .lang-opt:hover { background: rgba(0,153,255,0.12); color: #0099ff; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .skill-tag:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
         /* ── Tablet ── */
         @media (max-width: 900px) {
           .cv-body { grid-template-columns: 1fr 240px !important; }
@@ -387,9 +441,18 @@ export default function HomePage() {
                 ))}
               </div>
             </div>
-            <div className="cv-header-badge" style={{ background: th.badgeBg, border: `1px solid ${th.badgeBorder}`, borderRadius: 4, padding: '12px 20px', textAlign: 'center' as const, whiteSpace: 'nowrap' as const }}>
-              <span style={{ fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase' as const, color: th.badgeLabel, display: 'block', marginBottom: 5 }}>{t.disponibiliteLabel}</span>
-              <span style={{ fontSize: 13, fontWeight: 500, color: th.badgeValue }}>{t.disponibilite}</span>
+            <div className="cv-header-badge" style={{ 
+              width: 140, height: 140, borderRadius: '50%', 
+              background: `linear-gradient(135deg, ${th.badgeBg}, ${th.badgeBg}dd)`,
+              border: `3px dashed ${th.badgeBorder}`, 
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+              transform: 'rotate(-12deg)', boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              position: 'relative' as const
+            }}>
+              <div style={{ transform: 'rotate(12deg)', textAlign: 'center' as const }}>
+                <span style={{ fontSize: 10, letterSpacing: 1.8, textTransform: 'uppercase' as const, color: th.badgeLabel, display: 'block', marginBottom: 6, fontWeight: 600 }}>{t.disponibiliteLabel}</span>
+                <span style={{ fontSize: 15, fontWeight: 700, color: th.badgeValue, letterSpacing: 0.5 }}>{t.disponibilite}</span>
+              </div>
             </div>
           </div>
 
@@ -464,10 +527,19 @@ export default function HomePage() {
 
             {/* SIDEBAR */}
             <div className="cv-sidebar" style={{ padding: '36px 32px 48px', background: th.sidebarBg, transition: 'background 0.2s' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: th.openWorkBg, border: `1px solid ${th.openWorkBorder}`, borderRadius: 4, padding: '10px 14px', marginBottom: 18, flexDirection: isRtl ? 'row-reverse' : 'row' }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#00d4aa', flexShrink: 0 }} />
-                <div style={{ fontSize: 13, color: th.openWorkText, fontWeight: 500 }}>{t.openToWork}</div>
-              </div>
+              <button onClick={() => setContactModalOpen(true)} style={{ 
+                display: 'inline-flex', alignItems: 'center', gap: 10, 
+                background: '#00d4aa', color: '#0d0f14', border: 'none',
+                borderRadius: 999, padding: '12px 20px', marginBottom: 24,
+                boxShadow: '0 4px 12px rgba(0, 212, 170, 0.3)',
+                flexDirection: isRtl ? 'row-reverse' : 'row',
+                cursor: 'pointer', transition: 'all 0.2s'
+              }}>
+                <div style={{ fontSize: 13.5, fontWeight: 600, letterSpacing: 0.3 }}>{t.openToWork}</div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </button>
 
               {/* PORTFOLIO */}
               <div style={{ marginBottom: 32 }}>
@@ -485,7 +557,7 @@ export default function HomePage() {
                   <div key={i} style={{ marginBottom: 14 }}>
                     <div style={{ fontSize: 11, fontWeight: 600, color: th.compLabel, letterSpacing: 1, textTransform: 'uppercase' as const, marginBottom: 9 }}>{g.label}</div>
                     <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 5 }}>
-                      {g.tags.map((tag: string) => <Tag key={tag} label={tag} color={g.color} th={th} />)}
+                      {g.tags.map((tag: string) => <Tag key={tag} label={tag} color={g.color} th={th} onClick={() => setModalSkill(tag)} />)}
                     </div>
                   </div>
                 ))}
@@ -502,6 +574,77 @@ export default function HomePage() {
                 ))}
               </div>
             </div>
+          </div>
+
+          {/* SECTION CONTACT */}
+          <div style={{ 
+            padding: '48px 56px', 
+            borderTop: `1px solid ${th.mainBorder}`,
+            background: `linear-gradient(135deg, ${th.sidebarBg}40, transparent)`
+          }}>
+            <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' as const }}>
+              <h3 style={{ 
+                fontSize: 28, fontWeight: 700, color: th.h1, 
+                marginBottom: 16, fontFamily: "'Space Mono', monospace" 
+              }}>
+                {t.contactSectionTitle}
+              </h3>
+              <p style={{ fontSize: 15, color: th.profilText, lineHeight: 1.7, marginBottom: 32 }}>
+                {t.contactSectionDesc}
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 32 }}>
+                {[
+                  { 
+                    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00d4aa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
+                    label: 'Email', value: contact.email, href: `mailto:${contact.email}` 
+                  },
+                  { 
+                    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00d4aa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
+                    label: 'Téléphone', value: contact.phone, href: `tel:${contact.phone}` 
+                  },
+                  { 
+                    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00d4aa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>,
+                    label: 'LinkedIn', value: 'Profil LinkedIn', href: `https://${contact.linkedin}` 
+                  },
+                ].map((item, i) => (
+                  <a key={i} href={item.href} style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12,
+                    background: th.portfolioBg, border: `1px solid ${th.portfolioBorder}`,
+                    borderRadius: 12, padding: '24px 16px',
+                    transition: 'all 0.2s', cursor: 'pointer',
+                    textDecoration: 'none', color: th.expTitle
+                  }}>
+                    <div>{item.icon}</div>
+                    <div style={{ fontSize: 11, textTransform: 'uppercase' as const, letterSpacing: 1.5, color: th.compLabel, fontWeight: 600 }}>{item.label}</div>
+                    <div style={{ fontSize: 13.5, color: th.contactColor, fontWeight: 500 }}>{item.value}</div>
+                  </a>
+                ))}
+              </div>
+              <a href={`mailto:${contact.email}`} style={{
+                display: 'inline-flex', alignItems: 'center', gap: 10,
+                background: '#00d4aa', color: '#0d0f14', 
+                padding: '14px 32px', borderRadius: 999,
+                fontSize: 14, fontWeight: 600, textDecoration: 'none',
+                transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(0, 212, 170, 0.3)'
+              }}>
+                {t.contactBtn}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          {/* FOOTER */}
+          <div style={{ 
+            padding: '24px 56px', 
+            borderTop: `1px solid ${th.mainBorder}`,
+            textAlign: 'center' as const,
+            background: th.sidebarBg
+          }}>
+            <p style={{ fontSize: 13, color: th.compLabel, margin: 0 }}>
+              © {new Date().getFullYear()} Nadir Ben Salah. Tous droits réservés.
+            </p>
           </div>
         </div>
 
@@ -562,6 +705,92 @@ export default function HomePage() {
             </div>
           ))}
         </div>
+
+        {/* ── MODAL CONTACT ── */}
+        {contactModalOpen && (
+          <div onClick={() => setContactModalOpen(false)} style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, padding: 20
+          }}>
+            <div onClick={(e) => e.stopPropagation()} style={{
+              background: th.floatBg, border: `2px solid ${th.floatBorder}`,
+              borderRadius: 16, padding: 32, maxWidth: 400, width: '100%',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.4)'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
+                <h3 style={{ fontSize: 22, fontWeight: 700, color: th.expTitle, fontFamily: "'Space Mono', monospace" }}>
+                  {t.contactBtn}
+                </h3>
+                <button onClick={() => setContactModalOpen(false)} style={{
+                  background: 'transparent', border: 'none', cursor: 'pointer',
+                  color: th.floatText, fontSize: 28, padding: 0, lineHeight: 1
+                }}>×</button>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <a href={`mailto:${contact.email}`} onClick={() => setContactModalOpen(false)} style={{
+                  display: 'flex', alignItems: 'center', gap: 16,
+                  background: th.portfolioBg, border: `1px solid ${th.portfolioBorder}`,
+                  borderRadius: 12, padding: '20px 24px', textDecoration: 'none',
+                  transition: 'all 0.2s', cursor: 'pointer'
+                }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00d4aa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                  <div>
+                    <div style={{ fontSize: 11, textTransform: 'uppercase' as const, letterSpacing: 1.5, color: th.compLabel, fontWeight: 600, marginBottom: 4 }}>Email</div>
+                    <div style={{ fontSize: 14, color: th.expTitle, fontWeight: 500 }}>{contact.email}</div>
+                  </div>
+                </a>
+                <a href={`tel:${contact.phone}`} onClick={() => setContactModalOpen(false)} style={{
+                  display: 'flex', alignItems: 'center', gap: 16,
+                  background: th.portfolioBg, border: `1px solid ${th.portfolioBorder}`,
+                  borderRadius: 12, padding: '20px 24px', textDecoration: 'none',
+                  transition: 'all 0.2s', cursor: 'pointer'
+                }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00d4aa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                  <div>
+                    <div style={{ fontSize: 11, textTransform: 'uppercase' as const, letterSpacing: 1.5, color: th.compLabel, fontWeight: 600, marginBottom: 4 }}>Téléphone</div>
+                    <div style={{ fontSize: 14, color: th.expTitle, fontWeight: 500 }}>{contact.phone}</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── MODAL SKILL ── */}
+        {modalSkill && skillDefinitions[modalSkill] && (
+          <div onClick={() => setModalSkill(null)} style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, padding: 20
+          }}>
+            <div onClick={(e) => e.stopPropagation()} style={{
+              background: th.floatBg, border: `2px solid ${th.floatBorder}`,
+              borderRadius: 16, padding: 32, maxWidth: 500, width: '100%',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.4)'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
+                <h3 style={{ fontSize: 24, fontWeight: 700, color: th.expTitle, fontFamily: "'Space Mono', monospace" }}>
+                  {modalSkill}
+                </h3>
+                <button onClick={() => setModalSkill(null)} style={{
+                  background: 'transparent', border: 'none', cursor: 'pointer',
+                  color: th.floatText, fontSize: 24, padding: 0, lineHeight: 1
+                }}>×</button>
+              </div>
+              <p style={{ fontSize: 15, color: th.profilText, lineHeight: 1.8 }}>
+                {skillDefinitions[modalSkill][lang]}
+              </p>
+            </div>
+          </div>
+        )}
 
       </div>
     </>

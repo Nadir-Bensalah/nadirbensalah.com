@@ -13,7 +13,13 @@ export const metadata: Metadata = {
   description: "Développeur Full Stack Amiens - Création application mobile iOS Android, site web WordPress, développement SaaS, base de données. Agence web freelance React Native Node.js Amiens France.",
   keywords: 'développeur web amiens, développeur mobile amiens, application mobile amiens, agence web amiens, création site web amiens, react native amiens, développeur freelance amiens, application ios android amiens, développeur wordpress amiens, base de données amiens, développement saas amiens, site internet amiens, agence digitale amiens, développeur full stack france, création application mobile france, mobile app developer france, web developer amiens, react developer amiens, node.js developer amiens',
   icons: {
-    icon: [{ url: '/favicon.ico', type: 'image/x-icon' }],
+    icon: [
+      { url: '/assets/images/Group 5 (1).png', type: 'image/png', sizes: '32x32' },
+      { url: '/assets/images/Group 5 (1).png', type: 'image/png', sizes: '16x16' },
+    ],
+    apple: [
+      { url: '/assets/images/Group 5 (1).png', sizes: '180x180' },
+    ],
   },
   openGraph: {
     title: 'Développeur Web Mobile Amiens | Application React Native | Agence Web',
