@@ -50,7 +50,7 @@ const translations: Record<Lang, {
     profilBold: ['React, React Native & Node.js', 'CDI, CDD ou mission freelance'],
     experiences: [
       { title: 'Développeur Full Stack Web & Mobile', company: 'Auto-entrepreneur · Freelance', date: "Juil. 2024 - Aujourd'hui", bullets: ["Conception et livraison d'applications web et mobiles cross-platform pour des clients directs", "Développement de solutions SaaS, e-commerce et dashboards administratifs de A à Z", "Création d'APIs REST robustes avec Node.js et Express, intégrées à des frontends React", 'Gestion complète des projets : architecture, UX/UI, intégration, déploiement et maintenance'] },
-      { title: "Concepteur Développeur d'Applications Mobiles", company: 'Decayeux · Abbeville', date: 'Sept. 2022 - Juin 2022', bullets: ['Développement d\'applications mobiles React Native en environnement industriel connecté', "Contribution active aux interfaces utilisateur et aux projets frontend en production", "Optimisation des performances backend et intégration d'APIs tierces", 'Collaboration étroite avec les équipes produit et techniques en mode agile'] },
+      { title: "Concepteur Développeur d'Applications Mobiles", company: 'Decayeux · Abbeville', date: 'Sept. 2022 - Oct. 2024', bullets: ['Développement d\'applications mobiles React Native en environnement industriel connecté', "Contribution active aux interfaces utilisateur et aux projets frontend en production", "Optimisation des performances backend et intégration d'APIs tierces", 'Collaboration étroite avec les équipes produit et techniques en mode agile'] },
     ],
     realisations: [
       { title: 'SaaS Dashboard Admin', stack: ['React', 'Node.js', 'MongoDB'], desc: 'Plateforme de gestion multi-tenant avec authentification, rôles utilisateurs et tableaux de bord analytiques en temps réel.', accent: 'blue' },
@@ -84,7 +84,7 @@ const translations: Record<Lang, {
     profilBold: ['React, React Native & Node.js', 'permanent, fixed-term or freelance'],
     experiences: [
       { title: 'Full Stack Web & Mobile Developer', company: 'Self-employed · Freelance', date: 'Jul. 2024 - Present', bullets: ['Design and delivery of cross-platform web and mobile applications for direct clients', 'Development of SaaS solutions, e-commerce platforms and admin dashboards end-to-end', 'Building robust REST APIs with Node.js and Express, integrated with React frontends', 'Full project management: architecture, UX/UI, integration, deployment and maintenance'] },
-      { title: 'Mobile Application Developer', company: 'Decayeux · Abbeville', date: 'Sept. 2022 - Jun. 2022', bullets: ['React Native mobile app development in a connected industrial environment', 'Active contribution to user interfaces and frontend projects in production', 'Backend performance optimization and third-party API integration', 'Close collaboration with product and technical teams in agile mode'] },
+      { title: 'Mobile Application Developer', company: 'Decayeux · Abbeville', date: 'Sept. 2022 - Oct. 2024', bullets: ['React Native mobile app development in a connected industrial environment', 'Active contribution to user interfaces and frontend projects in production', 'Backend performance optimization and third-party API integration', 'Close collaboration with product and technical teams in agile mode'] },
     ],
     realisations: [
       { title: 'SaaS Admin Dashboard', stack: ['React', 'Node.js', 'MongoDB'], desc: 'Multi-tenant management platform with authentication, user roles and real-time analytics dashboards.', accent: 'blue' },
@@ -118,7 +118,7 @@ const translations: Record<Lang, {
     profilBold: ['React وReact Native وNode.js', 'دائم أو مؤقت أو كمستقل'],
     experiences: [
       { title: 'مطوّر Full Stack ويب وموبايل', company: 'مستقل · Freelance', date: 'يوليو 2024 - الآن', bullets: ['تصميم وتسليم تطبيقات ويب وموبايل متعددة المنصات لعملاء مباشرين', 'تطوير حلول SaaS ومنصات تجارة إلكترونية ولوحات إدارة من الألف إلى الياء', 'بناء APIs REST قوية مع Node.js وExpress مدمجة مع واجهات React', 'إدارة كاملة للمشاريع: الهندسة، UX/UI، التكامل، النشر والصيانة'] },
-      { title: 'مطوّر تطبيقات موبايل', company: 'Decayeux · Abbeville', date: 'سبت. 2022 - يونيو 2022', bullets: ['تطوير تطبيقات موبايل بـ React Native في بيئة صناعية متصلة', 'مساهمة فعّالة في واجهات المستخدم والمشاريع الأمامية في الإنتاج', 'تحسين أداء الخادم وتكامل APIs الخارجية', 'تعاون وثيق مع فرق المنتج والتقنية بأسلوب Agile'] },
+      { title: 'مطوّر تطبيقات موبايل', company: 'Decayeux · Abbeville', date: 'سبت. 2022 - أكت. 2024', bullets: ['تطوير تطبيقات موبايل بـ React Native في بيئة صناعية متصلة', 'مساهمة فعّالة في واجهات المستخدم والمشاريع الأمامية في الإنتاج', 'تحسين أداء الخادم وتكامل APIs الخارجية', 'تعاون وثيق مع فرق المنتج والتقنية بأسلوب Agile'] },
     ],
     realisations: [
       { title: 'لوحة إدارة SaaS', stack: ['React', 'Node.js', 'MongoDB'], desc: 'منصة إدارة متعددة المستأجرين مع المصادقة وأدوار المستخدمين ولوحات تحليلات في الوقت الفعلي.', accent: 'blue' },
