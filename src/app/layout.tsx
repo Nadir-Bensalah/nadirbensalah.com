@@ -9,9 +9,9 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
-  title: 'Développeur Web & Mobile Amiens | Application Mobile React Native | Agence Web France',
-  description: "Développeur Full Stack Amiens - Création application mobile iOS Android, site web WordPress, développement SaaS, base de données. Agence web freelance React Native Node.js Amiens France.",
-  keywords: 'développeur web amiens, développeur mobile amiens, application mobile amiens, agence web amiens, création site web amiens, react native amiens, développeur freelance amiens, application ios android amiens, développeur wordpress amiens, base de données amiens, développement saas amiens, site internet amiens, agence digitale amiens, développeur full stack france, création application mobile france, mobile app developer france, web developer amiens, react developer amiens, node.js developer amiens',
+  title: 'Lead React Native Developer | iOS & Android | Architecture & Delivery',
+  description: 'Lead React Native Developer. I build and ship production-grade iOS & Android apps: mobile architecture, TypeScript quality, performance, and App Store / Google Play releases. Open to a role or contract.',
+  keywords: 'lead react native developer, react native developer, mobile app developer, ios android, typescript, mobile architecture, app store release, google play release, firebase, supabase, postgresql, api rest, startup product, technical leadership',
   icons: {
     icon: [
       { url: '/assets/images/Group 5 (1).png', type: 'image/png', sizes: '32x32' },
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Développeur Web Mobile Amiens | Application React Native | Agence Web',
-    description: "Expert développement application mobile iOS Android, site web, SaaS. Agence web freelance Amiens France.",
+    title: 'Lead React Native Developer | iOS & Android | Architecture & Delivery',
+    description: 'Lead React Native Developer building production iOS & Android apps: architecture, delivery, and store releases.',
     images: [{ url: '/assets/images/app_logo.png', width: 1200, height: 630 }],
     locale: 'fr_FR',
     alternateLocale: ['en_US', 'ar_SA'],
@@ -47,7 +47,7 @@ export default function RootLayout({
     {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
-      name: 'Nadir Ben Salah - Développeur Web Mobile Amiens',
+      name: 'Nadir Ben Salah - Lead React Native Developer',
       url: siteUrl,
       inLanguage: ['fr-FR', 'en-US', 'ar-SA'],
       potentialAction: {
@@ -59,9 +59,9 @@ export default function RootLayout({
     {
       '@context': 'https://schema.org',
       '@type': 'ProfessionalService',
-      name: 'Nadir Ben Salah - Agence Web & Mobile Amiens',
+      name: 'Nadir Ben Salah - Lead React Native Developer',
       url: siteUrl,
-      description: 'Développeur Full Stack spécialisé création application mobile React Native, développement web WordPress, SaaS, base de données. Agence web freelance Amiens France.',
+      description: 'Lead React Native Developer building and shipping production iOS & Android apps. Mobile architecture, TypeScript quality, performance, backend integrations, and App Store / Google Play releases.',
       areaServed: [{
         '@type': 'City',
         name: 'Amiens'
@@ -69,7 +69,7 @@ export default function RootLayout({
         '@type': 'Country',
         name: 'France'
       }],
-      serviceType: ['Développement Application Mobile', 'Création Site Web', 'Développement WordPress', 'Application React Native', 'Développement SaaS', 'Base de Données', 'API REST', 'Application iOS', 'Application Android', 'Site E-commerce', 'Web Agency', 'Mobile App Development', 'تطوير تطبيقات الجوال', 'تطوير المواقع'],
+      serviceType: ['React Native Development', 'Mobile App Development', 'iOS App Development', 'Android App Development', 'Mobile Architecture', 'App Store Release', 'Google Play Release', 'Product Engineering', 'API Integration', 'Firebase', 'Supabase', 'PostgreSQL'],
       priceRange: '$$',
     },
     {
@@ -77,8 +77,8 @@ export default function RootLayout({
       '@type': 'Person',
       name: 'Nadir Ben Salah',
       url: siteUrl,
-      jobTitle: 'Développeur Full Stack Web & Mobile | Mobile App Developer | مطور تطبيقات',
-      knowsAbout: ['React Native', 'React', 'Next.js', 'Node.js', 'TypeScript', 'JavaScript', 'WordPress', 'MongoDB', 'PostgreSQL', 'Firebase', 'Supabase', 'iOS Development', 'Android Development', 'SaaS', 'API REST', 'Mobile Apps', 'Web Development', 'Database', 'تطوير التطبيقات', 'تطوير الويب'],
+      jobTitle: 'Lead React Native Developer | iOS & Android | Mobile Architecture',
+      knowsAbout: ['React Native', 'TypeScript', 'React', 'Mobile Architecture', 'iOS Development', 'Android Development', 'App Store Release', 'Google Play Release', 'Firebase', 'Supabase', 'PostgreSQL', 'API REST', 'SaaS', 'Product Engineering', 'Mobile Apps', 'AI-assisted development'],
       areaServed: ['Amiens', 'France', 'Tunisie', 'Europe', 'Remote'],
       address: {
         '@type': 'PostalAddress',

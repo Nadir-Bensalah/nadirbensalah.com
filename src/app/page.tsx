@@ -26,9 +26,12 @@ const skillDefinitions: Record<string, Record<Lang, string>> = {
 const translations: Record<Lang, {
   title: string; disponibilite: string; disponibiliteLabel: string;
   profil: string; profilBold: string[]; openToWork: string;
+  profilAvailability: string;
   sectionProfil: string; sectionExp: string; sectionReal: string;
   sectionForm: string; sectionPortfolio: string; siteLabel: string;
   sectionComp: string; sectionAtouts: string;
+  cvDownload: string;
+  cvDownloadToast: string;
   contactSectionTitle: string; contactSectionDesc: string; contactBtn: string;
   experiences: { title: string; company: string; date: string; bullets: string[] }[];
   realisations: { title: string; stack: string[]; desc: string; accent: 'blue' | 'teal' | 'purple' }[];
@@ -37,20 +40,23 @@ const translations: Record<Lang, {
   atouts: string[];
 }> = {
   fr: {
-    title: 'Développeur Full Stack Web & Mobile',
+    title: 'Lead Développeur React Native',
     disponibilite: 'Immédiate', disponibiliteLabel: 'Disponibilité',
     openToWork: 'Contacter', siteLabel: 'Site & projets',
+    profilAvailability: 'Disponible pour un poste ou une mission',
     sectionProfil: 'Profil', sectionExp: 'Expériences', sectionReal: 'Réalisations',
     sectionForm: 'Formations', sectionPortfolio: 'Portfolio',
     sectionComp: 'Compétences', sectionAtouts: 'Atouts',
-    contactSectionTitle: 'Intéressé par mon profil ?',
-    contactSectionDesc: 'N\'hésitez pas à me contacter pour discuter de votre projet. Je suis disponible pour des missions en freelance, CDI ou CDD.',
+    cvDownload: 'Télécharger le CV',
+    cvDownloadToast: 'Téléchargement du CV lancé',
+    contactSectionTitle: 'On construit votre projet mobile ?',
+    contactSectionDesc: "Recrutement, mission ou collaboration produit : je vous réponds sous 24h. Parlons roadmap, architecture, delivery et qualité, et voyons si je suis la bonne personne pour accélérer votre app.",
     contactBtn: 'Me contacter',
-    profil: "Développeur Full Stack spécialisé React, React Native & Node.js, je conçois des applications web et mobiles orientées produit - de l'architecture backend à l'expérience utilisateur. Autonome sur l'ensemble du cycle de vie d'un projet : conception, développement, déploiement et maintenance. Disponible en CDI, CDD ou mission freelance.",
-    profilBold: ['React, React Native & Node.js', 'CDI, CDD ou mission freelance'],
+    profil: "Lead Développeur React Native, je conçois et je fais livrer des applications iOS & Android orientées produit, de l'architecture mobile au déploiement App Store / Google Play. Je combine leadership technique, livraison et qualité (TypeScript, performance, maintenance) avec une approche IA appliquée au développement pour accélérer sans compromis.",
+    profilBold: ['Lead Développeur React Native', 'App Store / Google Play'],
     experiences: [
-      { title: 'Développeur Full Stack Web & Mobile', company: 'Auto-entrepreneur · Freelance', date: "Juil. 2024 - Aujourd'hui", bullets: ["Conception et livraison d'applications web et mobiles cross-platform pour des clients directs", "Développement de solutions SaaS, e-commerce et dashboards administratifs de A à Z", "Création d'APIs REST robustes avec Node.js et Express, intégrées à des frontends React", 'Gestion complète des projets : architecture, UX/UI, intégration, déploiement et maintenance'] },
-      { title: "Concepteur Développeur d'Applications Mobiles", company: 'Decayeux · Abbeville', date: 'Sept. 2022 - Oct. 2024', bullets: ['Développement d\'applications mobiles React Native en environnement industriel connecté', "Contribution active aux interfaces utilisateur et aux projets frontend en production", "Optimisation des performances backend et intégration d'APIs tierces", 'Collaboration étroite avec les équipes produit et techniques en mode agile'] },
+      { title: 'Lead React Native Developer', company: 'Capmedia Digital · Freelance', date: "Juil. 2024 - Aujourd'hui", bullets: ["Livraison d'applications mobiles React Native (iOS/Android) : cadrage, architecture, développement, tests et publication", "Pilotage produit : priorisation, itérations rapides, onboarding et amélioration continue post-lancement", "Architecture & qualité : base de code évolutive, conventions TypeScript, performance, dette technique maîtrisée", "Intégration de l'IA au workflow (accélération dev/qualité) avec garde-fous pour maintenir la fiabilité en production"] },
+      { title: 'React Native Developer (équipe produit)', company: 'Decayeux · Abbeville', date: 'Sept. 2022 - Oct. 2024', bullets: ["Développement et maintien d'applications React Native en contexte professionnel", "Intégration d'APIs et collaboration étroite avec les équipes produit (agile) pour livrer en continu", "Amélioration de la stabilité et de la performance : correctifs, optimisation, réduction des frictions UX", "Contribution aux patterns et bonnes pratiques d'architecture mobile pour une maintenance durable"] },
     ],
     realisations: [
       { title: 'SaaS Dashboard Admin', stack: ['React', 'Node.js', 'MongoDB'], desc: 'Plateforme de gestion multi-tenant avec authentification, rôles utilisateurs et tableaux de bord analytiques en temps réel.', accent: 'blue' },
@@ -58,33 +64,37 @@ const translations: Record<Lang, {
       { title: 'API REST Microservices', stack: ['Node.js', 'Express', 'PostgreSQL'], desc: 'Architecture API modulaire pour une plateforme B2B, documentation Swagger, tests unitaires et déploiement Docker.', accent: 'purple' },
     ],
     formations: [
-      { degree: 'Concepteur Développeur Full Stack Web & Mobile', school: 'La Manu · Amiens', year: '2021 - 2023', desc: 'React, React Native, Node.js, APIs REST, bases SQL & NoSQL, architecture Full Stack, méthodologies Agile.' },
-      { degree: "Master MIAGE - Informatique Appliquée à la Gestion des Entreprises", school: 'UPJV · Amiens', year: '2013 - 2015', desc: "Développement logiciel, gestion des SI, conception d'outils numériques appliqués aux entreprises." },
+      { degree: "Concepteur Développeur d'applications", school: 'LA MANU - Grande Ecole - Création - Management - Numérique', year: 'Oct. 2022 - Nov. 2023', desc: 'Programmation informatique (parcours général).' },
+      { degree: "Développeur d'applications mobiles", school: 'LA MANU - Grande Ecole - Création - Management - Numérique', year: 'Juin 2022 - Oct. 2022', desc: 'Développement d’applications mobiles en React Native.' },
+      { degree: 'Licence', school: 'LA MANU - Grande Ecole - Création - Management - Numérique', year: 'Déc. 2020 - Juin 2022', desc: 'Programmation informatique (parcours général).' },
+      { degree: "Master MIAGE - Informatique Appliquée à la Gestion des Entreprises", school: 'UPJV · Amiens', year: 'Oct. 2013 - Juin 2015', desc: "Développement logiciel, gestion des SI, conception d'outils numériques appliqués aux entreprises." },
     ],
     competences: [
-      { label: 'Frontend', tags: ['React', 'React Native', 'TypeScript', 'JavaScript', 'HTML/CSS'], color: 'blue' },
-      { label: 'Backend', tags: ['Node.js', 'Express', 'APIs REST'], color: 'teal' },
-      { label: 'Bases de données', tags: ['MongoDB', 'PostgreSQL', 'Firebase', 'Supabase'], color: 'purple' },
-      { label: 'Outils', tags: ['Git', 'Docker', 'VS Code', 'Figma', 'Notion'], color: 'gray' },
-      { label: 'Méthodes', tags: ['Agile', 'Scrum', 'Architecture applicative', 'UX/UI'], color: 'gray' },
+      { label: 'Mobile (Core)', tags: ['React Native', 'TypeScript', 'iOS', 'Android', 'Architecture mobile'], color: 'blue' },
+      { label: 'Livraison & Qualité', tags: ['Publication stores', 'Performance', 'Tests', 'Revue de code', 'Observabilité'], color: 'teal' },
+      { label: 'Backend pour le mobile', tags: ['Firebase', 'Supabase', 'PostgreSQL', 'Node.js', 'APIs REST'], color: 'purple' },
+      { label: 'Produit & Collaboration', tags: ['Cadrage', 'Feuille de route', 'Agile', 'UX/UI', 'Parties prenantes'], color: 'gray' },
     ],
-    atouts: ['Jury professionnel pour formations développeur · Amiens', 'Forte autonomie sur la gestion complète de projets techniques', 'Profil orienté produit & expérience utilisateur', 'Veille technologique active sur les stacks web & mobile'],
+    atouts: ['Leadership technique : cadrer, structurer et faire évoluer une base de code React Native en production', 'Livraison iOS/Android : gestion des publications, itérations courtes, qualité & performance', 'Ownership produit : transformer une idée en app utilisable, mesurable et maintenable', 'IA appliquée au développement : accélération de la livraison avec standards et garde-fous'],
   },
   en: {
-    title: 'Full Stack Web & Mobile Developer',
+    title: 'Lead React Native Developer',
     disponibilite: 'Immediate', disponibiliteLabel: 'Availability',
     openToWork: 'Contact', siteLabel: 'Site & projects',
+    profilAvailability: 'Open to a role or contract',
     sectionProfil: 'Profile', sectionExp: 'Experience', sectionReal: 'Projects',
     sectionForm: 'Education', sectionPortfolio: 'Portfolio',
     sectionComp: 'Skills', sectionAtouts: 'Strengths',
-    contactSectionTitle: 'Interested in my profile?',
-    contactSectionDesc: 'Feel free to contact me to discuss your project. I am available for freelance missions, permanent or fixed-term contracts.',
+    cvDownload: 'Download CV',
+    cvDownloadToast: 'CV download started',
+    contactSectionTitle: 'Let’s ship your mobile product.',
+    contactSectionDesc: 'Hiring, contract or product collaboration: I reply within 24h. Let’s talk roadmap, architecture, delivery and quality — and see how I can help you move faster.',
     contactBtn: 'Contact me',
-    profil: "Full Stack Developer specializing in React, React Native & Node.js - I build product-focused web and mobile applications, from backend architecture to user experience. Fully autonomous across the entire project lifecycle: design, development, deployment and maintenance. Available for permanent, fixed-term or freelance contracts.",
-    profilBold: ['React, React Native & Node.js', 'permanent, fixed-term or freelance'],
+    profil: 'Lead React Native Developer. I build and ship production-grade iOS & Android apps, from mobile architecture to App Store / Google Play releases. I combine technical leadership, delivery and quality (TypeScript, performance, maintainability) with AI-assisted development to move fast without breaking reliability.',
+    profilBold: ['Lead React Native Developer', 'App Store / Google Play'],
     experiences: [
-      { title: 'Full Stack Web & Mobile Developer', company: 'Self-employed · Freelance', date: 'Jul. 2024 - Present', bullets: ['Design and delivery of cross-platform web and mobile applications for direct clients', 'Development of SaaS solutions, e-commerce platforms and admin dashboards end-to-end', 'Building robust REST APIs with Node.js and Express, integrated with React frontends', 'Full project management: architecture, UX/UI, integration, deployment and maintenance'] },
-      { title: 'Mobile Application Developer', company: 'Decayeux · Abbeville', date: 'Sept. 2022 - Oct. 2024', bullets: ['React Native mobile app development in a connected industrial environment', 'Active contribution to user interfaces and frontend projects in production', 'Backend performance optimization and third-party API integration', 'Close collaboration with product and technical teams in agile mode'] },
+      { title: 'Lead React Native Developer', company: 'Capmedia Digital · Freelance', date: 'Jul. 2024 - Present', bullets: ['React Native iOS/Android delivery: scope, architecture, development, testing and releases', 'Product ownership: prioritization, fast iterations, onboarding and post-launch improvements', 'Architecture & quality: scalable codebase, TypeScript standards, performance, controlled tech debt', 'AI-assisted workflow (dev/QA acceleration) with guardrails to keep production reliability'] },
+      { title: 'React Native Developer (product team)', company: 'Decayeux · Abbeville', date: 'Sep. 2022 - Oct. 2024', bullets: ['Built and maintained React Native apps in a professional environment', 'API integrations and close collaboration with product teams (agile) to ship continuously', 'Stability and performance improvements: bug fixing, optimization and UX friction reduction', 'Contributed to mobile architecture patterns for long-term maintainability'] },
     ],
     realisations: [
       { title: 'SaaS Admin Dashboard', stack: ['React', 'Node.js', 'MongoDB'], desc: 'Multi-tenant management platform with authentication, user roles and real-time analytics dashboards.', accent: 'blue' },
@@ -92,33 +102,37 @@ const translations: Record<Lang, {
       { title: 'REST Microservices API', stack: ['Node.js', 'Express', 'PostgreSQL'], desc: 'Modular API architecture for a B2B platform, Swagger documentation, unit tests and Docker deployment.', accent: 'purple' },
     ],
     formations: [
-      { degree: 'Full Stack Web & Mobile Application Developer', school: 'La Manu · Amiens', year: '2021 - 2023', desc: 'React, React Native, Node.js, REST APIs, SQL & NoSQL databases, Full Stack architecture, Agile methodologies.' },
-      { degree: 'Master MIAGE - Computer Science Applied to Business Management', school: 'UPJV · Amiens', year: '2013 - 2015', desc: 'Software development, information systems management, design of digital tools for enterprises.' },
+      { degree: 'Application Developer (Computer Programming)', school: 'LA MANU - Grande Ecole - Creation - Management - Digital', year: 'Oct. 2022 - Nov. 2023', desc: 'Computer Programming/Programmer (general track).' },
+      { degree: 'Mobile Application Developer', school: 'LA MANU - Grande Ecole - Creation - Management - Digital', year: 'Jun. 2022 - Oct. 2022', desc: 'Mobile app development with React Native.' },
+      { degree: 'Bachelor (Programming)', school: 'LA MANU - Grande Ecole - Creation - Management - Digital', year: 'Dec. 2020 - Jun. 2022', desc: 'Computer Programming/Programmer (general track).' },
+      { degree: 'Master MIAGE - Computer Science Applied to Business Management', school: 'UPJV · Amiens', year: 'Oct. 2013 - Jun. 2015', desc: 'Software development, information systems management, design of digital tools for enterprises.' },
     ],
     competences: [
-      { label: 'Frontend', tags: ['React', 'React Native', 'TypeScript', 'JavaScript', 'HTML/CSS'], color: 'blue' },
-      { label: 'Backend', tags: ['Node.js', 'Express', 'REST APIs'], color: 'teal' },
-      { label: 'Databases', tags: ['MongoDB', 'PostgreSQL', 'Firebase', 'Supabase'], color: 'purple' },
-      { label: 'Tools', tags: ['Git', 'Docker', 'VS Code', 'Figma', 'Notion'], color: 'gray' },
-      { label: 'Methods', tags: ['Agile', 'Scrum', 'App Architecture', 'UX/UI'], color: 'gray' },
+      { label: 'Mobile (Core)', tags: ['React Native', 'TypeScript', 'iOS', 'Android', 'Mobile architecture'], color: 'blue' },
+      { label: 'Delivery & Quality', tags: ['Store releases', 'Performance', 'Testing', 'Code review', 'Monitoring'], color: 'teal' },
+      { label: 'Backend for Mobile', tags: ['Firebase', 'Supabase', 'PostgreSQL', 'Node.js', 'REST APIs'], color: 'purple' },
+      { label: 'Product & Collaboration', tags: ['Discovery', 'Roadmap', 'Agile', 'UX/UI', 'Stakeholders'], color: 'gray' },
     ],
-    atouts: ['Professional jury for developer training programs · Amiens', 'Strong autonomy in full technical project management', 'Product-oriented profile focused on user experience', 'Active tech watch on web & mobile stacks'],
+    atouts: ['Technical leadership: structure and scale a production React Native codebase', 'iOS/Android delivery: release management, short iterations, quality & performance', 'Product ownership: turn ideas into measurable, maintainable mobile products', 'AI-assisted development: faster delivery with standards and guardrails'],
   },
   ar: {
-    title: 'مطوّر Full Stack ويب وموبايل',
+    title: 'قائد تطوير React Native',
     disponibilite: 'فوري', disponibiliteLabel: 'التوفر',
     openToWork: 'اتصل', siteLabel: 'الموقع والمشاريع',
+    profilAvailability: 'متاح لوظيفة أو عقد',
     sectionProfil: 'الملف الشخصي', sectionExp: 'الخبرات', sectionReal: 'المشاريع',
     sectionForm: 'التعليم', sectionPortfolio: 'المحفظة',
     sectionComp: 'المهارات', sectionAtouts: 'المزايا',
-    contactSectionTitle: 'مهتم بملفي الشخصي؟',
-    contactSectionDesc: 'لا تتردد في الاتصال بي لمناقشة مشروعك. أنا متاح لمهام العمل الحر والعقود الدائمة أو محددة المدة.',
+    cvDownload: 'تحميل السيرة الذاتية',
+    cvDownloadToast: 'بدأ تنزيل السيرة الذاتية',
+    contactSectionTitle: 'هل نبني منتجك المحمول؟',
+    contactSectionDesc: 'توظيف أو عقد أو تعاون مع فريق المنتج: أجيب خلال 24 ساعة. لنتحدث عن خارطة الطريق والهندسة والتسليم والجودة — ونرى كيف يمكنني تسريع تطبيقك.',
     contactBtn: 'اتصل بي',
-    profil: "مطوّر Full Stack متخصص في React وReact Native وNode.js - أبني تطبيقات ويب وموبايل موجهة نحو المنتج، من بنية الخادم إلى تجربة المستخدم. مستقل تمامًا في دورة حياة المشروع الكاملة: التصميم والتطوير والنشر والصيانة. متاح للعمل الدائم أو المؤقت أو كمستقل.",
-    profilBold: ['React وReact Native وNode.js', 'دائم أو مؤقت أو كمستقل'],
+    profil: 'قائد تطوير React Native. أبني وأطلق تطبيقات iOS وAndroid بجودة إنتاجية، من هندسة التطبيق إلى الإطلاق على App Store / Google Play. أجمع بين القيادة التقنية والتسليم والجودة (TypeScript، الأداء، قابلية الصيانة) مع تطوير مدعوم بالذكاء الاصطناعي للتسريع دون التضحية بالاعتمادية.',
+    profilBold: ['قائد تطوير React Native', 'App Store / Google Play'],
     experiences: [
-      { title: 'مطوّر Full Stack ويب وموبايل', company: 'مستقل · Freelance', date: 'يوليو 2024 - الآن', bullets: ['تصميم وتسليم تطبيقات ويب وموبايل متعددة المنصات لعملاء مباشرين', 'تطوير حلول SaaS ومنصات تجارة إلكترونية ولوحات إدارة من الألف إلى الياء', 'بناء APIs REST قوية مع Node.js وExpress مدمجة مع واجهات React', 'إدارة كاملة للمشاريع: الهندسة، UX/UI، التكامل، النشر والصيانة'] },
-      { title: 'مطوّر تطبيقات موبايل', company: 'Decayeux · Abbeville', date: 'سبت. 2022 - أكت. 2024', bullets: ['تطوير تطبيقات موبايل بـ React Native في بيئة صناعية متصلة', 'مساهمة فعّالة في واجهات المستخدم والمشاريع الأمامية في الإنتاج', 'تحسين أداء الخادم وتكامل APIs الخارجية', 'تعاون وثيق مع فرق المنتج والتقنية بأسلوب Agile'] },
+      { title: 'قائد تطوير React Native', company: 'Capmedia Digital · Freelance', date: 'يوليو 2024 - الآن', bullets: ['تسليم تطبيقات React Native لنظامي iOS/Android: تحديد النطاق، الهندسة، التطوير، الاختبار والإطلاق', 'ملكية المنتج: تحديد الأولويات، تكرارات سريعة، تحسينات بعد الإطلاق', 'الهندسة والجودة: قاعدة كود قابلة للتوسع، معايير TypeScript، أداء، تقليل الدَّين التقني', 'سير عمل مدعوم بالذكاء الاصطناعي (تسريع التطوير/QA) مع ضوابط للحفاظ على الاعتمادية'] },
+      { title: 'مطوّر React Native (فريق المنتج)', company: 'Decayeux · Abbeville', date: 'سبت. 2022 - أكت. 2024', bullets: ['تطوير وصيانة تطبيقات React Native في بيئة احترافية', 'تكامل APIs والتعاون الوثيق مع فرق المنتج بأسلوب Agile للتسليم المستمر', 'تحسين الاستقرار والأداء: إصلاحات، تحسينات، تقليل احتكاك تجربة المستخدم', 'المساهمة في أنماط هندسة تطبيقات الموبايل لضمان قابلية الصيانة على المدى الطويل'] },
     ],
     realisations: [
       { title: 'لوحة إدارة SaaS', stack: ['React', 'Node.js', 'MongoDB'], desc: 'منصة إدارة متعددة المستأجرين مع المصادقة وأدوار المستخدمين ولوحات تحليلات في الوقت الفعلي.', accent: 'blue' },
@@ -130,13 +144,12 @@ const translations: Record<Lang, {
       { degree: 'ماجستير MIAGE - علوم الحاسوب التطبيقية لإدارة الأعمال', school: 'UPJV · Amiens', year: '2013 - 2015', desc: 'تطوير البرمجيات، إدارة أنظمة المعلومات، تصميم أدوات رقمية للمؤسسات.' },
     ],
     competences: [
-      { label: 'الواجهة الأمامية', tags: ['React', 'React Native', 'TypeScript', 'JavaScript', 'HTML/CSS'], color: 'blue' },
-      { label: 'الخادم', tags: ['Node.js', 'Express', 'REST APIs'], color: 'teal' },
-      { label: 'قواعد البيانات', tags: ['MongoDB', 'PostgreSQL', 'Firebase', 'Supabase'], color: 'purple' },
-      { label: 'الأدوات', tags: ['Git', 'Docker', 'VS Code', 'Figma', 'Notion'], color: 'gray' },
-      { label: 'المنهجيات', tags: ['Agile', 'Scrum', 'هندسة التطبيقات', 'UX/UI'], color: 'gray' },
+      { label: 'الموبايل (الأساس)', tags: ['React Native', 'TypeScript', 'iOS', 'Android', 'هندسة الموبايل'], color: 'blue' },
+      { label: 'التسليم والجودة', tags: ['إطلاق المتاجر', 'الأداء', 'الاختبارات', 'مراجعة الكود', 'المراقبة'], color: 'teal' },
+      { label: 'الخلفية للموبايل', tags: ['Firebase', 'Supabase', 'PostgreSQL', 'Node.js', 'REST APIs'], color: 'purple' },
+      { label: 'المنتج والتعاون', tags: ['Discovery', 'Roadmap', 'Agile', 'UX/UI', 'Stakeholders'], color: 'gray' },
     ],
-    atouts: ['لجنة تحكيم مهنية لدورات تدريب المطورين · Amiens', 'استقلالية عالية في إدارة المشاريع التقنية الكاملة', 'ملف شخصي موجه نحو المنتج وتجربة المستخدم', 'متابعة تقنية نشطة لمنظومتَي الويب والموبايل'],
+    atouts: ['قيادة تقنية: بناء وتوسيع قاعدة كود React Native في الإنتاج', 'تسليم iOS/Android: إدارة الإطلاق، تكرارات قصيرة، جودة وأداء', 'ملكية المنتج: تحويل الفكرة إلى منتج موبايل قابل للقياس والصيانة', 'تطوير مدعوم بالذكاء الاصطناعي: تسريع التسليم مع معايير وضوابط'],
   },
 };
 
@@ -197,6 +210,10 @@ const contact = {
   email: 'contact@nadirbensalah.com',
   linkedin: 'linkedin.com/in/nadir-ben-salah',
   site: 'nadirbensalah.com',
+};
+
+const cv = {
+  href: '/assets/cv/cv-nadir-ben-salah.pdf',
 };
 
 const name = 'Nadir Ben Salah';
@@ -420,7 +437,7 @@ export default function HomePage() {
           <div style={{ height: 3, background: 'linear-gradient(90deg, #00d4aa 0%, #0099ff 50%, #7c3aed 100%)' }} />
 
           {/* HEADER */}
-          <div className="cv-header" style={{ padding: '44px 56px 36px', background: th.headerBg, display: 'grid', gridTemplateColumns: '1fr auto', gap: 28, alignItems: 'start', borderBottom: `1px solid ${th.headerBorder}`, transition: 'background 0.2s' }}>
+          <div className="cv-header" style={{ padding: '44px 56px 20px', background: th.headerBg, display: 'grid', gridTemplateColumns: '1fr auto', gap: 28, alignItems: 'start', borderBottom: `1px solid ${th.headerBorder}`, transition: 'background 0.2s' }}>
             <div>
               <h1 className="cv-h1" style={{ fontFamily: "'Space Mono', monospace", fontSize: 34, fontWeight: 700, color: th.h1, letterSpacing: -0.5, lineHeight: 1.1, marginBottom: 8 }}>
                 {name}
@@ -441,18 +458,47 @@ export default function HomePage() {
                 ))}
               </div>
             </div>
-            <div className="cv-header-badge" style={{ 
-              width: 140, height: 140, borderRadius: '50%', 
-              background: `linear-gradient(135deg, ${th.badgeBg}, ${th.badgeBg}dd)`,
-              border: `3px dashed ${th.badgeBorder}`, 
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              transform: 'rotate(-12deg)', boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-              position: 'relative' as const
-            }}>
-              <div style={{ transform: 'rotate(12deg)', textAlign: 'center' as const }}>
-                <span style={{ fontSize: 10, letterSpacing: 1.8, textTransform: 'uppercase' as const, color: th.badgeLabel, display: 'block', marginBottom: 6, fontWeight: 600 }}>{t.disponibiliteLabel}</span>
-                <span style={{ fontSize: 15, fontWeight: 700, color: th.badgeValue, letterSpacing: 0.5 }}>{t.disponibilite}</span>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+              <div className="cv-header-badge" style={{ 
+                width: 140, height: 140, borderRadius: '50%', 
+                background: `linear-gradient(135deg, ${th.badgeBg}, ${th.badgeBg}dd)`,
+                border: `3px dashed ${th.badgeBorder}`, 
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                transform: 'rotate(-12deg)', boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                position: 'relative' as const
+              }}>
+                <div style={{ transform: 'rotate(12deg)', textAlign: 'center' as const }}>
+                  <span style={{ fontSize: 10, letterSpacing: 1.8, textTransform: 'uppercase' as const, color: th.badgeLabel, display: 'block', marginBottom: 6, fontWeight: 600 }}>{t.disponibiliteLabel}</span>
+                  <span style={{ fontSize: 15, fontWeight: 700, color: th.badgeValue, letterSpacing: 0.5 }}>{t.disponibilite}</span>
+                </div>
               </div>
+
+              <a
+                href={cv.href}
+                download
+                onClick={() => showToast(t.cvDownloadToast)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  background: th.openWorkBg,
+                  border: `1px solid ${th.openWorkBorder}`,
+                  color: th.openWorkText,
+                  borderRadius: 999,
+                  padding: '10px 14px',
+                  fontSize: 12.5,
+                  fontWeight: 700,
+                  fontFamily: "'Space Mono', monospace",
+                  textDecoration: 'none',
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                {t.cvDownload}
+              </a>
             </div>
           </div>
 
@@ -472,6 +518,27 @@ export default function HomePage() {
                       : part
                   )}
                 </p>
+                <div style={{ display: 'flex', marginTop: 14, justifyContent: isRtl ? 'flex-end' : 'flex-start' }}>
+                  <div style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '10px 14px',
+                    borderRadius: 999,
+                    background: th.floatBg,
+                    border: `1px solid ${th.floatBorder}`,
+                    color: th.floatText,
+                    fontSize: 13,
+                    fontWeight: 700,
+                    fontFamily: "'Space Mono', monospace",
+                    whiteSpace: 'nowrap' as const,
+                  }}>
+                    <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>
+                      ☺️
+                    </span>
+                    {t.profilAvailability}
+                  </div>
+                </div>
               </div>
 
               {/* EXPÉRIENCES */}
@@ -604,7 +671,7 @@ export default function HomePage() {
                   },
                   { 
                     icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00d4aa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>,
-                    label: 'LinkedIn', value: 'Profil LinkedIn', href: `https://${contact.linkedin}` 
+                    label: 'LinkedIn', value: <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, lineHeight: 1 }}><span>Profil LinkedIn</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block', flexShrink: 0 }}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>, href: `https://${contact.linkedin}` 
                   },
                 ].map((item, i) => (
                   <a key={i} href={item.href} style={{
@@ -620,7 +687,7 @@ export default function HomePage() {
                   </a>
                 ))}
               </div>
-              <a href={`mailto:${contact.email}`} style={{
+              <a href="https://wa.me/33610354259" target="_blank" rel="noopener noreferrer" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 10,
                 background: '#00d4aa', color: '#0d0f14', 
                 padding: '14px 32px', borderRadius: 999,
@@ -628,8 +695,8 @@ export default function HomePage() {
                 transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(0, 212, 170, 0.3)'
               }}>
                 {t.contactBtn}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden style={{ display: 'block' }}>
+                  <path d="M20.52 3.48A11.91 11.91 0 0 0 12.06 0C5.48 0 .12 5.36.12 11.94c0 2.1.55 4.16 1.6 5.98L0 24l6.25-1.64a11.9 11.9 0 0 0 5.69 1.45h.01c6.58 0 11.94-5.36 11.94-11.94 0-3.19-1.24-6.19-3.37-8.39ZM12 21.9h-.01a9.92 9.92 0 0 1-5.06-1.39l-.36-.21-3.71.97.99-3.62-.23-.37a9.93 9.93 0 0 1-1.52-5.28C2.1 6.47 6.53 2.04 12.06 2.04c2.65 0 5.14 1.03 7.02 2.9a9.86 9.86 0 0 1 2.91 7c0 5.53-4.46 9.96-9.99 9.96Zm5.47-7.47c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.66.15-.2.3-.76.97-.93 1.16-.17.2-.34.22-.64.07-.3-.15-1.25-.46-2.39-1.47-.88-.78-1.48-1.74-1.65-2.03-.17-.3-.02-.46.13-.61.13-.13.3-.34.44-.51.15-.17.2-.3.3-.49.1-.2.05-.37-.02-.52-.07-.15-.66-1.6-.9-2.2-.24-.57-.48-.49-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.5 0 1.48 1.07 2.9 1.22 3.1.15.2 2.07 3.17 5.03 4.45.7.3 1.24.48 1.67.62.7.22 1.34.19 1.85.12.56-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.08-.12-.27-.2-.56-.34Z"/>
                 </svg>
               </a>
             </div>
