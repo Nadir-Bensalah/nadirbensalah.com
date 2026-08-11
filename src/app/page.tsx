@@ -34,7 +34,8 @@ const translations: Record<Lang, {
   cvDownloadToast: string;
   contactSectionTitle: string; contactSectionDesc: string; contactBtn: string;
   experiences: { title: string; company: string; date: string; bullets: string[] }[];
-  realisations: { title: string; stack: string[]; desc: string; accent: 'blue' | 'teal' | 'purple' }[];
+  realisations: { title: string; client: string; stack: string[]; desc: string; bullets: string[]; accent: 'blue' | 'teal' | 'purple' }[];
+  sectionProjects: string;
   formations: { degree: string; school: string; year: string; desc: string }[];
   competences: { label: string; tags: string[]; color: 'blue' | 'teal' | 'purple' | 'gray' }[];
   atouts: string[];
@@ -45,6 +46,7 @@ const translations: Record<Lang, {
     openToWork: 'Contacter', siteLabel: 'Site & projets',
     profilAvailability: 'Disponible pour un poste ou une mission',
     sectionProfil: 'Profil', sectionExp: 'Expériences', sectionReal: 'Réalisations',
+    sectionProjects: 'Projets significatifs',
     sectionForm: 'Formations', sectionPortfolio: 'Portfolio',
     sectionComp: 'Compétences', sectionAtouts: 'Atouts',
     cvDownload: 'Télécharger le CV',
@@ -52,16 +54,16 @@ const translations: Record<Lang, {
     contactSectionTitle: 'On construit votre projet mobile ?',
     contactSectionDesc: "Recrutement, mission ou collaboration produit : je vous réponds sous 24h. Parlons roadmap, architecture, delivery et qualité, et voyons si je suis la bonne personne pour accélérer votre app.",
     contactBtn: 'Me contacter',
-    profil: "Lead Développeur React Native, je conçois et je fais livrer des applications iOS & Android orientées produit, de l'architecture mobile au déploiement App Store / Google Play. Je combine leadership technique, livraison et qualité (TypeScript, performance, maintenance) avec une approche IA appliquée au développement pour accélérer sans compromis.",
-    profilBold: ['Lead Développeur React Native', 'App Store / Google Play'],
+    profil: "Développeur Full Stack spécialisé React Native, j'interviens sur l'ensemble du cycle de vie d'un produit numérique : analyse des besoins, conception, développement, intégration, déploiement et maintenance.",
+    profilBold: ['React Native'],
     experiences: [
-      { title: 'Lead React Native Developer', company: 'Capmedia Digital · Freelance', date: "Juil. 2024 - Aujourd'hui", bullets: ["Livraison d'applications mobiles React Native (iOS/Android) : cadrage, architecture, développement, tests et publication", "Pilotage produit : priorisation, itérations rapides, onboarding et amélioration continue post-lancement", "Architecture & qualité : base de code évolutive, conventions TypeScript, performance, dette technique maîtrisée", "Intégration de l'IA au workflow (accélération dev/qualité) avec garde-fous pour maintenir la fiabilité en production"] },
-      { title: 'React Native Developer (équipe produit)', company: 'Decayeux · Abbeville', date: 'Sept. 2022 - Oct. 2024', bullets: ["Développement et maintien d'applications React Native en contexte professionnel", "Intégration d'APIs et collaboration étroite avec les équipes produit (agile) pour livrer en continu", "Amélioration de la stabilité et de la performance : correctifs, optimisation, réduction des frictions UX", "Contribution aux patterns et bonnes pratiques d'architecture mobile pour une maintenance durable"] },
+      { title: 'Développeur Full Stack & Mobile | Freelance / Auto-Entrepreneur', company: 'Indépendant', date: "Juil. 2024 - Aujourd'hui", bullets: ["Conception et développement d'applications mobiles avec React Native et TypeScript.", "Développement de plateformes web, solutions SaaS et applications métier sur mesure.", "Création d'APIs REST et de services backend avec Node.js et Express.", "Conception et administration de bases de données PostgreSQL, MongoDB et Supabase.", "Gestion complète du cycle produit : conception, développement, optimisation, livraison.", "Intégration de services tiers : authentification, notifications push, stockage cloud, géolocalisation et paiements en ligne.", "Déploiement, maintenance et évolution d'applications en environnement de production.", "Gestion complète des projets : analyse des besoins, architecture technique, développement, tests et mise en production."] },
+      { title: "Développeur d'Applications Mobiles React Native", company: 'Decayeux · Abbeville', date: 'Sept. 2022 - Oct. 2024', bullets: ["Développement et évolution d'applications mobiles React Native destinées à un environnement industriel.", "Participation à la conception technique et à l'amélioration continue des fonctionnalités existantes.", "Intégration d'APIs et services backend.", "Optimisation des performances, de la stabilité et de l'expérience utilisateur.", "Collaboration étroite avec les équipes produit, métier et techniques.", "Contribution aux choix techniques et aux évolutions de l'architecture applicative."] },
     ],
     realisations: [
-      { title: 'SaaS Dashboard Admin', stack: ['React', 'Node.js', 'MongoDB'], desc: 'Plateforme de gestion multi-tenant avec authentification, rôles utilisateurs et tableaux de bord analytiques en temps réel.', accent: 'blue' },
-      { title: 'App Mobile E-commerce', stack: ['React Native', 'Firebase', 'Stripe'], desc: 'Application shopping cross-platform iOS/Android avec paiement intégré, notifications push et catalogue dynamique.', accent: 'teal' },
-      { title: 'API REST Microservices', stack: ['Node.js', 'Express', 'PostgreSQL'], desc: 'Architecture API modulaire pour une plateforme B2B, documentation Swagger, tests unitaires et déploiement Docker.', accent: 'purple' },
+      { title: "FORGEME – Plateforme de Productivité et d'Organisation Personnelle", client: 'Perseus Capital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: "Application disponible sur mobile et web permettant aux utilisateurs de centraliser l'ensemble de leurs objectifs, tâches, habitudes, idées, événements importants et projets personnels au sein d'un environnement unique.", bullets: ['Développement des versions mobile (iOS & Android) et web.', "Mise en place de l'architecture backend Firebase.", "Gestion des utilisateurs, authentification et synchronisation des données.", "Développement de modules de tâches, objectifs, rituels, journal, idées et rappels.", 'Synchronisation temps réel entre les plateformes.', "Conception du produit, de l'expérience utilisateur et de l'architecture technique."], accent: 'blue' },
+      { title: 'MYKORBA – Application Mobile de Services et Informations Locales', client: 'Capmedia Digital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: 'Application mobile destinée à centraliser les informations, services et actualités utiles aux habitants de la ville.', bullets: ["Conception et développement complet de l'application mobile.", "Mise en place de l'architecture Firebase et de la base de données temps réel.", "Développement des fonctionnalités de consultation d'informations locales.", 'Gestion des contenus, actualités, services et données communautaires.', "Développement des mécanismes de synchronisation et de mise à jour des données.", "Optimisation des performances et de l'expérience utilisateur.", 'Déploiement, maintenance et évolution continue du produit.'], accent: 'teal' },
+      { title: 'SOLUTION INDUSTRIELLE RFID', client: 'Safran Tunisie', stack: ['React', 'Node.js', 'PostgreSQL', 'RFID', 'capteurs industriels'], desc: "Développement d'un logiciel métier de traçabilité industrielle destiné au suivi et à la gestion de pièces de production.", bullets: ["Conception et développement d'une plateforme métier sur mesure.", 'Communication avec lecteurs RFID, antennes et capteurs industriels.', "Suivi en temps réel des mouvements de pièces dans l'usine.", 'Gestion des flux logistiques et des états de production.', 'Visualisation et pilotage des données industrielles.', "Optimisation des processus de traçabilité et d'inventaire."], accent: 'purple' },
     ],
     formations: [
       { degree: "Concepteur Développeur d'applications", school: 'LA MANU - Grande Ecole - Création - Management - Numérique', year: 'Oct. 2022 - Nov. 2023', desc: 'Programmation informatique (parcours général).' },
@@ -83,6 +85,7 @@ const translations: Record<Lang, {
     openToWork: 'Contact', siteLabel: 'Site & projects',
     profilAvailability: 'Open to a role or contract',
     sectionProfil: 'Profile', sectionExp: 'Experience', sectionReal: 'Projects',
+    sectionProjects: 'Significant Projects',
     sectionForm: 'Education', sectionPortfolio: 'Portfolio',
     sectionComp: 'Skills', sectionAtouts: 'Strengths',
     cvDownload: 'Download CV',
@@ -90,16 +93,16 @@ const translations: Record<Lang, {
     contactSectionTitle: 'Let’s ship your mobile product.',
     contactSectionDesc: 'Hiring, contract or product collaboration: I reply within 24h. Let’s talk roadmap, architecture, delivery and quality — and see how I can help you move faster.',
     contactBtn: 'Contact me',
-    profil: 'Lead React Native Developer. I build and ship production-grade iOS & Android apps, from mobile architecture to App Store / Google Play releases. I combine technical leadership, delivery and quality (TypeScript, performance, maintainability) with AI-assisted development to move fast without breaking reliability.',
-    profilBold: ['Lead React Native Developer', 'App Store / Google Play'],
+    profil: 'Full Stack developer specialized in React Native, I work across the entire lifecycle of a digital product: requirements analysis, design, development, integration, deployment and maintenance.',
+    profilBold: ['React Native'],
     experiences: [
-      { title: 'Lead React Native Developer', company: 'Capmedia Digital · Freelance', date: 'Jul. 2024 - Present', bullets: ['React Native iOS/Android delivery: scope, architecture, development, testing and releases', 'Product ownership: prioritization, fast iterations, onboarding and post-launch improvements', 'Architecture & quality: scalable codebase, TypeScript standards, performance, controlled tech debt', 'AI-assisted workflow (dev/QA acceleration) with guardrails to keep production reliability'] },
-      { title: 'React Native Developer (product team)', company: 'Decayeux · Abbeville', date: 'Sep. 2022 - Oct. 2024', bullets: ['Built and maintained React Native apps in a professional environment', 'API integrations and close collaboration with product teams (agile) to ship continuously', 'Stability and performance improvements: bug fixing, optimization and UX friction reduction', 'Contributed to mobile architecture patterns for long-term maintainability'] },
+      { title: 'Full Stack & Mobile Developer | Freelance / Self-Employed', company: 'Independent', date: 'Jul. 2024 - Present', bullets: ['Design and development of mobile applications with React Native and TypeScript.', 'Development of web platforms, SaaS solutions and custom business applications.', 'Creation of REST APIs and backend services with Node.js and Express.', 'Design and administration of PostgreSQL, MongoDB and Supabase databases.', 'Full product lifecycle management: design, development, optimization, delivery.', 'Third-party integrations: authentication, push notifications, cloud storage, geolocation and online payments.', 'Deployment, maintenance and evolution of production applications.', 'End-to-end project management: requirements analysis, technical architecture, development, testing and release.'] },
+      { title: 'React Native Mobile App Developer', company: 'Decayeux · Abbeville', date: 'Sep. 2022 - Oct. 2024', bullets: ['Development and evolution of React Native mobile apps for an industrial environment.', 'Participation in technical design and continuous improvement of existing features.', 'API and backend service integrations.', 'Performance, stability and UX optimization.', 'Close collaboration with product, business and technical teams.', 'Contribution to technical decisions and application architecture evolution.'] },
     ],
     realisations: [
-      { title: 'SaaS Admin Dashboard', stack: ['React', 'Node.js', 'MongoDB'], desc: 'Multi-tenant management platform with authentication, user roles and real-time analytics dashboards.', accent: 'blue' },
-      { title: 'Mobile E-commerce App', stack: ['React Native', 'Firebase', 'Stripe'], desc: 'Cross-platform iOS/Android shopping app with integrated payments, push notifications and dynamic catalog.', accent: 'teal' },
-      { title: 'REST Microservices API', stack: ['Node.js', 'Express', 'PostgreSQL'], desc: 'Modular API architecture for a B2B platform, Swagger documentation, unit tests and Docker deployment.', accent: 'purple' },
+      { title: 'FORGEME – Personal Productivity & Organisation Platform', client: 'Perseus Capital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: 'Mobile and web application allowing users to centralise all their goals, tasks, habits, ideas, important events and personal projects in one unique environment.', bullets: ['Development of mobile (iOS & Android) and web versions.', 'Setup of the Firebase backend architecture.', 'User management, authentication and data synchronisation.', 'Development of tasks, goals, rituals, journal, ideas and reminders modules.', 'Real-time sync across platforms.', 'Product design, UX and technical architecture.'], accent: 'blue' },
+      { title: 'MYKORBA – Local Services & Information Mobile App', client: 'Capmedia Digital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: 'Mobile application designed to centralise information, services and local news useful to city residents.', bullets: ['Full mobile app design and development.', 'Firebase architecture and real-time database setup.', 'Development of local information browsing features.', 'Content, news, services and community data management.', 'Data sync and update mechanisms.', 'Performance and UX optimisation.', 'Deployment, maintenance and continuous product evolution.'], accent: 'teal' },
+      { title: 'INDUSTRIAL RFID SOLUTION', client: 'Safran Tunisia', stack: ['React', 'Node.js', 'PostgreSQL', 'RFID', 'Industrial sensors'], desc: 'Development of an industrial traceability business software for tracking and managing production parts.', bullets: ['Design and development of a custom business platform.', 'Communication with RFID readers, antennas and industrial sensors.', 'Real-time tracking of parts movement on the shop floor.', 'Logistics flow and production state management.', 'Industrial data visualisation and control.', 'Traceability and inventory process optimisation.'], accent: 'purple' },
     ],
     formations: [
       { degree: 'Application Developer (Computer Programming)', school: 'LA MANU - Grande Ecole - Creation - Management - Digital', year: 'Oct. 2022 - Nov. 2023', desc: 'Computer Programming/Programmer (general track).' },
@@ -121,6 +124,7 @@ const translations: Record<Lang, {
     openToWork: 'اتصل', siteLabel: 'الموقع والمشاريع',
     profilAvailability: 'متاح لوظيفة أو عقد',
     sectionProfil: 'الملف الشخصي', sectionExp: 'الخبرات', sectionReal: 'المشاريع',
+    sectionProjects: 'المشاريع البارزة',
     sectionForm: 'التعليم', sectionPortfolio: 'المحفظة',
     sectionComp: 'المهارات', sectionAtouts: 'المزايا',
     cvDownload: 'تحميل السيرة الذاتية',
@@ -128,16 +132,16 @@ const translations: Record<Lang, {
     contactSectionTitle: 'هل نبني منتجك المحمول؟',
     contactSectionDesc: 'توظيف أو عقد أو تعاون مع فريق المنتج: أجيب خلال 24 ساعة. لنتحدث عن خارطة الطريق والهندسة والتسليم والجودة — ونرى كيف يمكنني تسريع تطبيقك.',
     contactBtn: 'اتصل بي',
-    profil: 'قائد تطوير React Native. أبني وأطلق تطبيقات iOS وAndroid بجودة إنتاجية، من هندسة التطبيق إلى الإطلاق على App Store / Google Play. أجمع بين القيادة التقنية والتسليم والجودة (TypeScript، الأداء، قابلية الصيانة) مع تطوير مدعوم بالذكاء الاصطناعي للتسريع دون التضحية بالاعتمادية.',
-    profilBold: ['قائد تطوير React Native', 'App Store / Google Play'],
+    profil: 'مطوّر Full Stack متخصص في React Native، أتدخل على مستوى دورة حياة المنتج الرقمي بالكامل: تحليل المتطلبات، التصميم، التطوير، التكامل، النشر والصيانة.',
+    profilBold: ['React Native'],
     experiences: [
-      { title: 'قائد تطوير React Native', company: 'Capmedia Digital · Freelance', date: 'يوليو 2024 - الآن', bullets: ['تسليم تطبيقات React Native لنظامي iOS/Android: تحديد النطاق، الهندسة، التطوير، الاختبار والإطلاق', 'ملكية المنتج: تحديد الأولويات، تكرارات سريعة، تحسينات بعد الإطلاق', 'الهندسة والجودة: قاعدة كود قابلة للتوسع، معايير TypeScript، أداء، تقليل الدَّين التقني', 'سير عمل مدعوم بالذكاء الاصطناعي (تسريع التطوير/QA) مع ضوابط للحفاظ على الاعتمادية'] },
-      { title: 'مطوّر React Native (فريق المنتج)', company: 'Decayeux · Abbeville', date: 'سبت. 2022 - أكت. 2024', bullets: ['تطوير وصيانة تطبيقات React Native في بيئة احترافية', 'تكامل APIs والتعاون الوثيق مع فرق المنتج بأسلوب Agile للتسليم المستمر', 'تحسين الاستقرار والأداء: إصلاحات، تحسينات، تقليل احتكاك تجربة المستخدم', 'المساهمة في أنماط هندسة تطبيقات الموبايل لضمان قابلية الصيانة على المدى الطويل'] },
+      { title: 'مطوّر Full Stack وموبايل | Freelance / عمل حر', company: 'مستقل', date: 'يوليو 2024 - الآن', bullets: ['تصميم وتطوير تطبيقات موبايل باستخدام React Native وTypeScript.', 'تطوير منصات ويب وحلول SaaS وتطبيقات أعمال مخصصة.', 'إنشاء REST APIs وخدمات backend باستخدام Node.js وExpress.', 'تصميم وإدارة قواعد بيانات PostgreSQL وMongoDB وSupabase.', 'إدارة دورة المنتج الكاملة: تصميم، تطوير، تحسين، تسليم.', 'تكامل خدمات الطرف الثالث: مصادقة، إشعارات push، تخزين سحابي، تحديد موقع ومدفوعات.', 'نشر وصيانة وتطوير التطبيقات في بيئة الإنتاج.', 'إدارة المشاريع من الألف إلى الياء: تحليل، هندسة، تطوير، اختبار وإطلاق.'] },
+      { title: 'مطوّر تطبيقات موبايل React Native', company: 'Decayeux · Abbeville', date: 'سبت. 2022 - أكت. 2024', bullets: ['تطوير وتطوير تطبيقات React Native لبيئة صناعية.', 'المشاركة في التصميم التقني وتحسين الميزات القائمة.', 'تكامل APIs والخدمات الخلفية.', 'تحسين الأداء والاستقرار وتجربة المستخدم.', 'تعاون وثيق مع فرق المنتج والأعمال والتقنية.', 'المساهمة في القرارات التقنية وتطور هندسة التطبيق.'] },
     ],
     realisations: [
-      { title: 'لوحة إدارة SaaS', stack: ['React', 'Node.js', 'MongoDB'], desc: 'منصة إدارة متعددة المستأجرين مع المصادقة وأدوار المستخدمين ولوحات تحليلات في الوقت الفعلي.', accent: 'blue' },
-      { title: 'تطبيق موبايل للتجارة الإلكترونية', stack: ['React Native', 'Firebase', 'Stripe'], desc: 'تطبيق تسوق متعدد المنصات iOS/Android مع دفع مدمج وإشعارات فورية وكتالوج ديناميكي.', accent: 'teal' },
-      { title: 'API REST للخدمات المصغّرة', stack: ['Node.js', 'Express', 'PostgreSQL'], desc: 'بنية API معيارية لمنصة B2B، توثيق Swagger، اختبارات وحدة ونشر عبر Docker.', accent: 'purple' },
+      { title: 'FORGEME – منصة الإنتاجية والتنظيم الشخصي', client: 'Perseus Capital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: 'تطبيق موبايل وويب يتيح للمستخدمين تركيز أهدافهم ومهامهم وعاداتهم وأفكارهم وأحداثهم ومشاريعهم الشخصية في بيئة واحدة.', bullets: ['تطوير نسختي الموبايل (iOS وAndroid) والويب.', 'إعداد هندسة backend على Firebase.', 'إدارة المستخدمين والمصادقة ومزامنة البيانات.', 'تطوير وحدات المهام والأهداف والطقوس واليوميات والأفكار والتذكيرات.', 'مزامنة فورية بين المنصات.', 'تصميم المنتج وتجربة المستخدم والهندسة التقنية.'], accent: 'blue' },
+      { title: 'MYKORBA – تطبيق موبايل للخدمات والمعلومات المحلية', client: 'Capmedia Digital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: 'تطبيق موبايل لتركيز المعلومات والخدمات والأخبار المفيدة لسكان المدينة.', bullets: ['تصميم وتطوير التطبيق الموبايل كاملاً.', 'إعداد Firebase وقاعدة البيانات في الوقت الفعلي.', 'تطوير ميزات تصفح المعلومات المحلية.', 'إدارة المحتوى والأخبار والخدمات والبيانات المجتمعية.', 'مزامنة البيانات وتحديثها.', 'تحسين الأداء وتجربة المستخدم.', 'نشر وصيانة وتطوير مستمر للمنتج.'], accent: 'teal' },
+      { title: 'حل RFID الصناعي', client: 'Safran Tunisie', stack: ['React', 'Node.js', 'PostgreSQL', 'RFID', 'مستشعرات صناعية'], desc: 'تطوير برنامج تتبع صناعي لمتابعة وإدارة قطع الإنتاج.', bullets: ['تصميم وتطوير منصة أعمال مخصصة.', 'الاتصال بقارئات RFID والهوائيات والمستشعرات.', 'تتبع حركة القطع في الوقت الفعلي.', 'إدارة التدفقات اللوجستية وحالات الإنتاج.', 'تصور وإدارة البيانات الصناعية.', 'تحسين عمليات التتبع والجرد.'], accent: 'purple' },
     ],
     formations: [
       { degree: 'مطوّر تطبيقات Full Stack ويب وموبايل', school: 'La Manu · Amiens', year: '2021 - 2023', desc: 'React، React Native، Node.js، REST APIs، قواعد بيانات SQL وNoSQL، هندسة Full Stack، منهجيات Agile.' },
@@ -271,7 +275,7 @@ const themes = {
   },
 };
 
-type RealisationItem = { title: string; stack: string[]; desc: string; accent: 'blue' | 'teal' | 'purple' };
+type RealisationItem = { title: string; client: string; stack: string[]; desc: string; bullets: string[]; accent: 'blue' | 'teal' | 'purple' };
 
 function RealisationCard({ item, th }: { item: RealisationItem; th: typeof themes.dark }) {
   const ac = accentColors[item.accent];
@@ -279,26 +283,25 @@ function RealisationCard({ item, th }: { item: RealisationItem; th: typeof theme
     <div style={{ 
       background: ac.bg, 
       border: `1px solid ${ac.border}`, 
+      borderLeft: `3px solid ${ac.dot}`,
       borderRadius: 8, 
-      padding: 24, 
-      transition: 'all 0.2s',
-      cursor: 'pointer',
-      position: 'relative' as const,
-      overflow: 'hidden',
-      aspectRatio: '1/1',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between'
+      padding: '20px 24px', 
+      marginBottom: 20,
     }}>
-      <div style={{ position: 'absolute', top: 0, right: 0, width: 60, height: 60, background: `linear-gradient(135deg, ${ac.dot}20, transparent)`, borderRadius: '0 0 0 100%' }} />
-      <div>
-        <div style={{ width: 10, height: 10, borderRadius: '50%', background: ac.dot, marginBottom: 16 }} />
-        <h3 style={{ fontSize: 17, fontWeight: 600, color: th.expTitle, lineHeight: 1.3, marginBottom: 12 }}>{item.title}</h3>
-        <p style={{ fontSize: 13, color: th.bulletColor, lineHeight: 1.6, opacity: 0.85 }}>{item.desc}</p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4, gap: 12 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, color: ac.dot, lineHeight: 1.3, margin: 0 }}>{item.title}</h3>
+        <span style={{ fontSize: 12, fontWeight: 600, color: th.expDate, whiteSpace: 'nowrap' as const, flexShrink: 0, paddingTop: 2 }}>{item.client}</span>
       </div>
-      <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 6, marginTop: 16 }}>
+      <p style={{ fontSize: 13, color: th.bulletColor, lineHeight: 1.65, marginBottom: 10, opacity: 0.9 }}>{item.desc}</p>
+      <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 5, marginBottom: 10 }}>
+        <span style={{ fontSize: 11, fontWeight: 600, color: th.compLabel, marginRight: 4 }}>Technologies :</span>
         {item.stack.map((s: string) => <Tag key={s} label={s} color={item.accent} th={th} />)}
       </div>
+      <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+        {item.bullets.map((b, j) => (
+          <li key={j} className="cv-bullet" style={{ fontSize: 13.5, color: th.bulletColor, paddingLeft: 16, position: 'relative' as const, lineHeight: 1.65, marginBottom: 4 }}>{b}</li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -565,15 +568,11 @@ export default function HomePage() {
                 ))}
               </div>
 
-              {/* RÉALISATIONS - CACHÉE POUR LE MOMENT */}
-              {false && (
-                <div style={{ marginBottom: 32 }}>
-                  <SectionTitleComp>{t.sectionReal}</SectionTitleComp>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
-                    {t.realisations.map((r, i) => <RealisationCard key={i} item={r} th={th} />)}
-                  </div>
-                </div>
-              )}
+              {/* PROJETS SIGNIFICATIFS */}
+              <div style={{ marginBottom: 32 }}>
+                <SectionTitleComp>{t.sectionProjects}</SectionTitleComp>
+                {t.realisations.map((r, i) => <RealisationCard key={i} item={r} th={th} />)}
+              </div>
 
               {/* FORMATIONS */}
               <div style={{ marginBottom: 0 }}>
