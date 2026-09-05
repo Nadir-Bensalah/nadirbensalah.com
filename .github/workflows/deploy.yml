@@ -22,6 +22,8 @@ jobs:
         run: npm install
 
       - name: Build Next.js
+        env:
+          NEXT_PUBLIC_SITE_URL: https://nadirbensalah.com
         run: npm run build
 
       - name: Export static site

@@ -8,10 +8,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
-  title: 'Lead React Native Developer | iOS & Android | Architecture & Delivery',
-  description: 'Lead React Native Developer. I build and ship production-grade iOS & Android apps: mobile architecture, TypeScript quality, performance, and App Store / Google Play releases. Open to a role or contract.',
-  keywords: 'lead react native developer, react native developer, mobile app developer, ios android, typescript, mobile architecture, app store release, google play release, firebase, supabase, postgresql, api rest, startup product, technical leadership',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://nadirbensalah.com'),
+  title: "Développeur d'applications mobiles iOS & Android · Nadir Ben Salah",
+  description: 'Independent mobile app developer. Seven apps shipped to the App Store, designed and built end to end. React Native, TypeScript, iOS and Android.',
+  keywords: "développeur applications mobiles, développeur react native, développeur mobile freelance, application iOS Android, react native, typescript, publication app store, firebase, supabase, développeur mobile Amiens, Capmedia Digital",
   icons: {
     icon: [
       { url: '/assets/images/Group 5 (1).png', type: 'image/png', sizes: '32x32' },
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Lead React Native Developer | iOS & Android | Architecture & Delivery',
-    description: 'Lead React Native Developer building production iOS & Android apps: architecture, delivery, and store releases.',
+    title: "Développeur d'applications mobiles iOS & Android · Nadir Ben Salah",
+    description: 'Independent mobile app developer. Seven apps shipped to the App Store, designed and built end to end. React Native, TypeScript, iOS and Android.',
     images: [{ url: '/assets/images/app_logo.png', width: 1200, height: 630 }],
     locale: 'fr_FR',
     alternateLocale: ['en_US', 'ar_SA'],
@@ -47,7 +47,7 @@ export default function RootLayout({
     {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
-      name: 'Nadir Ben Salah - Lead React Native Developer',
+      name: "Nadir Ben Salah · Développeur d'applications mobiles",
       url: siteUrl,
       inLanguage: ['fr-FR', 'en-US', 'ar-SA'],
       potentialAction: {
@@ -59,9 +59,9 @@ export default function RootLayout({
     {
       '@context': 'https://schema.org',
       '@type': 'ProfessionalService',
-      name: 'Nadir Ben Salah - Lead React Native Developer',
+      name: "Nadir Ben Salah · Développeur d'applications mobiles",
       url: siteUrl,
-      description: 'Lead React Native Developer building and shipping production iOS & Android apps. Mobile architecture, TypeScript quality, performance, backend integrations, and App Store / Google Play releases.',
+      description: 'Independent mobile app developer. Seven apps shipped to the App Store, designed and built end to end. React Native, TypeScript, iOS and Android.',
       areaServed: [{
         '@type': 'City',
         name: 'Amiens'
@@ -77,7 +77,7 @@ export default function RootLayout({
       '@type': 'Person',
       name: 'Nadir Ben Salah',
       url: siteUrl,
-      jobTitle: 'Lead React Native Developer | iOS & Android | Mobile Architecture',
+      jobTitle: "Développeur d'applications mobiles indépendant",
       knowsAbout: ['React Native', 'TypeScript', 'React', 'Mobile Architecture', 'iOS Development', 'Android Development', 'App Store Release', 'Google Play Release', 'Firebase', 'Supabase', 'PostgreSQL', 'API REST', 'SaaS', 'Product Engineering', 'Mobile Apps', 'AI-assisted development'],
       areaServed: ['Amiens', 'France', 'Tunisie', 'Europe', 'Remote'],
       address: {

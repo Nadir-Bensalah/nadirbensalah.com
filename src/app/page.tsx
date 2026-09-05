@@ -34,14 +34,14 @@ const translations: Record<Lang, {
   cvDownloadToast: string;
   contactSectionTitle: string; contactSectionDesc: string; contactBtn: string;
   experiences: { title: string; company: string; date: string; bullets: string[] }[];
-  realisations: { title: string; client: string; stack: string[]; desc: string; bullets: string[]; accent: 'blue' | 'teal' | 'purple' }[];
+  realisations: { title: string; client: string; stack: string[]; desc: string; bullets: string[]; accent: 'blue' | 'teal' | 'purple'; appStore?: { name: string; url: string }[] }[];
   sectionProjects: string;
   formations: { degree: string; school: string; year: string; desc: string }[];
   competences: { label: string; tags: string[]; color: 'blue' | 'teal' | 'purple' | 'gray' }[];
   atouts: string[];
 }> = {
   fr: {
-    title: 'Lead Développeur React Native',
+    title: "Développeur d'applications mobiles indépendant",
     disponibilite: 'Immédiate', disponibiliteLabel: 'Disponibilité',
     openToWork: 'Contacter', siteLabel: 'Site & projets',
     profilAvailability: 'Disponible pour un poste ou une mission',
@@ -62,7 +62,7 @@ const translations: Record<Lang, {
     ],
     realisations: [
       { title: "FORGEME – Plateforme de Productivité et d'Organisation Personnelle", client: 'Perseus Capital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: "Application disponible sur mobile et web permettant aux utilisateurs de centraliser l'ensemble de leurs objectifs, tâches, habitudes, idées, événements importants et projets personnels au sein d'un environnement unique.", bullets: ['Développement des versions mobile (iOS & Android) et web.', "Mise en place de l'architecture backend Firebase.", "Gestion des utilisateurs, authentification et synchronisation des données.", "Développement de modules de tâches, objectifs, rituels, journal, idées et rappels.", 'Synchronisation temps réel entre les plateformes.', "Conception du produit, de l'expérience utilisateur et de l'architecture technique."], accent: 'blue' },
-      { title: 'MYKORBA – Application Mobile de Services et Informations Locales', client: 'Capmedia Digital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: 'Application mobile destinée à centraliser les informations, services et actualités utiles aux habitants de la ville.', bullets: ["Conception et développement complet de l'application mobile.", "Mise en place de l'architecture Firebase et de la base de données temps réel.", "Développement des fonctionnalités de consultation d'informations locales.", 'Gestion des contenus, actualités, services et données communautaires.', "Développement des mécanismes de synchronisation et de mise à jour des données.", "Optimisation des performances et de l'expérience utilisateur.", 'Déploiement, maintenance et évolution continue du produit.'], accent: 'teal' },
+      { title: "SEPT APPLICATIONS PUBLIÉES SUR L'APP STORE", client: 'Capmedia Digital', stack: ['React Native', 'TypeScript', 'Firebase', 'Swift', 'Kotlin'], desc: "Sept applications conçues, développées et publiées seul, de l'idée à la mise en ligne. Six d'entre elles ont passé la revue Apple entre le 13 août et le 2 septembre 2026.", bullets: ["Conception produit, développement iOS et Android, publication sur l'App Store.", 'Modules natifs Swift et Kotlin : widgets, Siri, Live Activities, watchOS, tuiles Android.', 'Backend Firebase avec autorité serveur : droits, quotas et rôles hors de portée du client.', 'Architecture IA contrainte : le modèle propose, du code déterministe valide et exécute.', 'Livraison de bout en bout : compte développeur, signature, revue Apple, mise en vente.'], accent: 'teal', appStore: [{ name: 'Qindil', url: 'https://apps.apple.com/fr/app/id6799055303' }, { name: 'Isogonic', url: 'https://apps.apple.com/fr/app/id6799470430' }, { name: 'CocoMind', url: 'https://apps.apple.com/fr/app/id6795916609' }, { name: 'Amiens · Bus & Vélam', url: 'https://apps.apple.com/fr/app/id6802407427' }, { name: 'Pilou', url: 'https://apps.apple.com/fr/app/id6803716462' }, { name: 'Ticket · Horodateur', url: 'https://apps.apple.com/fr/app/id6803202760' }, { name: 'Ose+', url: 'https://apps.apple.com/fr/app/id6752605468' }] },
       { title: 'SOLUTION INDUSTRIELLE RFID', client: 'Safran Tunisie', stack: ['React', 'Node.js', 'PostgreSQL', 'RFID', 'capteurs industriels'], desc: "Développement d'un logiciel métier de traçabilité industrielle destiné au suivi et à la gestion de pièces de production.", bullets: ["Conception et développement d'une plateforme métier sur mesure.", 'Communication avec lecteurs RFID, antennes et capteurs industriels.', "Suivi en temps réel des mouvements de pièces dans l'usine.", 'Gestion des flux logistiques et des états de production.', 'Visualisation et pilotage des données industrielles.', "Optimisation des processus de traçabilité et d'inventaire."], accent: 'purple' },
     ],
     formations: [
@@ -80,7 +80,7 @@ const translations: Record<Lang, {
     atouts: ['Leadership technique : cadrer, structurer et faire évoluer une base de code React Native en production', 'Livraison iOS/Android : gestion des publications, itérations courtes, qualité & performance', 'Ownership produit : transformer une idée en app utilisable, mesurable et maintenable', 'IA appliquée au développement : accélération de la livraison avec standards et garde-fous'],
   },
   en: {
-    title: 'Lead React Native Developer',
+    title: 'Independent Mobile App Developer',
     disponibilite: 'Immediate', disponibiliteLabel: 'Availability',
     openToWork: 'Contact', siteLabel: 'Site & projects',
     profilAvailability: 'Open to a role or contract',
@@ -101,7 +101,7 @@ const translations: Record<Lang, {
     ],
     realisations: [
       { title: 'FORGEME – Personal Productivity & Organisation Platform', client: 'Perseus Capital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: 'Mobile and web application allowing users to centralise all their goals, tasks, habits, ideas, important events and personal projects in one unique environment.', bullets: ['Development of mobile (iOS & Android) and web versions.', 'Setup of the Firebase backend architecture.', 'User management, authentication and data synchronisation.', 'Development of tasks, goals, rituals, journal, ideas and reminders modules.', 'Real-time sync across platforms.', 'Product design, UX and technical architecture.'], accent: 'blue' },
-      { title: 'MYKORBA – Local Services & Information Mobile App', client: 'Capmedia Digital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: 'Mobile application designed to centralise information, services and local news useful to city residents.', bullets: ['Full mobile app design and development.', 'Firebase architecture and real-time database setup.', 'Development of local information browsing features.', 'Content, news, services and community data management.', 'Data sync and update mechanisms.', 'Performance and UX optimisation.', 'Deployment, maintenance and continuous product evolution.'], accent: 'teal' },
+      { title: 'SEVEN APPS SHIPPED TO THE APP STORE', client: 'Capmedia Digital', stack: ['React Native', 'TypeScript', 'Firebase', 'Swift', 'Kotlin'], desc: 'Seven apps designed, built and shipped single-handed, from idea to store. Six of them cleared Apple review between 13 August and 2 September 2026.', bullets: ['Product design, iOS and Android development, App Store release.', 'Native Swift and Kotlin modules: widgets, Siri, Live Activities, watchOS, Android tiles.', 'Firebase backend with server authority: entitlements, quotas and roles out of client reach.', 'Constrained AI architecture: the model proposes, deterministic code validates and executes.', 'End-to-end delivery: developer account, signing, Apple review, release.'], accent: 'teal', appStore: [{ name: 'Qindil', url: 'https://apps.apple.com/fr/app/id6799055303' }, { name: 'Isogonic', url: 'https://apps.apple.com/fr/app/id6799470430' }, { name: 'CocoMind', url: 'https://apps.apple.com/fr/app/id6795916609' }, { name: 'Amiens · Bus & Vélam', url: 'https://apps.apple.com/fr/app/id6802407427' }, { name: 'Pilou', url: 'https://apps.apple.com/fr/app/id6803716462' }, { name: 'Ticket · Horodateur', url: 'https://apps.apple.com/fr/app/id6803202760' }, { name: 'Ose+', url: 'https://apps.apple.com/fr/app/id6752605468' }] },
       { title: 'INDUSTRIAL RFID SOLUTION', client: 'Safran Tunisia', stack: ['React', 'Node.js', 'PostgreSQL', 'RFID', 'Industrial sensors'], desc: 'Development of an industrial traceability business software for tracking and managing production parts.', bullets: ['Design and development of a custom business platform.', 'Communication with RFID readers, antennas and industrial sensors.', 'Real-time tracking of parts movement on the shop floor.', 'Logistics flow and production state management.', 'Industrial data visualisation and control.', 'Traceability and inventory process optimisation.'], accent: 'purple' },
     ],
     formations: [
@@ -119,7 +119,7 @@ const translations: Record<Lang, {
     atouts: ['Technical leadership: structure and scale a production React Native codebase', 'iOS/Android delivery: release management, short iterations, quality & performance', 'Product ownership: turn ideas into measurable, maintainable mobile products', 'AI-assisted development: faster delivery with standards and guardrails'],
   },
   ar: {
-    title: 'قائد تطوير React Native',
+    title: 'مطوّر تطبيقات موبايل مستقل',
     disponibilite: 'فوري', disponibiliteLabel: 'التوفر',
     openToWork: 'اتصل', siteLabel: 'الموقع والمشاريع',
     profilAvailability: 'متاح لوظيفة أو عقد',
@@ -140,7 +140,7 @@ const translations: Record<Lang, {
     ],
     realisations: [
       { title: 'FORGEME – منصة الإنتاجية والتنظيم الشخصي', client: 'Perseus Capital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: 'تطبيق موبايل وويب يتيح للمستخدمين تركيز أهدافهم ومهامهم وعاداتهم وأفكارهم وأحداثهم ومشاريعهم الشخصية في بيئة واحدة.', bullets: ['تطوير نسختي الموبايل (iOS وAndroid) والويب.', 'إعداد هندسة backend على Firebase.', 'إدارة المستخدمين والمصادقة ومزامنة البيانات.', 'تطوير وحدات المهام والأهداف والطقوس واليوميات والأفكار والتذكيرات.', 'مزامنة فورية بين المنصات.', 'تصميم المنتج وتجربة المستخدم والهندسة التقنية.'], accent: 'blue' },
-      { title: 'MYKORBA – تطبيق موبايل للخدمات والمعلومات المحلية', client: 'Capmedia Digital', stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions'], desc: 'تطبيق موبايل لتركيز المعلومات والخدمات والأخبار المفيدة لسكان المدينة.', bullets: ['تصميم وتطوير التطبيق الموبايل كاملاً.', 'إعداد Firebase وقاعدة البيانات في الوقت الفعلي.', 'تطوير ميزات تصفح المعلومات المحلية.', 'إدارة المحتوى والأخبار والخدمات والبيانات المجتمعية.', 'مزامنة البيانات وتحديثها.', 'تحسين الأداء وتجربة المستخدم.', 'نشر وصيانة وتطوير مستمر للمنتج.'], accent: 'teal' },
+      { title: 'سبعة تطبيقات منشورة على App Store', client: 'Capmedia Digital', stack: ['React Native', 'TypeScript', 'Firebase', 'Swift', 'Kotlin'], desc: 'سبعة تطبيقات صممتها وطوّرتها ونشرتها بمفردي، من الفكرة إلى المتجر. ستة منها اجتازت مراجعة Apple بين 13 أغسطس و2 سبتمبر 2026.', bullets: ['تصميم المنتج، تطوير iOS وAndroid، النشر على App Store.', 'وحدات أصلية بلغتي Swift وKotlin: widgets، Siri، Live Activities، watchOS.', 'خلفية Firebase بسلطة الخادم: الصلاحيات والحصص والأدوار بعيدة عن متناول العميل.', 'هندسة ذكاء اصطناعي مقيّدة: النموذج يقترح، والشيفرة الحتمية تتحقق وتنفّذ.', 'تسليم كامل: حساب المطور، التوقيع، مراجعة Apple، الإطلاق.'], accent: 'teal', appStore: [{ name: 'Qindil', url: 'https://apps.apple.com/fr/app/id6799055303' }, { name: 'Isogonic', url: 'https://apps.apple.com/fr/app/id6799470430' }, { name: 'CocoMind', url: 'https://apps.apple.com/fr/app/id6795916609' }, { name: 'Amiens · Bus & Vélam', url: 'https://apps.apple.com/fr/app/id6802407427' }, { name: 'Pilou', url: 'https://apps.apple.com/fr/app/id6803716462' }, { name: 'Ticket · Horodateur', url: 'https://apps.apple.com/fr/app/id6803202760' }, { name: 'Ose+', url: 'https://apps.apple.com/fr/app/id6752605468' }] },
       { title: 'حل RFID الصناعي', client: 'Safran Tunisie', stack: ['React', 'Node.js', 'PostgreSQL', 'RFID', 'مستشعرات صناعية'], desc: 'تطوير برنامج تتبع صناعي لمتابعة وإدارة قطع الإنتاج.', bullets: ['تصميم وتطوير منصة أعمال مخصصة.', 'الاتصال بقارئات RFID والهوائيات والمستشعرات.', 'تتبع حركة القطع في الوقت الفعلي.', 'إدارة التدفقات اللوجستية وحالات الإنتاج.', 'تصور وإدارة البيانات الصناعية.', 'تحسين عمليات التتبع والجرد.'], accent: 'purple' },
     ],
     formations: [
@@ -275,7 +275,7 @@ const themes = {
   },
 };
 
-type RealisationItem = { title: string; client: string; stack: string[]; desc: string; bullets: string[]; accent: 'blue' | 'teal' | 'purple' };
+type RealisationItem = { title: string; client: string; stack: string[]; desc: string; bullets: string[]; accent: 'blue' | 'teal' | 'purple'; appStore?: { name: string; url: string }[] };
 
 function RealisationCard({ item, th }: { item: RealisationItem; th: typeof themes.dark }) {
   const ac = accentColors[item.accent];
@@ -297,6 +297,17 @@ function RealisationCard({ item, th }: { item: RealisationItem; th: typeof theme
         <span style={{ fontSize: 11, fontWeight: 600, color: th.compLabel, marginRight: 4 }}>Technologies :</span>
         {item.stack.map((s: string) => <Tag key={s} label={s} color={item.accent} th={th} />)}
       </div>
+      {item.appStore && (
+        <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 8, marginBottom: 12 }}>
+          {item.appStore.map((a) => (
+            <a key={a.url} href={a.url} target="_blank" rel="noopener noreferrer"
+               style={{ fontSize: 12, fontWeight: 600, color: ac.dot, textDecoration: 'none',
+                        border: `1px solid ${ac.border}`, borderRadius: 6, padding: '4px 10px' }}>
+              {a.name} ↗
+            </a>
+          ))}
+        </div>
+      )}
       <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
         {item.bullets.map((b, j) => (
           <li key={j} className="cv-bullet" style={{ fontSize: 13.5, color: th.bulletColor, paddingLeft: 16, position: 'relative' as const, lineHeight: 1.65, marginBottom: 4 }}>{b}</li>
