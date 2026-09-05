@@ -1,0 +1,6 @@
+
+# Anciennes URL indexees : on les renvoie vers la page unique plutot que
+# de laisser Google servir un 404 en premiere page sur le nom.
+RewriteEngine On
+RewriteRule ^cv-numerique/?$ / [R=301,L]
+RewriteRule ^cv-numerique/(.*)$ / [R=301,L]
