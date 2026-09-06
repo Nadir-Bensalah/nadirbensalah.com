@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'Ose+ – Aide et support',
   description:
     "Support de l'application Ose+ : achat unique, restauration d'achat, notifications, langues, suppression des données et contact.",
-  alternates: { canonical: '/apps/ose-plus' },
+  alternates: { canonical: '/ose-plus' },
 };
 
 const questions: [string, React.ReactNode][] = [
@@ -103,7 +103,7 @@ export default function OsePlusSupportPage() {
               Écrire au support →
             </a>
             <Link
-              href="/apps/ose-plus/confidentialite"
+              href="/ose-plus-confidentialite"
               className="btn-outline px-7 py-3.5 rounded-full text-base font-600 text-center"
             >
               Politique de confidentialité

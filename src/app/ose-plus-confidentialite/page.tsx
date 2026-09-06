@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'Ose+ – Politique de confidentialité',
   description:
     "Politique de confidentialité de l'application Ose+ : aucune inscription, données conservées sur l'appareil, notifications et achat gérés par Apple.",
-  alternates: { canonical: '/apps/ose-plus/confidentialite' },
+  alternates: { canonical: '/ose-plus-confidentialite' },
 };
 
 const sections: [string, React.ReactNode][] = [
@@ -125,7 +125,7 @@ export default function OsePlusConfidentialitePage() {
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-6">
           <Link
-            href="/apps/ose-plus"
+            href="/ose-plus"
             className="btn-outline px-7 py-3.5 rounded-full text-base font-600 inline-block"
           >
             ← Retour au support Ose+
