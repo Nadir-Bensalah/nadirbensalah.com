@@ -49,7 +49,7 @@ export default function CTASection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:contact@nadirbs.dev"
+                href="mailto:contact@nadirbensalah.com"
                 className="btn-primary px-8 py-4 rounded-full text-base font-700 inline-block"
               >
                 Envoyer un email →

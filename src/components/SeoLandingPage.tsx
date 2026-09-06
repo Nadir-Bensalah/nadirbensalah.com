@@ -339,7 +339,7 @@ export default function SeoLandingPage({ page, basePath }: { page: SeoPage; base
               <p className="text-[#A1A1AA] text-lg leading-relaxed max-w-2xl mx-auto mt-6 mb-9">
                 {isEnglish ? 'Send me your idea, context and goals. I will reply with a clear first analysis of the scope, budget and next steps.' : 'Envoyez-moi votre idée, votre contexte et vos objectifs. Je vous réponds avec une première analyse claire du périmètre, du budget et des prochaines étapes.'}
               </p>
-              <a href="mailto:contact@nadirbs.dev" className="btn-primary px-8 py-4 rounded-full text-base font-800 inline-block">
+              <a href="mailto:contact@nadirbensalah.com" className="btn-primary px-8 py-4 rounded-full text-base font-800 inline-block">
                 {isEnglish ? 'Send an email →' : 'Envoyer un email →'}
               </a>
             </div>

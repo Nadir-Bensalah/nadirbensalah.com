@@ -23,7 +23,7 @@ export default function ContactPage() {
             <h1 className="text-4xl md:text-7xl font-800 text-white tracking-tight leading-[1.05] mt-5">Parlons de votre projet digital avec clarté</h1>
             <p className="text-lg text-[#A1A1AA] leading-relaxed max-w-3xl mt-7">Application mobile, SaaS, marketplace, logiciel métier, site web premium ou automatisation : envoyez votre contexte et je vous réponds avec une première lecture claire du périmètre, des risques, du budget et des prochaines étapes.</p>
             <div className="mt-9 flex flex-col sm:flex-row gap-4">
-              <a href="mailto:contact@nadirbs.dev?subject=Projet digital - demande d'échange" className="btn-primary px-7 py-3.5 rounded-full text-base font-700 text-center">Envoyer un email →</a>
+              <a href="mailto:contact@nadirbensalah.com?subject=Projet digital - demande d'échange" className="btn-primary px-7 py-3.5 rounded-full text-base font-700 text-center">Envoyer un email →</a>
               <Link href="/tarifs" className="btn-outline px-7 py-3.5 rounded-full text-base font-600 text-center">Voir les tarifs</Link>
             </div>
           </div>
