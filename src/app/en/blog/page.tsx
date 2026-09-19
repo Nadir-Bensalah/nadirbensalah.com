@@ -1,99 +1,101 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Entete from '@/components/Entete';
-import Pied from '@/components/Pied';
+import Header from '@/components/en/Header';
+import Footer from '@/components/en/Footer';
 import Apparait from '@/components/Apparait';
-import { dateFrCourte, guides } from '@/content/guides';
-import { profil } from '@/content/profil';
+import { articles, dateEn } from '@/content/en/articles';
+import { profileEn } from '@/content/en/profil';
 import { alternatives } from '@/lib/langues';
 
 export const metadata: Metadata = {
-  title: 'Guides',
+  title: 'Writing',
   description:
-    'Ce que huit applications publiées sur l’App Store m’ont appris : choix de technologie, revue Apple, préparation d’une soumission.',
-  alternates: alternatives('/guides'),
+    'Notes on the parts of iOS that React Native does not reach: App Intents, Live Activities, widgets and Watch apps. Written from shipped work.',
+  alternates: alternatives('/en/blog'),
   openGraph: {
-    title: 'Guides · Nadir Ben Salah',
-    description: 'Ce que publier sur l’App Store m’a appris, écrit pour être utile.',
-    url: '/guides',
+    title: 'Writing',
+    description: 'Notes on the native iOS layer, written from apps that shipped.',
+    url: '/en/blog',
     images: ['/assets/images/og.png'],
+    locale: 'en_GB',
   },
 };
 
-export default function Guides() {
+export default function Blog() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Guides',
-    url: `${profil.site}/guides`,
-    hasPart: guides.map((g) => ({
+    inLanguage: 'en',
+    name: 'Writing',
+    url: `${profileEn.site}/en/blog`,
+    hasPart: articles.map((a) => ({
       '@type': 'Article',
-      headline: g.titre,
-      datePublished: g.publieLe,
-      url: `${profil.site}/guides/${g.slug}`,
-      author: { '@type': 'Person', name: profil.nom },
+      headline: a.title,
+      datePublished: a.published,
+      url: `${profileEn.site}/en/blog/${a.slug}`,
+      author: { '@type': 'Person', name: profileEn.name },
     })),
   };
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
+      <a href="#content" className="saute-au-contenu">
+        Skip to content
       </a>
-      <Entete />
+      <Header />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
 
-      <main id="contenu">
+      <main id="content">
         <section style={{ paddingTop: 'clamp(40px, 7vw, 80px)', paddingBottom: 'var(--e-8)' }}>
           <div className="enveloppe">
             <nav
-              aria-label="Fil d’ariane"
+              aria-label="Breadcrumb"
               className="t-petit t-3"
               style={{ marginBottom: 'var(--e-5)' }}
             >
-              <Link href="/" className="lien-sobre">
-                Accueil
+              <Link href="/en" className="lien-sobre">
+                Home
               </Link>
               <span aria-hidden> › </span>
-              <span>Guides</span>
+              <span>Writing</span>
             </nav>
 
             <div style={{ maxWidth: 680, marginBottom: 'var(--e-8)' }}>
               <p className="etiquette" style={{ marginBottom: 'var(--e-3)' }}>
-                Guides
+                Writing
               </p>
-              <h1 className="t-h1">Ce qu’on apprend en publiant, on l’écrit.</h1>
+              <h1 className="t-h1">Notes from the native layer.</h1>
               <p className="t-lead" style={{ marginTop: 'var(--e-4)' }}>
-                Pas de contenu générique : chaque guide part de quelque chose que mes applications
-                publiées m’ont réellement appris. Quand un chiffre est cité, sa source est dite.
+                The parts of iOS that React Native does not reach, written from apps that actually
+                shipped. No generic tutorials: if I have not done it in production, I have not
+                written about it.
               </p>
             </div>
 
             <ul style={{ listStyle: 'none', padding: 0, maxWidth: 'var(--colonne-lecture)' }}>
-              {guides.map((g, i) => (
+              {articles.map((a, i) => (
                 <Apparait
-                  key={g.slug}
+                  key={a.slug}
                   as="li"
                   retard={(i % 3) as 0 | 1 | 2}
                   style={{ borderTop: i === 0 ? 'none' : '1px solid var(--trait)' }}
                 >
                   <Link
-                    href={`/guides/${g.slug}`}
+                    href={`/en/blog/${a.slug}`}
                     style={{ display: 'block', paddingBlock: 'var(--e-5)', color: 'var(--texte)' }}
                     className="lien-guide"
                   >
                     <p className="t-micro t-3" style={{ marginBottom: 8 }}>
-                      <time dateTime={g.publieLe}>{dateFrCourte(g.publieLe)}</time> · {g.minutes}{' '}
-                      min
+                      <time dateTime={a.published}>{dateEn(a.published)}</time> · {a.minutes} min
                     </p>
                     <h2 className="t-h3" style={{ fontSize: 21, marginBottom: 8 }}>
-                      {g.titre}
+                      {a.title}
                     </h2>
-                    <p className="t-corps t-2">{g.chapeau}</p>
+                    <p className="t-corps t-2">{a.standfirst}</p>
                   </Link>
                 </Apparait>
               ))}
@@ -102,7 +104,7 @@ export default function Guides() {
         </section>
       </main>
 
-      <Pied />
+      <Footer />
 
       <style>{`
         .lien-guide:hover { text-decoration: none; color: var(--texte); }

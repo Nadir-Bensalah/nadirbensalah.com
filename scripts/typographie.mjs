@@ -54,8 +54,25 @@ function corriger(texte) {
 
 let fichiers = 0;
 let remplacements = 0;
+let langCorriges = 0;
 
 for (const fichier of htmls(sortie)) {
+  // Les regles ci-dessus sont francaises : en anglais on n'insere pas
+  // d'espace avant les deux-points, et les guillemets ne sont pas les memes.
+  const nom = relative(sortie, fichier);
+
+  // Les pages anglaises : on corrige l'attribut lang du document, que le
+  // layout racine fixe a « fr » pour tout le site. Googlebot lit le HTML
+  // statique, donc le corriger en JavaScript ne suffirait pas.
+  if (nom.startsWith('en/') || nom === 'en.html') {
+    const html = readFileSync(fichier, 'utf8');
+    if (html.includes('<html lang="fr"')) {
+      writeFileSync(fichier, html.replace('<html lang="fr"', '<html lang="en"'), 'utf8');
+      langCorriges++;
+    }
+    continue;
+  }
+
   const original = readFileSync(fichier, 'utf8');
 
   // Découper sur les balises et les blocs à ne jamais toucher, puis ne
@@ -81,3 +98,4 @@ for (const fichier of htmls(sortie)) {
 }
 
 console.log(`Typographie : ${remplacements} passages corrigés dans ${fichiers} fichier(s).`);
+console.log(`Langue : ${langCorriges} page(s) anglaise(s) passée(s) en lang="en".`);

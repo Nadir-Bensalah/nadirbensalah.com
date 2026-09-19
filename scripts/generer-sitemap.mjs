@@ -27,7 +27,11 @@ const prefixesExclus = ['hello/'];
 
 /** Priorité et fréquence par page, du plus stratégique au plus stable. */
 function reglage(chemin) {
-  if (chemin === '/') return { priorite: '1.0', frequence: 'weekly' };
+  if (chemin === '/' || chemin === '/en') return { priorite: '1.0', frequence: 'weekly' };
+  if (chemin === '/en/apps' || chemin === '/en/ios-native-modules')
+    return { priorite: '0.9', frequence: 'monthly' };
+  if (chemin.startsWith('/en/blog/')) return { priorite: '0.8', frequence: 'monthly' };
+  if (chemin.startsWith('/en/')) return { priorite: '0.85', frequence: 'monthly' };
   if (chemin === '/realisations') return { priorite: '0.9', frequence: 'monthly' };
   if (chemin.startsWith('/realisations/')) return { priorite: '0.8', frequence: 'monthly' };
   if (chemin === '/contact') return { priorite: '0.9', frequence: 'yearly' };
@@ -53,6 +57,33 @@ function fichiersHtml(dossier) {
   return trouves;
 }
 
+/**
+ * Les paires de pages traduites. Doit rester identique a src/lib/langues.ts :
+ * le sitemap declare les memes alternances que les balises hreflang des pages,
+ * sinon Google voit deux signaux contradictoires.
+ */
+const paires = [
+  ['/', '/en'],
+  ['/realisations', '/en/apps'],
+  ['/expertise-react-native', '/en/ios-native-modules'],
+  ['/audit-application-react-native', '/en/react-native-audit'],
+  ['/freelance', '/en/hire'],
+  ['/a-propos', '/en/about'],
+  ['/contact', '/en/contact'],
+  ['/guides', '/en/blog'],
+];
+
+function alternances(chemin) {
+  const paire = paires.find((p) => p[0] === chemin || p[1] === chemin);
+  if (!paire) return '';
+  const [fr, en] = paire;
+  return (
+    `\n    <xhtml:link rel="alternate" hreflang="fr" href="${site}${fr}"/>` +
+    `\n    <xhtml:link rel="alternate" hreflang="en" href="${site}${en}"/>` +
+    `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${site}${en}"/>`
+  );
+}
+
 const aujourdhui = new Date().toISOString().slice(0, 10);
 
 const urls = fichiersHtml(dossierSortie)
@@ -68,12 +99,13 @@ const urls = fichiersHtml(dossierSortie)
   });
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls
   .map((u) => {
     const { priorite, frequence } = reglage(u);
     return `  <url>
-    <loc>${site}${u === '/' ? '/' : u}</loc>
+    <loc>${site}${u === '/' ? '/' : u}</loc>${alternances(u)}
     <lastmod>${aujourdhui}</lastmod>
     <changefreq>${frequence}</changefreq>
     <priority>${priorite}</priority>

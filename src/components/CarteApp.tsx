@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { App, dateFr } from '@/content/apps';
+import { App, dateEn, dateFr } from '@/content/apps';
 import LienAppStore from '@/components/LienAppStore';
 
 /**
@@ -10,10 +10,16 @@ import LienAppStore from '@/components/LienAppStore';
 export default function CarteApp({
   app,
   prioritaire = false,
+  langue = 'fr',
 }: {
   app: App;
   prioritaire?: boolean;
+  /** La carte est utilisée des deux côtés du site : elle suit la page. */
+  langue?: 'fr' | 'en';
 }) {
+  const en = langue === 'en';
+  const lien = en ? `/en/apps` : `/realisations/${app.slug}`;
+  const date = en ? dateEn(app.sortie) : dateFr(app.sortie);
   return (
     <article
       className="carte-app"
@@ -55,14 +61,17 @@ export default function CarteApp({
             </Link>
           </h3>
           <p className="t-micro t-3">
-            {app.categorie} · en ligne depuis le {dateFr(app.sortie)}
+            {en ? app.categoryEn : app.categorie} · {en ? 'live since' : 'en ligne depuis le'}{' '}
+            {date}
           </p>
         </div>
-        {app.client && <span className="pastille pastille--client">Client</span>}
+        {app.client && (
+          <span className="pastille pastille--client">{en ? 'Client work' : 'Client'}</span>
+        )}
       </div>
 
       <p className="t-petit t-2" style={{ flex: 1 }}>
-        {app.baseline}
+        {en ? app.baselineEn : app.baseline}
       </p>
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -91,11 +100,11 @@ export default function CarteApp({
         }}
       >
         <Link
-          href={`/realisations/${app.slug}`}
+          href={lien}
           className="t-petit t-fort lien-action-carte"
           style={{ color: 'var(--action)' }}
         >
-          L’étude de cas
+          {en ? 'Read more' : 'L’étude de cas'}
         </Link>
         <LienAppStore
           url={app.appStoreUrl}

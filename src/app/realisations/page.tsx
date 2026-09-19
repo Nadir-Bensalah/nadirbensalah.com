@@ -7,12 +7,13 @@ import Apparait from '@/components/Apparait';
 import CarteApp from '@/components/CarteApp';
 import { apps, appsClient, appsPersonnelles } from '@/content/apps';
 import { profil } from '@/content/profil';
+import { alternatives } from '@/lib/langues';
 
 export const metadata: Metadata = {
   title: 'Les 8 applications publiées sur l’App Store',
   description:
     'Ce que j’ai conçu, développé et publié sur l’App Store : contexte, contraintes techniques et choix d’architecture, application par application.',
-  alternates: { canonical: '/realisations' },
+  alternates: alternatives('/realisations'),
   openGraph: {
     title: 'Ce que j’ai conçu, développé et publié',
     description:

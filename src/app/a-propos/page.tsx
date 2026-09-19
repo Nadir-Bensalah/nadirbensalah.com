@@ -6,12 +6,13 @@ import Pied from '@/components/Pied';
 import Apparait from '@/components/Apparait';
 import BoutonCv from '@/components/BoutonCv';
 import { experiences, formations, profil } from '@/content/profil';
+import { alternatives } from '@/lib/langues';
 
 export const metadata: Metadata = {
   title: 'Qui je suis',
   description:
     'Développeur mobile et full-stack à Amiens. Le parcours, la façon de travailler, et ce qu’une année à publier mes propres applications m’a appris.',
-  alternates: { canonical: '/a-propos' },
+  alternates: alternatives('/a-propos'),
   openGraph: {
     title: 'Qui je suis · Nadir Ben Salah',
     description:

@@ -10,12 +10,13 @@ import SelecteurIntention from '@/components/SelecteurIntention';
 import BarreCollante from '@/components/BarreCollante';
 import { apps } from '@/content/apps';
 import { competences, disponibilite, experiences, preuves, profil } from '@/content/profil';
+import { alternatives } from '@/lib/langues';
 
 export const metadata: Metadata = {
   title: 'Nadir Ben Salah · Développeur mobile & full-stack à Amiens',
   description:
     'Développeur mobile et full-stack à Amiens. React Native, TypeScript, iOS et Android, de la conception à la publication sur l’App Store.',
-  alternates: { canonical: '/' },
+  alternates: alternatives('/'),
   openGraph: {
     title: 'Nadir Ben Salah · Développeur mobile & full-stack',
     description:

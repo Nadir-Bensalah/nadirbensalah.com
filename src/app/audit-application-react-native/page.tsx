@@ -5,12 +5,13 @@ import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
 import Apparait from '@/components/Apparait';
 import { profil } from '@/content/profil';
+import { alternatives } from '@/lib/langues';
 
 export const metadata: Metadata = {
   title: 'Audit d’application React Native',
   description:
     'Audit complet d’une application React Native : architecture, performances, dette technique et conformité aux règles de l’App Store.',
-  alternates: { canonical: '/audit-application-react-native' },
+  alternates: alternatives('/audit-application-react-native'),
   openGraph: {
     title: 'Audit d’une application React Native',
     description:

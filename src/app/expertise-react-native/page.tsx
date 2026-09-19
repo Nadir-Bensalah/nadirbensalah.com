@@ -7,12 +7,13 @@ import Apparait from '@/components/Apparait';
 import CarteApp from '@/components/CarteApp';
 import { apps } from '@/content/apps';
 import { profil } from '@/content/profil';
+import { alternatives } from '@/lib/langues';
 
 export const metadata: Metadata = {
   title: 'Expert React Native : audit et reprise',
   description:
     'Expertise React Native : audit de code, reprise de projet en difficulté, optimisation des performances et publication sur l’App Store.',
-  alternates: { canonical: '/expertise-react-native' },
+  alternates: alternatives('/expertise-react-native'),
   openGraph: {
     title: 'Expertise React Native · audit, conseil, reprise de projet',
     description:

@@ -12,15 +12,25 @@ import { apps } from '@/content/apps';
  * directement sur le lien écraserait son rôle de lien, et les huit tuiles
  * sortiraient de la liste des liens des lecteurs d'écran.
  */
-export default function RangeeApps() {
+export default function RangeeApps({ langue = 'fr' }: { langue?: 'fr' | 'en' }) {
+  // Les intitulés de cette rangée sont invisibles à l'écran mais lus par les
+  // lecteurs d'écran : ils doivent suivre la langue de la page.
+  const en = langue === 'en';
   return (
     <>
-      <ul className="rangee-apps" aria-label="Les huit applications publiées">
+      <ul
+        className="rangee-apps"
+        aria-label={en ? 'Eight published apps' : 'Les huit applications publiées'}
+      >
         {apps.map((app, i) => (
           <li key={app.slug} className="tuile-app" style={{ ['--i' as string]: i }}>
             <Link
-              href={`/realisations/${app.slug}`}
-              aria-label={`${app.nomCourt}, ${app.categorie} : voir l’étude de cas`}
+              href={en ? '/en/apps' : `/realisations/${app.slug}`}
+              aria-label={
+                en
+                  ? `${app.nomCourt}, ${app.categoryEn}: see the app`
+                  : `${app.nomCourt}, ${app.categorie} : voir l’étude de cas`
+              }
             >
               <img
                 src={app.icone}

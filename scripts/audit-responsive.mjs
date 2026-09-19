@@ -76,6 +76,16 @@ const PAGES = [
   'mentions-legales',
   'plan-du-site',
   '404',
+  // Les pages anglaises : memes controles, memes largeurs.
+  'en',
+  'en/apps',
+  'en/ios-native-modules',
+  'en/react-native-audit',
+  'en/hire',
+  'en/about',
+  'en/contact',
+  'en/blog',
+  'en/blog/react-native-app-intents-after-sirikit',
 ];
 
 let idMessage = 0;

@@ -16,7 +16,11 @@ export type App = {
   nom: string;
   nomCourt: string;
   baseline: string;
+  /** La même promesse, écrite en anglais et non traduite mot à mot. */
+  baselineEn: string;
   categorie: string;
+  /** La catégorie telle qu'Apple la nomme sur l'App Store anglophone. */
+  categoryEn: string;
   /** Le client, quand l'app a été développée pour un tiers. */
   client?: string;
   appStoreId: string;
@@ -54,7 +58,9 @@ export const apps: App[] = [
     nom: 'Ticket · Horodateur & Parking',
     nomCourt: 'Ticket',
     baseline: 'Vous vous garez, vous touchez une durée. C’est tout.',
+    baselineEn: 'You park, you tap a duration. That is all.',
     categorie: 'Navigation',
+    categoryEn: 'Navigation',
     appStoreId: '6803202760',
     appStoreUrl: 'https://apps.apple.com/fr/app/id6803202760',
     sortie: '2026-09-02',
@@ -99,7 +105,9 @@ export const apps: App[] = [
     nom: 'Pilou · Carnet de santé animal',
     nomCourt: 'Pilou',
     baseline: 'Le carnet de santé du chien ou du chat, toujours dans la poche.',
+    baselineEn: 'Your dog or cat’s health record, always in your pocket.',
     categorie: 'Style de vie',
+    categoryEn: 'Lifestyle',
     appStoreId: '6803716462',
     appStoreUrl: 'https://apps.apple.com/fr/app/id6803716462',
     sortie: '2026-08-24',
@@ -143,7 +151,9 @@ export const apps: App[] = [
     nom: 'Amiens · Bus & Vélam',
     nomCourt: 'Amiens',
     baseline: 'Il pleut, vous êtes à l’arrêt, vous voulez une réponse tout de suite.',
+    baselineEn: 'It is raining, you are at the stop, you want an answer now.',
     categorie: 'Navigation',
+    categoryEn: 'Navigation',
     appStoreId: '6802407427',
     appStoreUrl: 'https://apps.apple.com/fr/app/id6802407427',
     sortie: '2026-08-18',
@@ -195,7 +205,9 @@ export const apps: App[] = [
     nom: 'CocoMind · Assistant vocal',
     nomCourt: 'CocoMind',
     baseline: 'Une pensée vous traverse l’esprit. Vous appuyez, vous parlez. C’est rangé.',
+    baselineEn: 'A thought crosses your mind. You press, you speak. It is filed.',
     categorie: 'Productivité',
+    categoryEn: 'Productivity',
     appStoreId: '6795916609',
     appStoreUrl: 'https://apps.apple.com/fr/app/id6795916609',
     sortie: '2026-08-14',
@@ -239,7 +251,9 @@ export const apps: App[] = [
     nom: 'Qindil · قنديل',
     nomCourt: 'Qindil',
     baseline: 'Une app musulmane pensée en français, gratuite, sans compte et sans serveur.',
+    baselineEn: 'A Muslim app written in French. Free, no account, no server.',
     categorie: 'Style de vie',
+    categoryEn: 'Lifestyle',
     appStoreId: '6799055303',
     appStoreUrl: 'https://apps.apple.com/fr/app/id6799055303',
     sortie: '2026-08-20',
@@ -283,7 +297,9 @@ export const apps: App[] = [
     nom: 'Isogonic · Calculateur de vol',
     nomCourt: 'Isogonic',
     baseline: 'Un E6B pour les pilotes qui veulent comprendre le chiffre, pas seulement le lire.',
+    baselineEn: 'An E6B for pilots who want to understand the number, not just read it.',
     categorie: 'Éducation',
+    categoryEn: 'Education',
     appStoreId: '6799470430',
     appStoreUrl: 'https://apps.apple.com/fr/app/id6799470430',
     sortie: '2026-08-13',
@@ -327,7 +343,9 @@ export const apps: App[] = [
     nom: 'ForgeMe · Organisation personnelle',
     nomCourt: 'ForgeMe',
     baseline: 'Objectifs, tâches, habitudes, journal et projets au même endroit.',
+    baselineEn: 'Goals, tasks, habits, journal and projects in one place.',
     categorie: 'Productivité',
+    categoryEn: 'Productivity',
     client: 'Perseus Capital',
     appStoreId: '6760335253',
     appStoreUrl: 'https://apps.apple.com/fr/app/id6760335253',
@@ -371,7 +389,9 @@ export const apps: App[] = [
     nom: 'Ose+',
     nomCourt: 'Ose+',
     baseline: 'Le jeu social qui anime une soirée entre amis.',
+    baselineEn: 'A social party game for a night in with friends.',
     categorie: 'Divertissement',
+    categoryEn: 'Entertainment',
     appStoreId: '6752605468',
     appStoreUrl: 'https://apps.apple.com/fr/app/id6752605468',
     sortie: '2025-09-25',
@@ -414,6 +434,26 @@ export const appsClient = apps.filter((a) => a.client);
 
 export function appParSlug(slug: string): App | undefined {
   return apps.find((a) => a.slug === slug);
+}
+
+/** Formate une date ISO en anglais : « 2 September 2026 ». */
+export function dateEn(iso: string): string {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${d} ${months[m - 1]} ${y}`;
 }
 
 /** Formate une date ISO en français long : « 2 septembre 2026 ». */

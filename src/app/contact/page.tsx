@@ -6,12 +6,13 @@ import Pied from '@/components/Pied';
 import Formulaire from '@/components/Formulaire';
 import LiensDirects from '@/components/LiensDirects';
 import { disponibilite, profil } from '@/content/profil';
+import { alternatives } from '@/lib/langues';
 
 export const metadata: Metadata = {
   title: 'Me contacter',
   description:
     'Un projet d’application, une mission, un poste ou une question technique. Réponse sous 24 h, et je dis quand ce n’est pas pour moi.',
-  alternates: { canonical: '/contact' },
+  alternates: alternatives('/contact'),
   openGraph: {
     title: 'Me contacter · Nadir Ben Salah',
     description: 'Un projet, une mission ou un poste. Réponse sous 24 h.',

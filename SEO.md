@@ -204,6 +204,79 @@ différenciant, celui que ni une plateforme ni une agence ne peut reproduire.
 
 ---
 
+## La version anglaise
+
+Ajoutée en septembre 2026, après une seconde recherche de SERP, anglophone
+cette fois.
+
+### Le constat, vérifié
+
+**Les requêtes commerciales anglophones sont fermées.** « hire react native
+developer », « freelance react native developer », « react native expert » :
+Toptal, Upwork, Arc, Lemon.io, WorkGenius. **Zéro site personnel en page une**,
+sur aucune des deux principales. Ces pages agrègent des milliers de profils ;
+un site qui présente une personne ne peut pas structurellement mieux répondre
+à une requête de sélection. Y investir serait du temps perdu, et le dire est
+plus utile que de promettre le contraire.
+
+**« Remote react native developer » est un piège d'intention.** La SERP est
+faite d'offres d'emploi (Indeed, Working Nomads, Arc). Le chercheur est un
+candidat, pas un acheteur.
+
+**« How much does a react native app cost » est saturée** par des agences
+offshore. Beaucoup de trafic, aucune conversion vers un indépendant.
+
+### Ce qui est ouvert, et pourquoi
+
+Le gisement est ailleurs : **les sujets techniques où le contenu vécu gagne**.
+
+**App Intents, après la mort de SiriKit.** Apple a déprécié SiriKit à la
+WWDC 2026. Depuis iOS 27, une app qui l'utilise encore compile mais devient
+invisible pour Siri : aucun trafic vocal, aucune indexation Spotlight. Or
+toutes les pages positionnées sur « react native siri » parlent encore de
+SiriKit ou du paquet `react-native-siri-shortcut`, non maintenu. **La SERP
+entière est périmée.** C'est la meilleure fenêtre du rapport, et Ticket
+implémente déjà App Intents.
+
+**Live Activities et Dynamic Island.** Positionnés aujourd'hui : des billets
+Medium isolés et deux ou trois blogs personnels. Aucun acteur autoritaire.
+
+**Apple Watch en React Native.** Presque aucun contenu n'explique
+l'architecture réelle, à savoir que React Native ne tourne pas sur watchOS et
+que la montre s'écrit en SwiftUI.
+
+**Widgets et App Groups.** Les tutoriels s'arrêtent à la création de la cible
+Xcode et n'abordent jamais le partage de données, qui est le vrai sujet.
+
+### L'architecture retenue
+
+`/en/` en sous-dossier, pas en sous-domaine ni en domaine séparé : un site
+personnel reçoit peu de liens, et les fragmenter serait la pire décision
+possible. Le sous-dossier hérite de toute l'autorité du domaine.
+
+`x-default` pointe vers **l'anglais**, pas le français. Ce lien sert les
+visiteurs dont la langue ne correspond à aucune version déclarée : un
+Allemand, un Espagnol ou un Néerlandais lira l'anglais. Mettre le français en
+x-default fermerait le site à tout le marché non francophone.
+
+**Le hreflang est réciproque**, et le script de vérification le contrôle : si
+une page française déclare son équivalent anglais sans que l'anglaise déclare
+le français en retour, Google ignore silencieusement toutes les déclarations
+du site. Le défaut existait, il a été détecté par ce contrôle.
+
+### Ce qui n'est pas traduit, et pourquoi
+
+Les pages locales d'Amiens. « React Native developer in Amiens » ne cible
+personne : aucun anglophone ne cherche un développeur amiénois. Ces pages
+restent monolingues, sans hreflang, plutôt que d'exister en double sans
+lecteur.
+
+Aucune page pays non plus (« React Native developer UK », « …USA »). Sans
+ancrage local réel, ce sont des pages vides que Google traite comme du
+doorway, exactement comme les 48 pages de ville supprimées côté français.
+
+---
+
 ## Pour mesurer
 
 Ce document a été écrit sans données de volume. Si un jour tu veux un suivi de

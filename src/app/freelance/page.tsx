@@ -7,12 +7,13 @@ import Apparait from '@/components/Apparait';
 import CarteApp from '@/components/CarteApp';
 import { apps } from '@/content/apps';
 import { profil } from '@/content/profil';
+import { alternatives } from '@/lib/langues';
 
 export const metadata: Metadata = {
   title: 'Mission freelance · de l’idée à la production',
   description:
     'Développeur freelance mobile et full-stack : application iOS et Android, plateforme web, backend, API et publication sur les stores.',
-  alternates: { canonical: '/freelance' },
+  alternates: alternatives('/freelance'),
   openGraph: {
     title: 'Mission freelance · Nadir Ben Salah',
     description: 'Votre produit, de l’idée jusqu’à la mise en ligne sur les stores.',

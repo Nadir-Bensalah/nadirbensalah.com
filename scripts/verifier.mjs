@@ -51,6 +51,10 @@ for (const fichier of pages) {
   const nom = relative(sortie, fichier);
   const html = readFileSync(fichier, 'utf8');
   const est404 = nom === '404.html';
+  // La langue decide des regles typographiques : le tiret long est proscrit
+  // en francais et parfaitement normal en anglais, et « integration » est un
+  // mot anglais autant qu'un mot francais mal accentue.
+  const estAnglais = nom.startsWith('en/') || nom === 'en.html' || /<html lang="en"/.test(html);
 
   // ── Titre ───────────────────────────────────────────────────────────
   const titre = html.match(/<title[^>]*>([^<]*)<\/title>/)?.[1]?.trim();
@@ -132,7 +136,7 @@ for (const fichier of pages) {
   const corpsVisible = html
     .replace(/<script[\s\S]*?<\/script>/g, '')
     .replace(/<style[\s\S]*?<\/style>/g, '');
-  if (corpsVisible.includes('—')) {
+  if (!estAnglais && corpsVisible.includes('—')) {
     const extrait = corpsVisible
       .slice(Math.max(0, corpsVisible.indexOf('—') - 45), corpsVisible.indexOf('—') + 45)
       .replace(/<[^>]*>/g, ' ')
@@ -189,7 +193,7 @@ for (const fichier of pages) {
   ];
   const LETTRE = 'A-Za-z\u00c0-\u024f';
   const texteSeul = corpsVisible.replace(/<[^>]*>/g, ' ');
-  for (const mot of sansAccent) {
+  for (const mot of estAnglais ? [] : sansAccent) {
     const re = new RegExp(`(^|[^${LETTRE}])${mot}([^${LETTRE}]|$)`, 'i');
     if (re.test(texteSeul)) {
       problemes.push(`${nom} : « ${mot} » écrit sans accent dans le texte visible`);
@@ -201,17 +205,36 @@ for (const fichier of pages) {
   // En francais typographique l'apostrophe est courbe. Une droite dans le
   // texte rendu trahit un passage ecrit hors du reste du site. On tolere
   // quelques unites : un nom propre ou un extrait de code peut en porter.
+  // L'anglais utilise l'apostrophe droite couramment ; le francais non.
   const droites = (texteSeul.match(/\w'\w/g) || []).length;
-  if (droites > 2) {
+  if (!estAnglais && droites > 2) {
     problemes.push(`${nom} : ${droites} apostrophes droites dans le texte (attendu : courbes)`);
   }
 
   // ── Une seule identite : le pluriel de societe est banni ────────────
   // Nadir exerce en entrepreneur individuel. « Nous » suggere une equipe
   // qui n'existe pas, et sur une page juridique c'est trompeur.
-  const pluriel = texteSeul.match(/\b[Nn]ous (ne |n'|avons|sommes|proposons|utilisons|collectons|recevons|voyons)/g);
+  const pluriel = estAnglais
+    ? null
+    : texteSeul.match(/\b[Nn]ous (ne |n'|avons|sommes|proposons|utilisons|collectons|recevons|voyons)/g);
   if (pluriel) {
     problemes.push(`${nom} : « ${pluriel[0].trim()} » : le site parle a la premiere personne du singulier`);
+  }
+
+  // ── Fuite de langue ─────────────────────────────────────────────────
+  // Un composant partagé entre les deux versions du site peut laisser passer
+  // du français sur une page anglaise, y compris dans un aria-label invisible
+  // à l'écran. Liste de mots qui n'existent pas en anglais.
+  if (estAnglais) {
+    const fuites = [
+      'étude de cas', 'en ligne depuis', 'Style de vie', 'Divertissement',
+      'Productivité', 'Éducation', 'Télécharger', 'Me contacter',
+      'applications publiées', 'Réalisations',
+    ];
+    const trouvee = fuites.find((f) => texteSeul.includes(f) || html.includes(`aria-label="${f}`));
+    if (trouvee) {
+      problemes.push(`${nom} : texte français sur une page anglaise : « ${trouvee} »`);
+    }
   }
 
   // ── Restes de la refonte ────────────────────────────────────────────
@@ -219,6 +242,51 @@ for (const fichier of pages) {
   if (/href="#"/.test(html)) problemes.push(`${nom} : lien vide href="#"`);
   if (/\bTODO\b/.test(html)) avertissements.push(`${nom} : « TODO » visible dans le HTML`);
 }
+
+// ── Cohérence bilingue ────────────────────────────────────────────────
+// Le hreflang doit être réciproque : si le français déclare l'anglais,
+// l'anglais doit déclarer le français en retour. Sans cette réciprocité
+// Google ignore SILENCIEUSEMENT toutes les déclarations du site.
+const declarations = new Map();
+for (const fichier of pages) {
+  const nom = relative(sortie, fichier);
+  const html = readFileSync(fichier, 'utf8');
+  const chemin = nom === 'index.html' ? '/' : `/${nom.replace(/\.html$/, '')}`;
+
+  // Une page anglaise doit déclarer lang="en" dans le HTML statique :
+  // Googlebot ne l'obtiendra pas d'un script.
+  const estAnglaise = nom.startsWith('en/') || nom === 'en.html';
+  if (estAnglaise && !/<html lang="en"/.test(html)) {
+    problemes.push(`${nom} : page anglaise déclarée lang="fr"`);
+  }
+
+  const liens = [...html.matchAll(/<link rel="alternate" hrefLang="([^"]+)" href="([^"]+)"/gi)];
+  if (liens.length) {
+    declarations.set(
+      chemin,
+      liens.map((m) => ({ langue: m[1], href: new URL(m[2]).pathname }))
+    );
+  }
+}
+
+for (const [chemin, liens] of declarations) {
+  for (const l of liens) {
+    if (l.langue === 'x-default') continue;
+    const cible = l.href.replace(/\/$/, '') || '/';
+    if (cible === chemin) continue;
+    const retour = declarations.get(cible);
+    if (!retour) {
+      problemes.push(
+        `${chemin} : déclare ${cible} en hreflang, mais ${cible} ne déclare rien en retour`
+      );
+      continue;
+    }
+    if (!retour.some((r) => (r.href.replace(/\/$/, '') || '/') === chemin)) {
+      problemes.push(`${chemin} ↔ ${cible} : hreflang non réciproque`);
+    }
+  }
+}
+console.log(`hreflang : ${declarations.size} page(s) traduites, réciprocité vérifiée.`);
 
 // ── Fichiers attendus à la racine ─────────────────────────────────────
 for (const attendu of [

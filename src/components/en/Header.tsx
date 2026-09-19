@@ -4,51 +4,46 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { EVENEMENTS, suit } from '@/lib/analytics';
-import { profil } from '@/content/profil';
 import { equivalent } from '@/lib/langues';
+import { profileEn } from '@/content/en/profil';
 
-const liens = [
-  { libelle: 'Réalisations', href: '/realisations' },
-  { libelle: 'Recrutement', href: '/cdi' },
-  { libelle: 'Mission freelance', href: '/freelance' },
-  { libelle: 'Expertise', href: '/expertise-react-native' },
-  { libelle: 'Guides', href: '/guides' },
+const links = [
+  { label: 'Apps', href: '/en/apps' },
+  { label: 'Native iOS', href: '/en/ios-native-modules' },
+  { label: 'Audit', href: '/en/react-native-audit' },
+  { label: 'Hire me', href: '/en/hire' },
+  { label: 'Writing', href: '/en/blog' },
 ];
 
-export default function Entete() {
-  const [decolle, setDecolle] = useState(false);
-  const [ouvert, setOuvert] = useState(false);
-  const chemin = usePathname();
+export default function Header() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const path = usePathname();
 
   useEffect(() => {
-    const auDefilement = () => setDecolle(window.scrollY > 8);
-    auDefilement();
-    window.addEventListener('scroll', auDefilement, { passive: true });
-    return () => window.removeEventListener('scroll', auDefilement);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    setOuvert(false);
-  }, [chemin]);
+  useEffect(() => setOpen(false), [path]);
 
-  // Quand le panneau mobile est ouvert, la page dessous ne doit pas défiler.
   useEffect(() => {
-    document.body.style.overflow = ouvert ? 'hidden' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
-  }, [ouvert]);
+  }, [open]);
 
   useEffect(() => {
-    const auClavier = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOuvert(false);
-    };
-    window.addEventListener('keydown', auClavier);
-    return () => window.removeEventListener('keydown', auClavier);
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const actif = (href: string) => chemin === href || (href !== '/' && chemin?.startsWith(href));
-  const equivalentAnglais = equivalent(chemin || '/')?.href ?? '/en';
+  const active = (href: string) => path === href || (href !== '/en' && path?.startsWith(href));
+  const other = equivalent(path || '/en');
 
   return (
     <header
@@ -58,21 +53,16 @@ export default function Entete() {
         top: 0,
         zIndex: 50,
         background: 'var(--bg)',
-        borderBottom: `1px solid ${decolle ? 'var(--trait)' : 'transparent'}`,
+        borderBottom: `1px solid ${scrolled ? 'var(--trait)' : 'transparent'}`,
         transition: 'border-color var(--t-survol)',
       }}
     >
       <div
         className="enveloppe"
-        style={{
-          height: 60,
-          display: 'flex',
-          alignItems: 'center',
-          gap: 'var(--e-4)',
-        }}
+        style={{ height: 60, display: 'flex', alignItems: 'center', gap: 'var(--e-4)' }}
       >
         <Link
-          href="/"
+          href="/en"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -83,10 +73,6 @@ export default function Entete() {
             flex: 'none',
           }}
         >
-          {/* Deux fichiers plutot qu'un filtre CSS : le monogramme existe en
-              noir et en blanc, et le CSS choisit lequel afficher selon le
-              theme. Inverser une image au filter perdrait la finesse du
-              trace. */}
           <img
             src="/assets/marque/nb-noir.webp"
             alt=""
@@ -109,63 +95,61 @@ export default function Entete() {
         </Link>
 
         <nav
-          aria-label="Navigation principale"
+          aria-label="Main navigation"
           className="nav-bureau"
-          style={{ display: 'flex', gap: 22, marginLeft: 'auto' }}
+          style={{ display: 'flex', gap: 20, marginLeft: 'auto' }}
         >
-          {liens.map((l) => (
+          {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              aria-current={actif(l.href) ? 'page' : undefined}
+              aria-current={active(l.href) ? 'page' : undefined}
+              className="lien-sobre"
               style={{
                 fontSize: 14.5,
-                color: actif(l.href) ? 'var(--texte)' : 'var(--texte-2)',
-                fontWeight: actif(l.href) ? 600 : 400,
+                color: active(l.href) ? 'var(--texte)' : 'var(--texte-2)',
+                fontWeight: active(l.href) ? 600 : 400,
                 whiteSpace: 'nowrap',
               }}
-              className="lien-sobre"
             >
-              {l.libelle}
+              {l.label}
             </Link>
           ))}
         </nav>
 
-        {/* Le passage à l'anglais garde la page équivalente quand elle
-            existe, et renvoie à l'accueil anglais sinon : personne ne veut
-            recommencer sa navigation en changeant de langue. */}
-        <Link
-          href={equivalentAnglais}
-          hrefLang="en"
-          className="btn btn-fantome cta-bureau"
-          style={{ flex: 'none', marginLeft: 'auto' }}
-        >
-          English
-        </Link>
+        {/* Le passage d'une langue à l'autre garde la page équivalente plutôt
+            que de renvoyer à l'accueil : personne ne veut recommencer. */}
+        {other && (
+          <Link
+            href={other.href}
+            hrefLang={other.langue}
+            className="btn btn-fantome cta-bureau"
+            style={{ flex: 'none', marginLeft: 8 }}
+          >
+            Français
+          </Link>
+        )}
 
-        {/* Le CV doit être atteignable depuis n'importe quelle page : c'est
-            le document que tout recruteur vient chercher, et le laisser au
-            bas de l'accueil revenait à le cacher. */}
         <a
-          href={profil.cv}
+          href={profileEn.cv}
           download
-          onClick={() => suit(EVENEMENTS.telechargeCv, { depuis: 'entete' })}
+          onClick={() => suit(EVENEMENTS.telechargeCv, { depuis: 'en_header' })}
           className="btn btn-fantome cta-bureau"
           style={{ flex: 'none' }}
         >
-          Le CV
+          CV
         </a>
 
-        <Link href="/contact" className="btn btn-principal cta-bureau" style={{ flex: 'none' }}>
-          Me contacter
+        <Link href="/en/contact" className="btn btn-principal cta-bureau" style={{ flex: 'none' }}>
+          Get in touch
         </Link>
 
         <button
           type="button"
-          onClick={() => setOuvert((v) => !v)}
-          aria-expanded={ouvert}
-          aria-controls="menu-mobile"
-          aria-label={ouvert ? 'Fermer le menu' : 'Ouvrir le menu'}
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls="en-mobile-menu"
+          aria-label={open ? 'Close menu' : 'Open menu'}
           className="bouton-menu"
           style={{
             marginLeft: 'auto',
@@ -191,7 +175,7 @@ export default function Entete() {
             strokeLinecap="round"
             aria-hidden
           >
-            {ouvert ? (
+            {open ? (
               <>
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -207,9 +191,9 @@ export default function Entete() {
         </button>
       </div>
 
-      {ouvert && (
+      {open && (
         <div
-          id="menu-mobile"
+          id="en-mobile-menu"
           style={{
             position: 'fixed',
             inset: '60px 0 0',
@@ -219,8 +203,8 @@ export default function Entete() {
             padding: 'var(--e-5) var(--marge-mobile) var(--e-8)',
           }}
         >
-          <nav aria-label="Navigation mobile" style={{ display: 'flex', flexDirection: 'column' }}>
-            {liens.map((l) => (
+          <nav aria-label="Mobile navigation" style={{ display: 'flex', flexDirection: 'column' }}>
+            {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
@@ -232,39 +216,40 @@ export default function Entete() {
                   borderBottom: '1px solid var(--trait)',
                 }}
               >
-                {l.libelle}
+                {l.label}
               </Link>
             ))}
             <Link
-              href="/contact"
+              href="/en/contact"
               className="btn btn-principal btn-large btn-bloc"
               style={{ marginTop: 'var(--e-6)' }}
             >
-              Me contacter
+              Get in touch
             </Link>
             <a
-              href="/assets/cv/cv-nadir-ben-salah.pdf"
+              href={profileEn.cv}
+              download
               className="btn btn-secondaire btn-large btn-bloc"
               style={{ marginTop: 'var(--e-3)' }}
             >
-              Télécharger le CV
+              Download CV
             </a>
+            {other && (
+              <Link
+                href={other.href}
+                hrefLang={other.langue}
+                className="btn btn-fantome btn-bloc"
+                style={{ marginTop: 'var(--e-4)' }}
+              >
+                Lire en français
+              </Link>
+            )}
           </nav>
         </div>
       )}
 
       <style>{`
-        /* Le monogramme suit le theme : noir sur fond clair, blanc sur fond
-           sombre. Les trois etats sont couverts, « systeme » compris. */
-        .marque-sombre { display: none; }
-        [data-theme='dark'] .marque-claire { display: none; }
-        [data-theme='dark'] .marque-sombre { display: block; }
-        @media (prefers-color-scheme: dark) {
-          :root:not([data-theme='light']) .marque-claire { display: none; }
-          :root:not([data-theme='light']) .marque-sombre { display: block; }
-        }
-
-        @media (max-width: 900px) {
+        @media (max-width: 980px) {
           .nav-bureau { display: none !important; }
           .cta-bureau { display: none !important; }
           .bouton-menu { display: inline-flex !important; }
