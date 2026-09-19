@@ -46,15 +46,22 @@ doivent pouvoir bloquer un déploiement.
   voir « Les règles de contenu » plus bas) ;
 - un `href="#"`, un « lorem ipsum » ;
 - **un tiret long** dans le texte visible ;
+- une apostrophe droite, une séquence d'échappement non décodée, du mojibake ;
+- un mot français écrit sans accent, un « nous » de société ;
 - une URL du sitemap qui ne correspond à aucune page réelle ;
 - l'absence du CV, du sitemap, du robots.txt ou du `.htaccess`.
+
+`scripts/verifier-redirections.mjs` relit le `.htaccess` et vérifie que les
+anciennes URL indexées trouvent toutes preneur, que leur cible existe dans
+l'export, et que les trois règles sans lesquelles le site entier répond 404
+sont bien présentes.
 
 `scripts/audit-responsive.mjs` pilote Chrome et rend chaque page à huit
 largeurs, de 320 px à 1920 px. Il échoue sur :
 
 - un défilement horizontal involontaire ;
 - un élément qui déborde de la fenêtre ;
-- une cible tactile de moins de 40 px sur mobile ;
+- une cible tactile sous le minimum de 24 px du critère WCAG 2.2 ;
 - un texte sous 11,5 px ;
 - une image sans `width`/`height` (donc génératrice de CLS).
 
