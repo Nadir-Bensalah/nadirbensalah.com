@@ -264,6 +264,83 @@ export default function Freelance() {
               </div>
             </Apparait>
 
+            {/* Le budget : la question que se pose tout dirigeant, et que la
+                page évitait entièrement. On ne publie pas de grille, parce
+                qu'un chiffre affiché hors contexte est toujours faux. Mais on
+                explique ce qui le fait varier, ce qui est déjà utile. */}
+            <section className="section" aria-labelledby="t-budget">
+              <div className="section-tete">
+                <p className="etiquette">Le budget</p>
+                <h2 id="t-budget" className="t-h2">
+                  Ce qui fait vraiment varier le prix.
+                </h2>
+                <p className="t-lead" style={{ maxWidth: 680 }}>
+                  Je ne publie pas de grille tarifaire : un chiffre affiché sans connaître le projet
+                  serait faux dans les deux sens. En revanche, voici ce qui pèse réellement, pour
+                  que vous puissiez situer le vôtre avant même de m&apos;écrire.
+                </p>
+              </div>
+
+              <div className="grille grille-2">
+                <Apparait className="carte">
+                  <h3 className="t-h3" style={{ marginBottom: 'var(--e-3)' }}>
+                    Ce qui coûte cher
+                  </h3>
+                  <ul className="liste-marque liste-cher">
+                    <li>
+                      Un compte utilisateur, et tout ce qu&apos;il entraîne : mot de passe oublié,
+                      suppression de compte, données à synchroniser.
+                    </li>
+                    <li>Le paiement, l&apos;abonnement, la facturation.</li>
+                    <li>
+                      Le temps réel : messagerie, position partagée, notifications déclenchées par
+                      un serveur.
+                    </li>
+                    <li>Un back-office pour administrer le contenu.</li>
+                    <li>
+                      Une intégration avec un logiciel existant dont la documentation est pauvre.
+                    </li>
+                  </ul>
+                </Apparait>
+
+                <Apparait retard={1} className="carte">
+                  <h3 className="t-h3" style={{ marginBottom: 'var(--e-3)' }}>
+                    Ce qui coûte moins qu&apos;on ne croit
+                  </h3>
+                  <ul className="liste-marque">
+                    <li>Avoir les deux plateformes, iOS et Android, plutôt qu&apos;une seule.</li>
+                    <li>Un beau design, si les écrans sont décidés avant de développer.</li>
+                    <li>
+                      Le hors-ligne, quand il est prévu dès le départ plutôt qu&apos;ajouté après.
+                    </li>
+                    <li>
+                      Les widgets et les intégrations système, une fois l&apos;application
+                      construite.
+                    </li>
+                  </ul>
+                </Apparait>
+              </div>
+
+              <div className="encadre encadre--astuce" style={{ maxWidth: 780 }}>
+                <div>
+                  <strong style={{ color: 'var(--texte)' }}>
+                    La question à se poser avant le prix.
+                  </strong>{' '}
+                  Une application doit résoudre un problème que votre site ne résout pas : quelque
+                  chose qu&apos;on ouvre plusieurs fois par semaine, ou qui a besoin du téléphone
+                  lui-même (la position, l&apos;appareil photo, une notification, le fonctionnement
+                  sans réseau). Si ce n&apos;est pas le cas, je vous le dirai, et ça vous coûtera le
+                  prix d&apos;un appel.
+                </div>
+              </div>
+
+              <p className="t-petit t-3" style={{ maxWidth: 680 }}>
+                Concrètement : un premier échange gratuit, puis un devis écrit avant que quoi que ce
+                soit ne commence. Sur les projets longs, la facturation se fait par jalons, jamais
+                en une fois à la livraison.
+              </p>
+            </section>
+
             <Apparait as="section" className="creux">
               <div style={{ maxWidth: 620 }}>
                 <h2 className="t-h2" style={{ marginBottom: 'var(--e-4)' }}>
@@ -288,6 +365,10 @@ export default function Freelance() {
       </main>
 
       <Pied />
+
+      <style>{`
+        .liste-cher li::before { color: var(--texte-3); content: '\u2022'; }
+      `}</style>
     </>
   );
 }

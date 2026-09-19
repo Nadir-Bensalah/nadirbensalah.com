@@ -156,6 +156,47 @@ for (const fichier of pages) {
     problemes.push(`${nom} : caracteres mal encodes (mojibake)`);
   }
 
+  // ── Français sans accents ───────────────────────────────────────────
+  // Des mots courants écrits sans accent trahissent un texte tapé par un
+  // script ou copié depuis un terminal. Liste volontairement courte : elle
+  // ne contient que des formes qui n'existent pas en français correct.
+  // \\b ne convient pas : en JavaScript, une lettre accentuee compte comme
+  // une frontiere de mot, donc « autres » declencherait la regle « tres ».
+  // On encadre donc par « pas une lettre, accentuee ou non ».
+  // Uniquement des formes qui n'existent pas en francais correct : « ajoute »
+  // ou « cout » sont de vrais mots, ils n'ont rien a faire ici.
+  const sansAccent = [
+    'developpeur',
+    'developpement',
+    'realisation',
+    'realisations',
+    'experience',
+    'systeme',
+    'integration',
+    'probleme',
+    'telephone',
+    'reellement',
+    'concretement',
+    'coutera',
+    'evitait',
+    'connaitre',
+    'plutot',
+    'prevu',
+    'entraine',
+    'declenchees',
+    'partagee',
+    'affiche sans',
+  ];
+  const LETTRE = 'A-Za-z\u00c0-\u024f';
+  const texteSeul = corpsVisible.replace(/<[^>]*>/g, ' ');
+  for (const mot of sansAccent) {
+    const re = new RegExp(`(^|[^${LETTRE}])${mot}([^${LETTRE}]|$)`, 'i');
+    if (re.test(texteSeul)) {
+      problemes.push(`${nom} : « ${mot} » écrit sans accent dans le texte visible`);
+      break;
+    }
+  }
+
   // ── Restes de la refonte ────────────────────────────────────────────
   if (/lorem ipsum/i.test(html)) problemes.push(`${nom} : « lorem ipsum » présent`);
   if (/href="#"/.test(html)) problemes.push(`${nom} : lien vide href="#"`);

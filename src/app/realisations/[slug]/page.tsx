@@ -363,7 +363,7 @@ export default async function EtudeDeCas({ params }: { params: Params }) {
                   </p>
                   <Link
                     href={`/realisations/${suivante.slug}`}
-                    className="t-h3"
+                    className="t-h3 lien-action-carte"
                     style={{ color: 'var(--texte)' }}
                   >
                     {suivante.nomCourt} →

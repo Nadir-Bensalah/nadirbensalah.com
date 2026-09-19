@@ -87,7 +87,9 @@ async function cible(port) {
           })
           .on('error', rej);
       });
-      const t = liste.find((x) => x.webSocketDebuggerUrl);
+      // Cible de type « page » explicitement : les autres cibles refusent
+      // Emulation.setDeviceMetricsOverride.
+      const t = liste.find((x) => x.type === 'page' && x.webSocketDebuggerUrl);
       if (t) return t.webSocketDebuggerUrl;
     } catch {
       /* Chrome n'est pas encore prêt */
@@ -135,6 +137,13 @@ const SONDE = `(() => {
 
     // Débordement : l'élément déborde de la fenêtre, et aucun ancêtre proche
     // ne gère le défilement horizontal volontairement.
+    // Certains elements vivent volontairement hors ecran a gauche : le lien
+    // d'evitement tant qu'il n'a pas le focus, et le champ leurre anti-robot.
+    // Ils sont caches par la gauche a -9999px, jamais par la droite.
+    if (el.classList.contains('saute-au-contenu')) continue;
+    if (el.closest('[aria-hidden="true"]')) continue;
+    if (r.right < 0) continue;
+
     if (r.right > vw + 1 || r.left < -1) {
       let dansUnDefilant = false;
       let p = el.parentElement;
@@ -154,11 +163,14 @@ const SONDE = `(() => {
       }
     }
 
-    // Cibles tactiles : seulement sur mobile, et seulement les éléments
-    // réellement interactifs qui ne sont pas dans un paragraphe de texte.
+    // Cibles tactiles. Le seuil est celui du critere WCAG 2.2 « Target Size
+    // (Minimum) » : 24 x 24 px. Les 44 px d'Apple sont un confort, pas une
+    // regle, et les appliquer a un lien en ligne dans un paragraphe n'aurait
+    // pas de sens. On exclut donc les liens qui vivent dans du texte courant,
+    // pour lesquels WCAG prevoit explicitement une exception.
     if (vw <= 430 && (el.tagName === 'BUTTON' || (el.tagName === 'A' && el.getAttribute('href')))) {
-      const dansTexte = el.closest('p, li, .article-corps, .corps-acc');
-      if (!dansTexte && (r.height < 40 || r.width < 40) && r.height > 0 && res.ciblesPetites.length < 10) {
+      const dansTexte = el.closest('p, li, nav, .article-corps, .corps-acc');
+      if (!dansTexte && (r.height < 24 || r.width < 24) && r.height > 0 && res.ciblesPetites.length < 10) {
         res.ciblesPetites.push({ el: decrire(el), l: Math.round(r.width), h: Math.round(r.height), texte: (el.textContent || '').trim().slice(0, 30) });
       }
     }

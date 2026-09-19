@@ -712,6 +712,30 @@
   .lien-sobre {
     color: var(--texte-2);
   }
+
+  /* Les liens en ligne d'un texte courant heritent de la hauteur de ligne,
+     c'est normal. Mais un lien dont le contenu est une icone seule doit
+     rester attrapable au pouce : 20x20 px ne suffit pas. On elargit la zone
+     cliquable sans changer le dessin. */
+  /* Les liens d'action d'une carte (titre, « L'etude de cas », « App Store »)
+     tombaient a 21-23 px de haut, juste sous le minimum de 24 px du critere
+     WCAG 2.2 « Target Size ». Quelques pixels de zone cliquable suffisent,
+     sans toucher au dessin ni a l'interligne du texte. */
+  .lien-carte,
+  .lien-action-carte {
+    display: inline-block;
+    padding-block: 3px;
+  }
+
+  .lien-icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    margin: -12px;
+    border-radius: var(--r-2);
+  }
   .lien-sobre:hover {
     color: var(--texte);
     text-decoration: none;

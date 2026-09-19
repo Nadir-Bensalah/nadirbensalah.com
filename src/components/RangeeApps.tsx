@@ -38,18 +38,23 @@ export default function RangeeApps() {
 
       <style>{`
         .rangee-apps {
+          --espace-tuiles: 10px;
           list-style: none;
           margin: 0;
           padding: 14px 0;
           display: flex;
           justify-content: center;
           align-items: center;
-          gap: 10px;
+          gap: var(--espace-tuiles);
           flex-wrap: nowrap;
+          width: 100%;
         }
         .tuile-app {
           flex: none;
-          width: clamp(38px, 9.5vw, 68px);
+          /* Huit tuiles et sept espaces doivent tenir dans la largeur utile.
+             Un minimum de 38 px debordait a 320 px : on borne plutot par le
+             calcul, (100% - 7 espaces) / 8, ce qui tient par construction. */
+          width: min(calc((100% - 7 * var(--espace-tuiles)) / 8), 68px);
           aspect-ratio: 1;
           border-radius: clamp(9px, 2.2vw, 16px);
           overflow: hidden;
@@ -75,7 +80,7 @@ export default function RangeeApps() {
           box-shadow: var(--ombre-flottant);
         }
         @media (max-width: 420px) {
-          .rangee-apps { gap: 6px; }
+          .rangee-apps { --espace-tuiles: 6px; }
         }
         @media (prefers-reduced-motion: reduce) {
           .tuile-app,

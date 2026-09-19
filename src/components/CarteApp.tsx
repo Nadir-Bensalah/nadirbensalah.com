@@ -92,7 +92,7 @@ export default function CarteApp({
       >
         <Link
           href={`/realisations/${app.slug}`}
-          className="t-petit t-fort"
+          className="t-petit t-fort lien-action-carte"
           style={{ color: 'var(--action)' }}
         >
           L’étude de cas
@@ -100,6 +100,7 @@ export default function CarteApp({
         <LienAppStore
           url={app.appStoreUrl}
           app={app.nomCourt}
+          className="t-petit lien-sobre lien-action-carte"
           style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}
         >
           App&nbsp;Store
