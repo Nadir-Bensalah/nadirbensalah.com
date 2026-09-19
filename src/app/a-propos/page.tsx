@@ -224,8 +224,8 @@ export default function APropos() {
                   La suite
                 </h2>
                 <p className="t-lead" style={{ marginBottom: 'var(--e-5)' }}>
-                  Les huit applications sont là pour être inspectées. Le CV est là si votre
-                  processus le demande. Et je réponds aux messages.
+                  Les applications sont là pour être inspectées. Le CV est là si votre processus le
+                  demande. Et je réponds aux messages.
                 </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--e-3)' }}>
                   <Link href="/realisations" className="btn btn-principal btn-large">

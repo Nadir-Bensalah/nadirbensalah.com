@@ -81,23 +81,28 @@ export default function Entete() {
             flex: 'none',
           }}
         >
-          <span
+          {/* Deux fichiers plutot qu'un filtre CSS : le monogramme existe en
+              noir et en blanc, et le CSS choisit lequel afficher selon le
+              theme. Inverser une image au filter perdrait la finesse du
+              trace. */}
+          <img
+            src="/assets/marque/nb-noir.webp"
+            alt=""
             aria-hidden
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 22,
-              height: 22,
-              borderRadius: 'var(--r-2)',
-              background: 'var(--texte)',
-              color: 'var(--bg)',
-              fontWeight: 700,
-              fontSize: 12,
-            }}
-          >
-            N
-          </span>
+            width={30}
+            height={20}
+            className="marque-claire"
+            style={{ height: 20, width: 'auto', flex: 'none' }}
+          />
+          <img
+            src="/assets/marque/nb-blanc.webp"
+            alt=""
+            aria-hidden
+            width={30}
+            height={20}
+            className="marque-sombre"
+            style={{ height: 20, width: 'auto', flex: 'none' }}
+          />
           Nadir Ben Salah
         </Link>
 
@@ -235,6 +240,16 @@ export default function Entete() {
       )}
 
       <style>{`
+        /* Le monogramme suit le theme : noir sur fond clair, blanc sur fond
+           sombre. Les trois etats sont couverts, « systeme » compris. */
+        .marque-sombre { display: none; }
+        [data-theme='dark'] .marque-claire { display: none; }
+        [data-theme='dark'] .marque-sombre { display: block; }
+        @media (prefers-color-scheme: dark) {
+          :root:not([data-theme='light']) .marque-claire { display: none; }
+          :root:not([data-theme='light']) .marque-sombre { display: block; }
+        }
+
         @media (max-width: 900px) {
           .nav-bureau { display: none !important; }
           .cta-bureau { display: none !important; }

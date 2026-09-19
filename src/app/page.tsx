@@ -14,12 +14,12 @@ import { competences, disponibilite, experiences, preuves, profil } from '@/cont
 export const metadata: Metadata = {
   title: 'Nadir Ben Salah · Développeur mobile & full-stack à Amiens',
   description:
-    'Développeur mobile et full-stack à Amiens. Huit applications conçues, développées et publiées sur l’App Store. React Native, TypeScript, iOS et Android.',
+    'Développeur mobile et full-stack à Amiens. React Native, TypeScript, iOS et Android, de la conception à la publication sur l’App Store.',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'Nadir Ben Salah · Développeur mobile & full-stack',
     description:
-      'Huit applications publiées sur l’App Store, conçues et développées de bout en bout. React Native, TypeScript, iOS et Android.',
+      'Applications iOS et Android conçues, développées et publiées de bout en bout. React Native, TypeScript, Swift.',
     url: '/',
     images: ['/assets/images/og.png'],
     type: 'profile',
@@ -162,7 +162,7 @@ export default function Accueil() {
                   style={{ marginTop: 'var(--e-5)', maxWidth: 620, marginInline: 'auto' }}
                 >
                   Je conçois et je développe des applications mobiles, de l’idée jusqu’à la mise en
-                  ligne. Pas des maquettes, pas des dépôts Git : huit produits que vous pouvez
+                  ligne. Pas des maquettes, pas des dépôts Git : des produits que vous pouvez
                   installer maintenant.
                 </p>
               </Apparait>
@@ -178,7 +178,7 @@ export default function Accueil() {
                   }}
                 >
                   <Link href="/realisations" className="btn btn-principal btn-large">
-                    Voir les huit applications
+                    Voir mes réalisations
                   </Link>
                   <Link href="/contact" className="btn btn-secondaire btn-large">
                     Parler d’un projet
@@ -230,7 +230,7 @@ export default function Accueil() {
               <div className="section-tete">
                 <p className="etiquette">Les réalisations</p>
                 <h2 id="titre-apps" className="t-h2">
-                  Huit applications, huit contraintes différentes.
+                  Chaque application, une contrainte différente.
                 </h2>
                 <p className="t-lead" style={{ maxWidth: 640 }}>
                   Un calculateur de vol qui ne passe aucun appel réseau. Un horodateur de 3,3 Mo qui

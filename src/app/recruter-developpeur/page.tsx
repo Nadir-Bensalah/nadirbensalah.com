@@ -12,12 +12,12 @@ import { disponibilite } from '@/content/profil';
 export const metadata: Metadata = {
   title: 'Avant de publier votre offre de développeur',
   description:
-    'Vous allez recevoir des dizaines de candidatures à trier. Avant ça, soixante secondes : huit applications publiées, vérifiables tout de suite.',
+    'Vous allez recevoir des dizaines de candidatures à trier. Avant ça, soixante secondes : des applications publiées, vérifiables tout de suite.',
   alternates: { canonical: '/recruter-developpeur' },
   openGraph: {
     title: 'Avant de publier votre offre de développeur',
     description:
-      'Soixante secondes, et huit applications que vous pouvez installer pendant que vous lisez.',
+      'Soixante secondes, et des applications que vous pouvez installer pendant que vous lisez.',
     url: '/recruter-developpeur',
     images: ['/assets/images/og.png'],
   },
@@ -93,7 +93,7 @@ export default function RecruterDeveloppeur() {
                 }}
               >
                 <Link href="/realisations" className="btn btn-principal btn-large">
-                  Voir les huit applications
+                  Voir les réalisations
                 </Link>
                 <Link href="/cdi" className="btn btn-secondaire btn-large">
                   Le dossier complet

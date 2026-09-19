@@ -11,10 +11,10 @@ import { profil } from '@/content/profil';
 export const metadata: Metadata = {
   title: 'Les 8 applications publiées sur l’App Store',
   description:
-    'Les huit applications que j’ai conçues, développées et publiées : contexte, contraintes techniques et choix d’architecture pour chacune.',
+    'Ce que j’ai conçu, développé et publié sur l’App Store : contexte, contraintes techniques et choix d’architecture, application par application.',
   alternates: { canonical: '/realisations' },
   openGraph: {
-    title: 'Huit applications publiées sur l’App Store',
+    title: 'Ce que j’ai conçu, développé et publié',
     description:
       'Contexte, contraintes techniques et choix d’architecture, application par application.',
     url: '/realisations',
@@ -28,7 +28,7 @@ export default function Realisations() {
     '@type': 'CollectionPage',
     name: 'Les applications publiées',
     description:
-      'Les huit applications conçues, développées et publiées sur l’App Store par Nadir Ben Salah.',
+      'Les applications conçues, développées et publiées sur l’App Store par Nadir Ben Salah.',
     url: `${profil.site}/realisations`,
     hasPart: apps.map((a) => ({
       '@type': 'SoftwareApplication',

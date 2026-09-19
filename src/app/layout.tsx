@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: '%s · Nadir Ben Salah',
   },
   description:
-    'Développeur mobile et full-stack à Amiens. Huit applications conçues, développées et publiées sur l’App Store. React Native, TypeScript, iOS et Android.',
+    'Développeur mobile et full-stack à Amiens. React Native, TypeScript, iOS et Android, de la conception à la publication sur les stores.',
   applicationName: profil.nom,
   authors: [{ name: profil.nom, url: siteUrl }],
   creator: profil.nom,
@@ -45,8 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Nadir Ben Salah · Développeur mobile & full-stack',
-    description:
-      'Huit applications publiées sur l’App Store, conçues et développées de bout en bout.',
+    description: 'Applications iOS et Android conçues, développées et publiées de bout en bout.',
     images: ['/assets/images/og.png'],
   },
   robots: {

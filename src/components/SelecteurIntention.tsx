@@ -41,7 +41,7 @@ const portes: {
   {
     cle: 'travaux',
     libelle: 'Je regarde son travail',
-    sous: 'Les 8 applications publiées',
+    sous: 'Ce qui est déjà en ligne',
     href: '/realisations',
     evenement: EVENEMENTS.intentionTravaux,
   },

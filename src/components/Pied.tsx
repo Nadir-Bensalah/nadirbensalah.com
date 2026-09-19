@@ -6,7 +6,7 @@ const colonnes = [
   {
     titre: 'Le travail',
     liens: [
-      { libelle: 'Les 8 applications', href: '/realisations' },
+      { libelle: 'Les réalisations', href: '/realisations' },
       { libelle: 'Expertise React Native', href: '/expertise-react-native' },
       { libelle: 'Audit d’application', href: '/audit-application-react-native' },
       { libelle: 'Guides', href: '/guides' },
@@ -62,28 +62,29 @@ export default function Pied() {
                 marginBottom: 'var(--e-3)',
               }}
             >
-              <span
+              <img
+                src="/assets/marque/nb-noir.webp"
+                alt=""
                 aria-hidden
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: 22,
-                  height: 22,
-                  borderRadius: 'var(--r-2)',
-                  background: 'var(--texte)',
-                  color: 'var(--bg)',
-                  fontWeight: 700,
-                  fontSize: 12,
-                }}
-              >
-                N
-              </span>
+                width={30}
+                height={20}
+                className="marque-claire"
+                style={{ height: 20, width: 'auto', flex: 'none' }}
+              />
+              <img
+                src="/assets/marque/nb-blanc.webp"
+                alt=""
+                aria-hidden
+                width={30}
+                height={20}
+                className="marque-sombre"
+                style={{ height: 20, width: 'auto', flex: 'none' }}
+              />
               {profil.nom}
             </div>
             <p className="t-petit t-2" style={{ maxWidth: 260 }}>
-              Développeur mobile et full-stack à {profil.ville}. Huit applications publiées sur
-              l’App Store.
+              Développeur mobile et full-stack à {profil.ville}. React Native, TypeScript, iOS et
+              Android.
             </p>
             <div style={{ display: 'flex', gap: 'var(--e-3)', marginTop: 'var(--e-4)' }}>
               <a

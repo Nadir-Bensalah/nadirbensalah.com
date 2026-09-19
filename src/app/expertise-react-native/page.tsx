@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Expertise React Native · audit, conseil, reprise de projet',
     description:
-      'Huit applications React Native publiées. Audit, reprise de code et accompagnement technique.',
+      'Applications React Native publiées, dont plusieurs avec des modules natifs en Swift. Audit, reprise de code, accompagnement.',
     url: '/expertise-react-native',
     images: ['/assets/images/og.png'],
   },

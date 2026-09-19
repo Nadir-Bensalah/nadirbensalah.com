@@ -187,7 +187,7 @@ export const preuves = [
   {
     titre: 'Je vais jusqu’à la mise en ligne',
     texte:
-      'Huit applications sont passées par la revue Apple et sont téléchargeables aujourd’hui. Ce n’est pas un dépôt Git : c’est un produit que n’importe qui peut installer.',
+      'Mes applications sont passées par la revue Apple et sont téléchargeables aujourd’hui. Ce n’est pas un dépôt Git : c’est un produit que n’importe qui peut installer.',
   },
   {
     titre: 'Je descends en natif quand il le faut',

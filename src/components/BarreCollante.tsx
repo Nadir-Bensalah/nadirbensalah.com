@@ -94,7 +94,7 @@ export default function BarreCollante() {
             style={{ flex: 1 }}
             tabIndex={visible ? 0 : -1}
           >
-            Les 8 apps
+            Réalisations
           </Link>
           <Link
             href="/contact"

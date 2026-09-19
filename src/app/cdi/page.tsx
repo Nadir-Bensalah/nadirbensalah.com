@@ -101,7 +101,7 @@ export default function Cdi() {
                 Vous avez sans doute d’autres CV ouverts. Celui-ci se vérifie en trois minutes.
               </h1>
               <p className="t-lead" style={{ marginTop: 'var(--e-4)' }}>
-                Huit applications sont en ligne sur l’App&nbsp;Store. Vous pouvez les installer
+                Mes applications sont en ligne sur l’App&nbsp;Store. Vous pouvez les installer
                 pendant que vous lisez cette page. C’est la forme de preuve la plus rapide que je
                 connaisse.
               </p>

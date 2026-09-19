@@ -11,12 +11,12 @@ import { disponibilite, profil } from '@/content/profil';
 export const metadata: Metadata = {
   title: 'Développeur application mobile à Amiens',
   description:
-    'Développeur mobile indépendant à Amiens. Huit applications publiées sur l’App Store, dont une sur le réseau de bus amiénois. iOS, Android, React Native.',
+    'Développeur mobile indépendant à Amiens. Applications iOS et Android en React Native, dont une sur le réseau de bus amiénois.',
   alternates: { canonical: '/developpeur-application-mobile-amiens' },
   openGraph: {
     title: 'Développeur d’applications mobiles à Amiens',
     description:
-      'Huit applications publiées, dont une construite sur les données ouvertes du réseau amiénois.',
+      'Des applications publiées sur l’App Store, dont une construite sur les données ouvertes du réseau amiénois.',
     url: '/developpeur-application-mobile-amiens',
     images: ['/assets/images/og.png'],
   },
@@ -97,10 +97,9 @@ export default function AmiensMobile() {
               </p>
               <h1 className="t-h1">Développeur d’applications mobiles à Amiens.</h1>
               <p className="t-lead" style={{ marginTop: 'var(--e-4)' }}>
-                Je vis à Amiens, j’y ai fait mes études, et l’une de mes huit applications est
-                construite sur les données ouvertes du réseau de bus amiénois. Si vous cherchez
-                quelqu’un de joignable, avec qui on peut prendre un café pour cadrer un projet,
-                c’est faisable.
+                Je vis à Amiens, j’y ai fait mes études, et l’une de mes applications est construite
+                sur les données ouvertes du réseau de bus amiénois. Si vous cherchez quelqu’un de
+                joignable, avec qui on peut prendre un café pour cadrer un projet, c’est faisable.
               </p>
 
               <div

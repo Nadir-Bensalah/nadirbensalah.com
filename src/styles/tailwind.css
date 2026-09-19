@@ -709,6 +709,27 @@
 }
 
 @layer utilities {
+  /* Le monogramme suit le theme : noir sur fond clair, blanc sur fond sombre.
+     Deux fichiers plutot qu'une inversion par filter, qui abimerait le trace.
+     Les trois etats sont couverts, « systeme » compris. */
+  .marque-sombre {
+    display: none;
+  }
+  [data-theme='dark'] .marque-claire {
+    display: none;
+  }
+  [data-theme='dark'] .marque-sombre {
+    display: block;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .marque-claire {
+      display: none;
+    }
+    :root:not([data-theme='light']) .marque-sombre {
+      display: block;
+    }
+  }
+
   .lien-sobre {
     color: var(--texte-2);
   }

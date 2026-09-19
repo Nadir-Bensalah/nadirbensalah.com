@@ -141,7 +141,7 @@ export default function FreelanceAmiens() {
               <h2>Ce que je fais</h2>
               <p>
                 Mon cœur de métier, c’est l’application mobile : iOS et Android, en React Native,
-                avec du code natif quand le système l’exige. Huit applications sont aujourd’hui en
+                avec du code natif quand le système l’exige. Mes applications sont aujourd’hui en
                 ligne sur l’App Store, conçues, développées et publiées de bout en bout. L’une
                 d’elles porte sur le réseau de bus amiénois.
               </p>

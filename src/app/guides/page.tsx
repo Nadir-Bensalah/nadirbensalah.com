@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/guides' },
   openGraph: {
     title: 'Guides · Nadir Ben Salah',
-    description: 'Ce que huit applications publiées m’ont appris, écrit pour être utile.',
+    description: 'Ce que publier sur l’App Store m’a appris, écrit pour être utile.',
     url: '/guides',
     images: ['/assets/images/og.png'],
   },
@@ -67,7 +67,7 @@ export default function Guides() {
               </p>
               <h1 className="t-h1">Ce qu’on apprend en publiant, on l’écrit.</h1>
               <p className="t-lead" style={{ marginTop: 'var(--e-4)' }}>
-                Pas de contenu générique : chaque guide part de quelque chose que huit applications
+                Pas de contenu générique : chaque guide part de quelque chose que mes applications
                 publiées m’ont réellement appris. Quand un chiffre est cité, sa source est dite.
               </p>
             </div>

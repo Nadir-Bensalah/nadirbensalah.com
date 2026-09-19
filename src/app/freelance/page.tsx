@@ -123,8 +123,8 @@ export default function Freelance() {
               </h1>
               <p className="t-lead" style={{ marginTop: 'var(--e-4)' }}>
                 Pas seulement le développement : le cadrage, les arbitrages, l’interface, le
-                backend, la publication et ce qui vient après. Sur mes huit applications, j’ai fait
-                toute la chaîne sans personne d’autre.
+                backend, la publication et ce qui vient après. Sur mes propres applications, j’ai
+                fait toute la chaîne sans personne d’autre.
               </p>
 
               <div
