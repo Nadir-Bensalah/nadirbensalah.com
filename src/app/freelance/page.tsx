@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     title: 'Mission freelance · Nadir Ben Salah',
     description: 'Votre produit, de l’idée jusqu’à la mise en ligne sur les stores.',
     url: '/freelance',
+    images: ['/assets/images/og.png'],
   },
 };
 

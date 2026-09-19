@@ -28,7 +28,9 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       title: `${app.nomCourt} · étude de cas`,
       description: app.baseline,
       url: `/realisations/${app.slug}`,
-      images: [{ url: app.icone, width: 256, height: 256, alt: app.nomCourt }],
+      // L'icone fait 256 px : trop petite pour une carte de partage large,
+      // et LinkedIn la recadrerait de travers. On reprend l'image du site.
+      images: [{ url: '/assets/images/og.png', width: 1200, height: 630, alt: app.nomCourt }],
     },
   };
 }

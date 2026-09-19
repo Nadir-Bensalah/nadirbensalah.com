@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     title: 'Pourquoi Apple refuse une application, et comment le corriger',
     description: guide.description,
     url: '/guides/refus-app-store',
+    images: ['/assets/images/og.png'],
     type: 'article',
   },
 };
@@ -32,7 +33,7 @@ export default function Article() {
         ceux que je rencontre le plus, et ce qu’ils signifient réellement.
       </p>
 
-      <h2>Guideline 2.1 : « Performance — Informations complémentaires »</h2>
+      <h2>Guideline 2.1 : « Performance, informations complémentaires »</h2>
       <p>
         C’est le refus le plus fréquent, et le plus vague. Il veut presque toujours dire l’une de
         ces trois choses.
@@ -58,10 +59,10 @@ export default function Article() {
       <h2>Guideline 5.1.1 : la confidentialité et les données</h2>
       <p>
         Deux pièges distincts. Le premier : demander une autorisation sans expliquer pourquoi.
-        Chaque chaîne d’usage — position, micro, photos, notifications — doit dire ce que vous
-        faites de la donnée, en langage clair. « Cette app utilise votre position » est refusé. «
-        Votre position sert à calculer les horaires de prière sur votre appareil, et ne quitte
-        jamais votre téléphone » passe.
+        Chaque chaîne d’usage (position, micro, photos, notifications) doit dire ce que vous faites
+        de la donnée, en langage clair. « Cette app utilise votre position » est refusé. « Votre
+        position sert à calculer les horaires de prière sur votre appareil, et ne quitte jamais
+        votre téléphone » passe.
       </p>
       <p>
         Le second piège, plus sournois : le questionnaire de confidentialité que vous remplissez

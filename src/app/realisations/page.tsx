@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     description:
       'Contexte, contraintes techniques et choix d’architecture, application par application.',
     url: '/realisations',
+    images: ['/assets/images/og.png'],
   },
 };
 

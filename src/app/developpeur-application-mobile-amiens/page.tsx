@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     description:
       'Huit applications publiées, dont une construite sur les données ouvertes du réseau amiénois.',
     url: '/developpeur-application-mobile-amiens',
+    images: ['/assets/images/og.png'],
   },
 };
 

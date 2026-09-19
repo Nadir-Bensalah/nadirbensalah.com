@@ -4,32 +4,55 @@ on:
   push:
     branches:
       - main
+  # Permet de relancer un déploiement à la main depuis l'onglet Actions,
+  # sans avoir à pousser un commit vide.
+  workflow_dispatch:
+
+# Un seul déploiement à la fois : deux envois FTP simultanés dans un dossier
+# vidé avant chaque envoi laisseraient le site dans un état incohérent.
+concurrency:
+  group: deploiement-production
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  construire-et-deployer:
+    name: Construire, vérifier, déployer
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Récupérer le dépôt
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Installer Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
-      - name: Install dependencies
+      - name: Installer les dépendances
         run: npm install
 
-      - name: Build Next.js
+      - name: Construire le site
         env:
           NEXT_PUBLIC_SITE_URL: https://nadirbensalah.com
+        # `next build` produit directement l'export statique : la commande
+        # `next export` n'existe plus depuis Next 14. Le script de build
+        # génère ensuite sitemap.xml et robots.txt.
         run: npm run build
 
-      - name: Export static site
-        run: npx next export || echo "Export completed"
+      - name: Vérifier l'export
+        # Lien mort, image absente, page sans titre, JSON-LD invalide, tiret
+        # long, sitemap incohérent : le déploiement s'arrête ici plutôt que
+        # de mettre un site cassé en ligne.
+        run: npm run verifier
 
-      - name: Deploy via FTP to Hostinger
+      - name: Vérifier que le rendu tient à toutes les largeurs
+        run: |
+          npx --yes http-server ./out -p 8899 --silent &
+          npx --yes wait-on http://127.0.0.1:8899/index.html -t 30000
+          node scripts/audit-responsive.mjs http://127.0.0.1:8899
+
+      - name: Déployer par FTP chez Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: 193.203.189.68
@@ -39,4 +62,21 @@ jobs:
           port: 21
           local-dir: ./out/
           server-dir: /public_html/
+          # Vide entièrement /public_html/ avant l'envoi. Tout ce qui doit
+          # vivre sur le serveur doit donc exister dans le dépôt.
           dangerous-clean-slate: true
+
+      - name: Contrôler le site en ligne
+        # Dernier filet : on vérifie que les pages stratégiques répondent 200
+        # et que le sitemap existe vraiment, ce qui n'a pas été le cas pendant
+        # des mois alors que robots.txt en annonçait quatre.
+        run: |
+          sleep 25
+          for chemin in "" "realisations" "cdi" "freelance" "contact" "sitemap.xml" "robots.txt"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 20 "https://nadirbensalah.com/$chemin")
+            echo "$code  /$chemin"
+            if [ "$code" != "200" ]; then
+              echo "ÉCHEC : /$chemin répond $code"
+              exit 1
+            fi
+          done

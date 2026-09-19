@@ -40,14 +40,14 @@ export const metadata: Metadata = {
     locale: 'fr_FR',
     siteName: profil.nom,
     url: siteUrl,
-    images: [{ url: '/assets/images/app_logo.png', width: 1200, height: 630, alt: profil.nom }],
+    images: [{ url: '/assets/images/og.png', width: 1200, height: 630, alt: profil.nom }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Nadir Ben Salah · Développeur mobile & full-stack',
     description:
       'Huit applications publiées sur l’App Store, conçues et développées de bout en bout.',
-    images: ['/assets/images/app_logo.png'],
+    images: ['/assets/images/og.png'],
   },
   robots: {
     index: true,

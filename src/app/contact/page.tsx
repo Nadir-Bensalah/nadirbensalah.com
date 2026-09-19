@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: 'Me contacter · Nadir Ben Salah',
     description: 'Un projet, une mission ou un poste. Réponse sous 24 h.',
     url: '/contact',
+    images: ['/assets/images/og.png'],
   },
 };
 

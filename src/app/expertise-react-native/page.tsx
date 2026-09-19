@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     description:
       'Huit applications React Native publiées. Audit, reprise de code et accompagnement technique.',
     url: '/expertise-react-native',
+    images: ['/assets/images/og.png'],
   },
 };
 

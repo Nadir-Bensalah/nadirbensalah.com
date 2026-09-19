@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: 'Ne me croyez pas sur parole',
     description: 'Un problème, et ma manière de l’aborder. Sans engagement.',
     url: '/challenge',
+    images: ['/assets/images/og.png'],
   },
 };
 

@@ -83,14 +83,21 @@ export default async function Hello({ params }: { params: Params }) {
               </p>
               <h1 className="t-h1">Bonjour {p.entreprise}.</h1>
               <p className="t-lead" style={{ marginTop: 'var(--e-4)' }}>
-                Cette page existe parce que j’aimerais travailler avec vous. Elle n’est pas référencée et
-                n’est envoyée à personne d’autre.
+                Cette page existe parce que j’aimerais travailler avec vous. Elle n’est pas
+                référencée et n’est envoyée à personne d’autre.
               </p>
               <p className="t-lead" style={{ marginTop: 'var(--e-3)' }}>
                 {p.accroche}
               </p>
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--e-3)', marginTop: 'var(--e-6)' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 'var(--e-3)',
+                  marginTop: 'var(--e-6)',
+                }}
+              >
                 <Link href="/contact" className="btn btn-principal btn-large">
                   Prendre contact
                 </Link>

@@ -10,13 +10,14 @@ import { experiences, formations, profil } from '@/content/profil';
 export const metadata: Metadata = {
   title: 'Qui je suis',
   description:
-    'Développeur mobile et full-stack à Amiens. Le parcours, la façon de travailler, et ce que deux ans à publier mes propres applications m’ont appris.',
+    'Développeur mobile et full-stack à Amiens. Le parcours, la façon de travailler, et ce qu’une année à publier mes propres applications m’a appris.',
   alternates: { canonical: '/a-propos' },
   openGraph: {
     title: 'Qui je suis · Nadir Ben Salah',
     description:
       'Le parcours, la façon de travailler, et ce que publier huit applications m’a appris.',
     url: '/a-propos',
+    images: ['/assets/images/og.png'],
   },
 };
 
@@ -60,7 +61,7 @@ export default function APropos() {
                 plateformes web depuis Amiens, et j’exerce sous l’enseigne {profil.enseigne}.
               </p>
 
-              <h2>Ce que deux ans à publier m’ont appris</h2>
+              <h2>Ce qu’une année à publier m’a appris</h2>
               <p>
                 En septembre 2025, j’ai publié ma première application sur l’App Store. Elle
                 s’appelle Ose+, c’est un jeu de soirée, et honnêtement elle n’a rien
@@ -70,8 +71,9 @@ export default function APropos() {
                 réellement pendant la revue.
               </p>
               <p>
-                Les sept suivantes sont sorties en treize mois. Chacune a été choisie pour m’imposer
-                une contrainte que les précédentes n’avaient pas. Un calculateur de vol qui ne doit
+                Les sept suivantes sont sorties entre le 7 août et le 2 septembre 2026, après onze
+                mois passés à les construire en parallèle. Chacune a été choisie pour m’imposer une
+                contrainte que les précédentes n’avaient pas. Un calculateur de vol qui ne doit
                 passer <strong>aucun appel réseau</strong>, parce qu’en vol il n’y a pas de réseau.
                 Un horodateur qui doit vivre dans la Dynamic Island, donc en Swift natif, et tenir
                 en 3,3 Mo. Un carnet de santé animal dont on doit pouvoir vérifier, en mode avion,

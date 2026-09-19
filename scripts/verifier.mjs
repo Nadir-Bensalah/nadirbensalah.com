@@ -57,7 +57,7 @@ for (const fichier of pages) {
   if (!titre) {
     problemes.push(`${nom} : aucun <title>`);
   } else if (titre.length > 65) {
-    avertissements.push(`${nom} : <title> de ${titre.length} caractères (> 65) — « ${titre} »`);
+    avertissements.push(`${nom} : <title> de ${titre.length} caractères (> 65) : « ${titre} »`);
   }
 
   // ── Description ─────────────────────────────────────────────────────
@@ -104,7 +104,7 @@ for (const fichier of pages) {
       problemes.push(`${nom} : image absente ${src}`);
     }
     if (!/alt="/.test(balise)) {
-      problemes.push(`${nom} : <img> sans attribut alt — ${balise.slice(0, 90)}`);
+      problemes.push(`${nom} : <img> sans attribut alt : ${balise.slice(0, 90)}`);
     }
   }
 
@@ -121,8 +121,39 @@ for (const fichier of pages) {
         problemes.push(`${nom} : donnée structurée de type note ou avis`);
       }
     } catch (e) {
-      problemes.push(`${nom} : JSON-LD invalide — ${e.message}`);
+      problemes.push(`${nom} : JSON-LD invalide : ${e.message}`);
     }
+  }
+
+  // ── Typographie : le tiret long est proscrit sur ce site ────────────
+  // Il se glisse facilement dans un texte rédigé, et il ne se lit pas comme
+  // du français écrit. On le remplace par deux-points, une virgule, des
+  // parenthèses ou un point médian selon le sens.
+  const corpsVisible = html
+    .replace(/<script[\s\S]*?<\/script>/g, '')
+    .replace(/<style[\s\S]*?<\/style>/g, '');
+  if (corpsVisible.includes('—')) {
+    const extrait = corpsVisible
+      .slice(Math.max(0, corpsVisible.indexOf('—') - 45), corpsVisible.indexOf('—') + 45)
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    problemes.push(`${nom} : tiret long (—) dans le texte : « …${extrait}… »`);
+  }
+
+  // ── Caracteres non decodes ──────────────────────────────────────────
+  // Une sequence \uXXXX visible dans la page signale un texte ecrit par un
+  // script qui a echappe ses antislashs. C'est arrive, et ca ne se voit pas
+  // au build : seul le rendu le revele.
+  if (/\\u[0-9a-fA-F]{4}/.test(corpsVisible)) {
+    const m = corpsVisible.match(/.{0,40}\\u[0-9a-fA-F]{4}.{0,40}/);
+    problemes.push(
+      `${nom} : sequence d'echappement non decodee : « ${m?.[0].replace(/<[^>]*>/g, ' ').trim()} »`
+    );
+  }
+  // Mojibake classique : de l'UTF-8 relu en latin-1.
+  if (/Ã©|Ã¨|Ã\u00a0|â€™|Ã§/.test(corpsVisible)) {
+    problemes.push(`${nom} : caracteres mal encodes (mojibake)`);
   }
 
   // ── Restes de la refonte ────────────────────────────────────────────

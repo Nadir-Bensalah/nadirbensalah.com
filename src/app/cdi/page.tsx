@@ -6,7 +6,7 @@ import Pied from '@/components/Pied';
 import Apparait from '@/components/Apparait';
 import CarteApp from '@/components/CarteApp';
 import BoutonCv from '@/components/BoutonCv';
-import { apps } from '@/content/apps';
+import { appParSlug } from '@/content/apps';
 import { competences, disponibilite, experiences, formations, profil } from '@/content/profil';
 
 export const metadata: Metadata = {
@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     title: 'Recrutement & CDI · Nadir Ben Salah',
     description: 'Parcours, produits livrés, technologies, disponibilité et CV. En une page.',
     url: '/cdi',
+    images: ['/assets/images/og.png'],
   },
 };
 
@@ -29,11 +30,15 @@ const questions = [
   },
   {
     q: 'Quel est son niveau d’autonomie ?',
-    r: 'Sur mes propres applications, il n’y a personne d’autre : pas de designer, pas de chef de projet, pas de DevOps. Cadrage, interface, développement mobile et backend, publication, correctifs. En équipe, cette autonomie se traduit par un besoin d’encadrement faible et une capacité à débloquer les autres.',
+    r: 'Sur mes propres applications, il n’y a personne d’autre : pas de designer, pas de chef de projet, pas de DevOps. Cadrage, interface, développement mobile et backend, publication, correctifs. Ce que ça prouve, c’est que je sais avancer sans qu’on me débloque. Ce que ça ne prouve pas, c’est que je sais travailler à cinq sur la même base de code : pour ça, il faut regarder les deux ans chez Decayeux, pas les huit applications.',
   },
   {
     q: 'A-t-il déjà travaillé en équipe et en entreprise ?',
-    r: 'Oui, deux ans chez Decayeux à Abbeville, sur des applications React Native en environnement industriel, avec des équipes produit, métier et techniques. Et sept ans auparavant en relation directe avec des clients.',
+    r: 'Oui, deux ans chez Decayeux à Abbeville, sur des applications React Native destinées à des opérateurs en atelier. Le travail s’y faisait avec des gens dont ce n’est pas le métier de rédiger une spécification : il fallait aller voir sur le terrain ce que l’application devait réellement faire, puis revenir défendre les arbitrages techniques devant l’équipe produit. C’est un exercice très différent de celui de mes propres applications, où je suis à la fois celui qui demande et celui qui décide.',
+  },
+  {
+    q: 'Qu’est-ce qui change quand il rejoint une équipe déjà constituée ?',
+    r: 'Trois choses, et je préfère les dire franchement. Je pose beaucoup de questions au début, parce que reprendre une base de code sans en comprendre l’historique est la meilleure façon de casser quelque chose. J’écris les décisions, parce qu’un arbitrage qui reste dans une conversation est un arbitrage qu’on refera dans six mois. Et je demande une revue sur ce que j’écris : travailler seul pendant deux ans m’a surtout appris ce que je perds à ne pas en avoir.',
   },
   {
     q: 'Est-il disponible, et où ?',
@@ -46,7 +51,11 @@ const questions = [
 ];
 
 export default function Cdi() {
-  const troisApps = [apps[0], apps[1], apps[5]];
+  // Par slug, jamais par index : un index se décale dès qu'une application
+  // est ajoutée au tableau, et la légende ci-dessous cesse d'être vraie.
+  const troisApps = ['ticket', 'pilou', 'amiens-bus-velam']
+    .map(appParSlug)
+    .filter((a) => a !== undefined);
 
   const schema = {
     '@context': 'https://schema.org',
@@ -109,9 +118,14 @@ export default function Cdi() {
                 <Link href="/realisations" className="btn btn-secondaire btn-large">
                   Voir les réalisations
                 </Link>
-                <Link href="/contact" className="btn btn-fantome btn-large">
-                  Me contacter
-                </Link>
+                <a
+                  href={profil.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-fantome btn-large"
+                >
+                  Le code sur GitHub
+                </a>
               </div>
             </div>
           </div>
@@ -135,7 +149,7 @@ export default function Cdi() {
                 {[
                   ['Poste', 'Développeur mobile & full-stack'],
                   ['Spécialité', 'React Native, TypeScript, iOS & Android'],
-                  ['Expérience', 'Dix ans, dont deux à publier mes propres produits'],
+                  ['Expérience', 'Dix ans, dont un à publier mes propres produits'],
                   ['Localisation', `${profil.ville}, ${profil.region}`],
                   ['Mobilité', 'À distance, ou géographique pour un poste pertinent'],
                   ['Ouvert à', disponibilite.ouvertA.join(', ')],

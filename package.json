@@ -1,46 +1,10 @@
 {
-  "name": "Nadirbensalah",
+  "name": "nadirbensalah.com",
   "version": "0.1.0",
   "private": true,
-  "rocketCritical": {
-    "dependencies": [
-      "next",
-      "react",
-      "react-dom",
-      "@dhiwise/component-tagger",
-      "@tailwindcss/typography",
-      "recharts"
-    ],
-    "devDependencies": [
-      "typescript",
-      "@types/node",
-      "@types/react",
-      "@types/react-dom",
-      "@typescript-eslint/eslint-plugin",
-      "@typescript-eslint/parser",
-      "eslint-config-next",
-      "tailwindcss",
-      "autoprefixer",
-      "postcss",
-      "eslint",
-      "prettier",
-      "@netlify/plugin-nextjs"
-    ],
-    "scripts": [
-      "dev",
-      "build",
-      "start",
-      "lint",
-      "lint:fix",
-      "format",
-      "serve",
-      "type-check"
-    ],
-    "warning": "🚨 CRITICAL: DO NOT REMOVE OR MODIFY ABOVE DEPENDENCIES - Required for Next.js 15 TypeScript app functionality"
-  },
   "scripts": {
     "dev": "next dev -p 4028",
-    "build": "next build && node scripts/generer-sitemap.mjs",
+    "build": "next build && node scripts/generer-sitemap.mjs && node scripts/typographie.mjs",
     "start": "next dev -p 4028",
     "verifier": "node scripts/verifier.mjs",
     "lint": "next lint",
@@ -50,19 +14,12 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@dhiwise/component-tagger": "^1.0.15",
-    "@heroicons/react": "^2.2.0",
-    "@tailwindcss/forms": "^0.5.10",
-    "@tailwindcss/typography": "^0.5.16",
     "next": "15.1.11",
     "react": "19.0.3",
-    "react-dom": "19.0.3",
-    "recharts": "^2.15.2",
-    "lucide-react": "^1.7.0"
+    "react-dom": "19.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@netlify/plugin-nextjs": "^5.11.1",
     "@types/node": "^20",
     "@types/react": "19.0.3",
     "@types/react-dom": "19.0.3",
@@ -76,7 +33,7 @@
     "postcss": "8.4.8",
     "prettier": "^3.5.3",
     "tailwindcss": "3.4.6",
-    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5"
-  }
+  },
+  "description": "Le site personnel de Nadir Ben Salah, développeur mobile et full-stack."
 }

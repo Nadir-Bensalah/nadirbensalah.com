@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     description:
       'Architecture, performances, dette technique et conformité App Store. Un rapport écrit et priorisé.',
     url: '/audit-application-react-native',
+    images: ['/assets/images/og.png'],
   },
 };
 

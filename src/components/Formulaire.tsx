@@ -67,8 +67,15 @@ export default function Formulaire({
     setErreurs(e);
     if (Object.keys(e).length > 0) {
       setEtat('erreur');
-      const premier = form.querySelector<HTMLElement>('[aria-invalid="true"]');
-      premier?.focus();
+      // On vise le champ par son nom, pas par [aria-invalid] : setErreurs est
+      // asynchrone, l'attribut n'est pas encore posé dans le DOM à cet
+      // instant, et la recherche ne trouvait jamais rien. L'utilisateur au
+      // clavier restait sur le bouton sans savoir ce qui avait échoué.
+      const ordre = ['nom', 'email', 'message'];
+      const premierNom = ordre.find((n) => e[n]);
+      if (premierNom) {
+        form.querySelector<HTMLElement>(`[name="${premierNom}"]`)?.focus();
+      }
       return;
     }
 
@@ -81,10 +88,10 @@ export default function Formulaire({
 
     const sujet =
       variante === 'challenge'
-        ? `Un problème à regarder — ${nom}${entreprise ? ` (${entreprise})` : ''}`
-        : `Projet — ${nom}${entreprise ? ` (${entreprise})` : ''}`;
+        ? `Un problème à regarder : ${nom}${entreprise ? ` (${entreprise})` : ''}`
+        : `Projet : ${nom}${entreprise ? ` (${entreprise})` : ''}`;
 
-    const corps = [message, '', '—', `${nom}${entreprise ? ` · ${entreprise}` : ''}`, email].join(
+    const corps = [message, '', '--', `${nom}${entreprise ? ` · ${entreprise}` : ''}`, email].join(
       '\n'
     );
 
@@ -173,6 +180,7 @@ export default function Formulaire({
           {erreurs.nom && (
             <p
               id={`err-nom-${variante}`}
+              role="alert"
               className="t-petit"
               style={{ color: 'var(--danger)', marginTop: 6 }}
             >
@@ -213,6 +221,7 @@ export default function Formulaire({
         {erreurs.email && (
           <p
             id={`err-email-${variante}`}
+            role="alert"
             className="t-petit"
             style={{ color: 'var(--danger)', marginTop: 6 }}
           >
@@ -238,6 +247,7 @@ export default function Formulaire({
         {erreurs.message && (
           <p
             id={`err-message-${variante}`}
+            role="alert"
             className="t-petit"
             style={{ color: 'var(--danger)', marginTop: 6 }}
           >

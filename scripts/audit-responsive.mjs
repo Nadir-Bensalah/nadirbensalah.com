@@ -10,9 +10,32 @@
 
 import { spawn } from 'node:child_process';
 import http from 'node:http';
+import { existsSync } from 'node:fs';
 
 const BASE = process.argv[2] || 'http://localhost:8899';
-const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+
+/**
+ * Chrome se trouve ailleurs selon la machine : sur le Mac de Nadir, dans
+ * /Applications ; sur un exécuteur GitHub, dans /usr/bin. On prend le premier
+ * chemin qui existe, et CHROME_PATH permet de forcer le choix.
+ */
+function trouverChrome() {
+  const candidats = [
+    process.env.CHROME_PATH,
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/usr/bin/google-chrome',
+    '/usr/bin/google-chrome-stable',
+    '/usr/bin/chromium-browser',
+    '/usr/bin/chromium',
+  ].filter(Boolean);
+
+  for (const c of candidats) {
+    if (existsSync(c)) return c;
+  }
+  throw new Error('Chrome introuvable. Installer Chrome ou définir CHROME_PATH vers le binaire.');
+}
+
+const CHROME = trouverChrome();
 
 const LARGEURS = [
   { nom: 'iPhone SE', l: 320, h: 780 },
@@ -211,14 +234,16 @@ async function principal() {
       }
       for (const c of r.ciblesPetites) {
         problemes.push(
-          `[${taille.nom} ${taille.l}px] ${page} : cible tactile ${c.l}×${c.h}px — ${c.el} « ${c.texte} »`
+          `[${taille.nom} ${taille.l}px] ${page} : cible tactile ${c.l}×${c.h}px : ${c.el} « ${c.texte} »`
         );
       }
       for (const t of r.textesPetits) {
-        problemes.push(`[${taille.nom} ${taille.l}px] ${page} : texte à ${t.px}px — « ${t.texte} »`);
+        problemes.push(
+          `[${taille.nom} ${taille.l}px] ${page} : texte à ${t.px}px : « ${t.texte} »`
+        );
       }
       for (const i of r.imagesSansTaille) {
-        problemes.push(`[${taille.nom}] ${page} : image sans width/height — ${i}`);
+        problemes.push(`[${taille.nom}] ${page} : image sans width/height : ${i}`);
       }
     }
   }
@@ -226,7 +251,9 @@ async function principal() {
   ws.close();
   chrome.kill();
 
-  console.log(`${verifiees} rendus vérifiés (${PAGES.length} pages × ${LARGEURS.length} largeurs).\n`);
+  console.log(
+    `${verifiees} rendus vérifiés (${PAGES.length} pages × ${LARGEURS.length} largeurs).\n`
+  );
 
   // Dédoublonner : un même défaut se répète à plusieurs largeurs.
   const uniques = [...new Set(problemes)];

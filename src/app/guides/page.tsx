@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: 'Guides · Nadir Ben Salah',
     description: 'Ce que huit applications publiées m’ont appris, écrit pour être utile.',
     url: '/guides',
+    images: ['/assets/images/og.png'],
   },
 };
 

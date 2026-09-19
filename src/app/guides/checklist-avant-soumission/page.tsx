@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     title: 'Ce que je vérifie avant chaque soumission à l’App Store',
     description: guide.description,
     url: '/guides/checklist-avant-soumission',
+    images: ['/assets/images/og.png'],
     type: 'article',
   },
 };

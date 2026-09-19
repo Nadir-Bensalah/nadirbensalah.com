@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     title: 'Développeur freelance à Amiens',
     description: 'Applications mobiles, plateformes web et outils métier. Un seul interlocuteur.',
     url: '/developpeur-freelance-amiens',
+    images: ['/assets/images/og.png'],
   },
 };
 

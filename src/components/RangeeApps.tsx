@@ -7,39 +7,45 @@ import { apps } from '@/content/apps';
  *
  * Chaque tuile est un lien réel vers son étude de cas. La rotation est
  * purement décorative et se désactive sous prefers-reduced-motion.
+ *
+ * C'est une vraie liste : un <li> qui contient un <a>. Porter role="listitem"
+ * directement sur le lien écraserait son rôle de lien, et les huit tuiles
+ * sortiraient de la liste des liens des lecteurs d'écran.
  */
 export default function RangeeApps() {
   return (
-    <div className="rangee-apps" role="list" aria-label="Les huit applications publiées">
-      {apps.map((app, i) => (
-        <Link
-          key={app.slug}
-          href={`/realisations/${app.slug}`}
-          role="listitem"
-          className="tuile-app"
-          style={{ ['--i' as string]: i }}
-          title={`${app.nomCourt} — ${app.categorie}`}
-        >
-          <img
-            src={app.icone}
-            alt={app.nomCourt}
-            width={72}
-            height={72}
-            loading="eager"
-            decoding="async"
-            style={{ width: '100%', height: '100%', borderRadius: 'inherit' }}
-          />
-        </Link>
-      ))}
+    <>
+      <ul className="rangee-apps" aria-label="Les huit applications publiées">
+        {apps.map((app, i) => (
+          <li key={app.slug} className="tuile-app" style={{ ['--i' as string]: i }}>
+            <Link
+              href={`/realisations/${app.slug}`}
+              aria-label={`${app.nomCourt}, ${app.categorie} : voir l’étude de cas`}
+            >
+              <img
+                src={app.icone}
+                alt=""
+                aria-hidden
+                width={72}
+                height={72}
+                loading="eager"
+                decoding="async"
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
 
       <style>{`
         .rangee-apps {
+          list-style: none;
+          margin: 0;
+          padding: 14px 0;
           display: flex;
           justify-content: center;
           align-items: center;
           gap: 10px;
           flex-wrap: nowrap;
-          padding-block: 14px;
         }
         .tuile-app {
           flex: none;
@@ -52,6 +58,8 @@ export default function RangeeApps() {
           transform: rotate(var(--r, 0deg)) translateY(var(--y, 0)) scale(var(--s, 1));
           transition: transform var(--t-apparition);
         }
+        .tuile-app a { display: block; width: 100%; height: 100%; }
+        .tuile-app img { width: 100%; height: 100%; border-radius: inherit; }
         .tuile-app:nth-child(1) { --r: -10deg; --y: 14px; }
         .tuile-app:nth-child(2) { --r: -7deg;  --y: 6px; }
         .tuile-app:nth-child(3) { --r: -4deg;  --y: 1px; }
@@ -60,7 +68,8 @@ export default function RangeeApps() {
         .tuile-app:nth-child(6) { --r: 5deg;   --y: 1px; }
         .tuile-app:nth-child(7) { --r: 8deg;   --y: 6px; }
         .tuile-app:nth-child(8) { --r: 11deg;  --y: 14px; }
-        .tuile-app:hover {
+        .tuile-app:hover,
+        .tuile-app:focus-within {
           transform: rotate(0deg) translateY(-6px) scale(1.12);
           z-index: 2;
           box-shadow: var(--ombre-flottant);
@@ -69,10 +78,11 @@ export default function RangeeApps() {
           .rangee-apps { gap: 6px; }
         }
         @media (prefers-reduced-motion: reduce) {
-          .tuile-app { transform: none; }
-          .tuile-app:hover { transform: none; box-shadow: none; }
+          .tuile-app,
+          .tuile-app:hover,
+          .tuile-app:focus-within { transform: none; box-shadow: none; }
         }
       `}</style>
-    </div>
+    </>
   );
 }

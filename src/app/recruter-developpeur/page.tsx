@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     description:
       'Soixante secondes, et huit applications que vous pouvez installer pendant que vous lisez.',
     url: '/recruter-developpeur',
+    images: ['/assets/images/og.png'],
   },
 };
 
@@ -37,7 +38,7 @@ const coutsCaches = [
   ],
   [
     'Le doute',
-    'La vraie question — « est-ce qu’il sait finir ? » — reste sans réponse jusqu’à la période d’essai.',
+    'La vraie question, « est-ce qu’il sait finir ? », reste sans réponse jusqu’à la période d’essai.',
   ],
 ];
 

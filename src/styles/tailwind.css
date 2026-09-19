@@ -18,7 +18,7 @@
   /* texte : gris chauds */
   --texte: #000000;
   --texte-2: #615d59;
-  --texte-3: #8a847e;
+  --texte-3: #726c66;
 
   /* traits et survol */
   --trait: rgba(0, 0, 0, 0.09);
@@ -28,6 +28,7 @@
   /* action */
   --action: #0075de;
   --action-survol: #005bab;
+  --texte-sur-action: #ffffff;
   --anneau: rgba(0, 117, 222, 0.2);
   --danger: #d93a24;
   --valide: #157f2a;
@@ -86,12 +87,13 @@
   --bg-3: #f6f5f4;
   --texte: #000000;
   --texte-2: #615d59;
-  --texte-3: #8a847e;
+  --texte-3: #726c66;
   --trait: rgba(0, 0, 0, 0.09);
   --trait-fort: rgba(0, 0, 0, 0.16);
   --survol: rgba(0, 0, 0, 0.06);
   --action: #0075de;
   --action-survol: #005bab;
+  --texte-sur-action: #ffffff;
   --anneau: rgba(0, 117, 222, 0.2);
   --danger: #d93a24;
   --valide: #157f2a;
@@ -111,12 +113,13 @@
     --bg-3: #2c2c2c;
     --texte: #e9e9e7;
     --texte-2: #a6a6a6;
-    --texte-3: #85817c;
+    --texte-3: #a09b95;
     --trait: rgba(255, 255, 255, 0.094);
     --trait-fort: rgba(255, 255, 255, 0.16);
     --survol: rgba(255, 255, 255, 0.055);
     --action: #62aef0;
     --action-survol: #8cc5f5;
+    --texte-sur-action: #10243a;
     --anneau: rgba(98, 174, 240, 0.25);
     --danger: #ff8a75;
     --valide: #5ed17a;
@@ -135,12 +138,13 @@
   --bg-3: #2c2c2c;
   --texte: #e9e9e7;
   --texte-2: #a6a6a6;
-  --texte-3: #85817c;
+  --texte-3: #a09b95;
   --trait: rgba(255, 255, 255, 0.094);
   --trait-fort: rgba(255, 255, 255, 0.16);
   --survol: rgba(255, 255, 255, 0.055);
   --action: #62aef0;
   --action-survol: #8cc5f5;
+  --texte-sur-action: #10243a;
   --anneau: rgba(98, 174, 240, 0.25);
   --danger: #ff8a75;
   --valide: #5ed17a;
@@ -391,16 +395,20 @@
     transform: translateY(0);
   }
 
+  /* Le texte du bouton principal suit le theme plutot que d'etre blanc en
+     dur : en sombre, --action s'eclaircit pour rester lisible sur du noir,
+     et du blanc dessus ne donnait que 2,38:1. Un texte sombre y monte a
+     6,6:1. */
   .btn-principal {
     background: var(--action);
-    color: #fff;
+    color: var(--texte-sur-action);
     box-shadow:
       0 1px 2px rgba(0, 117, 222, 0.28),
       0 2px 8px -2px rgba(0, 117, 222, 0.4);
   }
   .btn-principal:hover {
     background: var(--action-survol);
-    color: #fff;
+    color: var(--texte-sur-action);
     box-shadow:
       0 2px 4px rgba(0, 117, 222, 0.32),
       0 8px 20px -4px rgba(0, 117, 222, 0.5);

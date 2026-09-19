@@ -2,7 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
+import type { Metadata } from 'next';
 import { apps } from '@/content/apps';
+
+export const metadata: Metadata = {
+  title: 'Page introuvable',
+  description:
+    'Cette page n’existe pas. Voici les pages vers lesquelles les liens cassés mènent le plus souvent.',
+  robots: { index: false, follow: true },
+};
 
 /**
  * Le 404 doit être utile, pas décoratif : il propose les pages vers lesquelles
@@ -12,6 +20,9 @@ import { apps } from '@/content/apps';
 export default function Introuvable() {
   return (
     <>
+      <a href="#contenu" className="saute-au-contenu">
+        Aller au contenu
+      </a>
       <Entete />
       <main id="contenu">
         <section style={{ paddingTop: 'clamp(48px, 9vw, 96px)', paddingBottom: 'var(--e-8)' }}>

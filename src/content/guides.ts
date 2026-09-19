@@ -32,7 +32,7 @@ export const guides: Guide[] = [
     intention:
       'Fondateur ou CTO qui doit choisir une technologie avant de lancer un développement.',
     publieLe: '2026-09-19',
-    minutes: 9,
+    minutes: 5,
     chapeau:
       'La question revient à chaque cadrage. La plupart des réponses en ligne comparent des tableaux de fonctionnalités. Voici plutôt ce que la contrainte réelle a imposé, application par application.',
   },
@@ -43,7 +43,7 @@ export const guides: Guide[] = [
       'Ce qu’Apple regarde réellement pendant la revue, les motifs de refus les plus fréquents et la façon de les traiter.',
     intention: 'Développeur ou porteur de projet dont la soumission est refusée sans motif clair.',
     publieLe: '2026-09-19',
-    minutes: 8,
+    minutes: 4,
     chapeau:
       'Le motif invoqué par Apple est souvent laconique. Voici comment je le traduis, et ce que je vérifie désormais avant chaque soumission.',
   },
@@ -55,7 +55,7 @@ export const guides: Guide[] = [
     intention:
       'Équipe qui prépare une première soumission et veut éviter un aller-retour de deux semaines.',
     publieLe: '2026-09-19',
-    minutes: 7,
+    minutes: 4,
     chapeau:
       'Un refus coûte rarement moins d’une semaine. Chaque ligne de cette liste correspond à quelque chose qui m’a déjà valu un aller-retour.',
   },

@@ -3,12 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { EVENEMENTS, suit } from '@/lib/analytics';
+import { profil } from '@/content/profil';
 
 const liens = [
   { libelle: 'Réalisations', href: '/realisations' },
+  { libelle: 'Recrutement', href: '/cdi' },
+  { libelle: 'Mission freelance', href: '/freelance' },
   { libelle: 'Expertise', href: '/expertise-react-native' },
-  { libelle: 'Freelance', href: '/freelance' },
-  { libelle: 'CDI', href: '/cdi' },
   { libelle: 'Guides', href: '/guides' },
 ];
 
@@ -122,11 +124,20 @@ export default function Entete() {
           ))}
         </nav>
 
-        <Link
-          href="/contact"
-          className="btn btn-principal cta-bureau"
-          style={{ flex: 'none', marginLeft: 16 }}
+        {/* Le CV doit être atteignable depuis n'importe quelle page : c'est
+            le document que tout recruteur vient chercher, et le laisser au
+            bas de l'accueil revenait à le cacher. */}
+        <a
+          href={profil.cv}
+          download
+          onClick={() => suit(EVENEMENTS.telechargeCv, { depuis: 'entete' })}
+          className="btn btn-fantome cta-bureau"
+          style={{ flex: 'none', marginLeft: 8 }}
         >
+          Le CV
+        </a>
+
+        <Link href="/contact" className="btn btn-principal cta-bureau" style={{ flex: 'none' }}>
           Me contacter
         </Link>
 

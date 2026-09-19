@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     description:
       'Huit applications publiées sur l’App Store, conçues et développées de bout en bout. React Native, TypeScript, iOS et Android.',
     url: '/',
+    images: ['/assets/images/og.png'],
     type: 'profile',
   },
 };
@@ -72,7 +73,7 @@ export default function Accueil() {
           addressRegion: profil.region,
           addressCountry: 'FR',
         },
-        sameAs: [profil.linkedin, profil.capmedia],
+        sameAs: [profil.linkedin, profil.github, profil.capmedia],
         knowsAbout: [
           'React Native',
           'TypeScript',
@@ -142,7 +143,8 @@ export default function Accueil() {
                   }}
                 >
                   <span className="point-vert" aria-hidden />
-                  Huit applications en ligne sur l’App&nbsp;Store
+                  Huit applications en ligne sur l’App&nbsp;Store : sept sous mon nom, une pour un
+                  client
                 </p>
               </Apparait>
 
@@ -337,7 +339,7 @@ export default function Accueil() {
               <div className="section-tete">
                 <p className="etiquette">Le parcours</p>
                 <h2 id="titre-parcours" className="t-h2">
-                  Dix ans de métier, dont deux à publier mes propres produits.
+                  Dix ans de métier, dont un à publier mes propres produits.
                 </h2>
               </div>
 

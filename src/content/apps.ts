@@ -402,7 +402,7 @@ export const apps: App[] = [
       'C’est l’application qui m’a appris ce qu’Apple regarde vraiment en revue',
     ],
     saillant:
-      'Ma première application publiée, en septembre 2025. Les sept suivantes sont sorties en treize mois.',
+      'Ma première application publiée, en septembre 2025. Les sept suivantes sont toutes sorties un an plus tard, entre le 7 août et le 2 septembre 2026.',
   },
 ];
 

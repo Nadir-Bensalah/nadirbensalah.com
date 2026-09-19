@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     title: 'React Native ou natif : ce que j’ai constaté après huit applications',
     description: guide.description,
     url: '/guides/react-native-ou-natif',
+    images: ['/assets/images/og.png'],
     type: 'article',
   },
 };
@@ -123,8 +124,8 @@ export default function Article() {
 
       <h2>Ce que je répondrais si vous me posiez la question</h2>
       <p>
-        Dans la majorité des cas que je rencontre — une PME, une startup, un porteur de projet, une
-        équipe de moins de cinq personnes — React Native est le bon choix, à une condition : que
+        Dans la majorité des cas que je rencontre, qu’il s’agisse d’une PME, d’une startup ou d’une
+        équipe de moins de cinq personnes, React Native est le bon choix, à une condition : que
         quelqu’un dans le projet sache descendre en natif le jour où il le faudra. Sans cette
         compétence, le framework devient un plafond de verre, et c’est là que les projets
         s’arrêtent.

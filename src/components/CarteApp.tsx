@@ -66,12 +66,20 @@ export default function CarteApp({
       </p>
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-        {app.stack.slice(0, 3).map((t) => (
+        {/* On en montre cinq plutôt que trois : les technologies qui
+            distinguent réellement un profil (ActivityKit, App Intents,
+            SwiftUI, Core NFC) arrivent en fin de liste, et un « +3 » les
+            rendait invisibles à qui survole. */}
+        {app.stack.slice(0, 5).map((t) => (
           <span key={t} className="pastille">
             {t}
           </span>
         ))}
-        {app.stack.length > 3 && <span className="pastille">+{app.stack.length - 3}</span>}
+        {app.stack.length > 5 && (
+          <span className="pastille" title={app.stack.slice(5).join(', ')}>
+            +{app.stack.length - 5}
+          </span>
+        )}
       </div>
 
       <div
