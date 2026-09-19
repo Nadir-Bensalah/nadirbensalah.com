@@ -128,7 +128,7 @@ export default function FreelanceAmiens() {
                   Parler de votre projet
                 </Link>
                 <Link href="/realisations" className="btn btn-secondaire btn-large">
-                  Les 8 applications publiées
+                  Les réalisations
                 </Link>
               </div>
             </div>

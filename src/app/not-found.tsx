@@ -49,7 +49,7 @@ export default function Introuvable() {
                   Retour à l’accueil
                 </Link>
                 <Link href="/realisations" className="btn btn-secondaire btn-large">
-                  Les 8 applications
+                  Les réalisations
                 </Link>
               </div>
             </div>

@@ -52,7 +52,7 @@ export const experiences: Experience[] = [
     courant: true,
     faits: [
       'Conception et développement d’applications mobiles en React Native et TypeScript, de l’idée à la publication sur les stores.',
-      'Huit applications publiées sur l’App Store, dont sept sous mon propre compte développeur et une pour un client.',
+      'Applications publiées sur l’App Store sous mon propre compte développeur, et une pour un client.',
       'Développement de plateformes web, de solutions SaaS et d’applications métier sur mesure.',
       'Création d’API REST et de services backend avec Node.js, Firebase et Supabase.',
       'Prise en charge complète du cycle : cadrage, architecture, développement, tests, revue Apple, mise en production et maintenance.',
