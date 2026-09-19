@@ -6,12 +6,13 @@
     "dev": "next dev -p 4028",
     "build": "next build && node scripts/generer-sitemap.mjs && node scripts/typographie.mjs",
     "start": "next dev -p 4028",
-    "verifier": "node scripts/verifier.mjs",
+    "verifier": "node scripts/verifier.mjs && node scripts/verifier-redirections.mjs",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
     "serve": "next start",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "audit": "node scripts/audit-responsive.mjs"
   },
   "dependencies": {
     "next": "15.1.11",

@@ -81,9 +81,20 @@ Un lien de campagne avec QR code fonctionne tel quel :
 ### Le CV en PDF
 
 Le fichier `public/assets/cv/cv-nadir-ben-salah.pdf` est celui d'avant la
-refonte. Il est en ligne et fonctionne, mais son contenu ne reflète pas le
-nouveau positionnement. À reprendre quand tu auras un moment, avec les huit
-applications en tête de la section réalisations.
+refonte. Il fonctionne, mais **il dit « sept applications » là où le site dit
+« huit »**. Les deux sont vrais (sept sous ton compte, une pour Perseus
+Capital), mais un recruteur qui compare les deux documents voit une
+contradiction, et c'est le genre de détail qui élimine au tri.
+
+La page d'accueil le dit maintenant en toutes lettres (« sept sous mon nom,
+une pour un client »), donc le plus urgent est réglé côté site. Reste à
+reprendre le PDF quand tu auras un moment.
+
+Deuxième point à vérifier sur le CV : les dates. Capmedia commence en
+**juillet 2024** et Decayeux se termine en **octobre 2024**. Quatre mois se
+recouvrent, sans explication. Ce n'est pas nécessairement faux, mais un
+recruteur le repère en trois secondes et le note comme question d'entretien.
+Si c'est une période de cumul, autant l'écrire.
 
 ---
 
@@ -99,15 +110,18 @@ il a vu le visage. Un portrait sobre, cadré buste, fond neutre, suffirait :
 Format attendu : 800 × 800 px minimum, en `.webp`, dans
 `public/assets/images/`.
 
-### Une image de partage
+### Une image de partage par page (facultatif)
 
-Quand tu partages un lien du site sur LinkedIn ou WhatsApp, l'aperçu utilise
-`public/assets/images/app_logo.png`, qui fait 478 × 578 px. Le format attendu
-est **1200 × 630 px**. L'aperçu actuel est donc recadré de travers.
+C'est réglé pour l'essentiel : `public/assets/images/og.png` fait maintenant
+1200 × 630 px, au bon format, avec ton nom, la phrase d'accroche et les huit
+icônes. Elle est servie par toutes les pages. Avant, le code annonçait
+1200 × 630 aux agrégateurs alors que le fichier faisait 478 × 578 : l'aperçu
+sortait recadré de travers sur LinkedIn.
 
-À produire : une image 1200 × 630 avec ton nom, « Développeur mobile &
-full-stack » et les huit icônes d'applications. Idéalement une par page
-stratégique, mais une seule bien faite vaut mieux que huit bâclées.
+Ce qui resterait à faire, si tu veux aller plus loin : une image par étude de
+cas, avec la capture de l'application concernée. Le gabarit est dans
+`scripts/og.html`, il se régénère avec Chrome en mode headless. C'est du
+confort, pas une urgence.
 
 ### Des témoignages
 
@@ -117,8 +131,13 @@ trois paragraphes écrits par moi.
 
 Deux pistes concrètes :
 - Perseus Capital, pour qui tu as livré ForgeMe. Deux phrases signées, avec
-  le nom et la fonction de la personne, suffisent.
-- Decayeux, si un ancien responsable accepte.
+  le nom et la fonction de la personne, suffisent. C'est le seul projet client
+  du site, et le panel de relecture a noté que « Pour un client », au
+  singulier, souligne justement qu'il n'y en a qu'un. Un témoignage
+  renverserait cette lecture.
+- Decayeux, si un ancien responsable accepte. Ce serait doublement utile :
+  c'est la seule preuve de travail en équipe dont dispose le site, et c'est
+  l'objection numéro un pour un recrutement en CDI.
 
 **Ne rien inventer.** Un faux témoignage se repère, et il détruit la
 crédibilité de tout le reste de la page.
