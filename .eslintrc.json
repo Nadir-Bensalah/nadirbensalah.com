@@ -32,6 +32,8 @@
       }
     ],
     "@typescript-eslint/no-explicit-any": "warn",
+    "@next/next/no-img-element": "off",
+    "@next/next/no-page-custom-font": "off",
     "no-console": [
       "warn",
       {
@@ -53,5 +55,9 @@
     "browser": true,
     "node": true,
     "es6": true
+  },
+  "_commentaires": {
+    "@next/next/no-img-element": "Desactivee : le site est exporte en statique (output: 'export') avec images.unoptimized. next/image n'optimiserait rien et ajouterait du JavaScript pour rien. Les images sont converties en WebP en amont, dimensionnees a la main, avec width, height, loading et decoding explicites.",
+    "@next/next/no-page-custom-font": "Desactivee : regle concue pour le routeur pages/. Ici la police est declaree dans le layout de l'App Router, donc chargee une seule fois pour tout le site, avec preconnect."
   }
 }

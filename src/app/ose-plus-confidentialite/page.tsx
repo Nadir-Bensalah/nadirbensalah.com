@@ -1,8 +1,8 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Entete from '@/components/Entete';
+import Pied from '@/components/Pied';
 
 export const metadata: Metadata = {
   title: 'Ose+ – Politique de confidentialité',
@@ -59,8 +59,8 @@ const sections: [string, React.ReactNode][] = [
     '6. Durées de conservation',
     <>
       Données locales : tant que l&apos;application reste installée. Jeton de notification :
-      jusqu&apos;à sa révocation par le système ou à la désinstallation. Informations
-      d&apos;achat : selon les politiques d&apos;Apple.
+      jusqu&apos;à sa révocation par le système ou à la désinstallation. Informations d&apos;achat :
+      selon les politiques d&apos;Apple.
     </>,
   ],
   [
@@ -88,7 +88,7 @@ const sections: [string, React.ReactNode][] = [
 export default function OsePlusConfidentialitePage() {
   return (
     <main className="min-h-screen bg-background overflow-x-hidden">
-      <Header />
+      <Entete />
 
       <section className="relative pt-36 pb-14 md:pt-44 overflow-hidden">
         <div
@@ -133,7 +133,7 @@ export default function OsePlusConfidentialitePage() {
         </div>
       </section>
 
-      <Footer />
+      <Pied />
     </main>
   );
 }

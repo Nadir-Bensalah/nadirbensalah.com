@@ -1,8 +1,8 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Entete from '@/components/Entete';
+import Pied from '@/components/Pied';
 
 export const metadata: Metadata = {
   title: 'Ose+ – Aide et support',
@@ -15,9 +15,9 @@ const questions: [string, React.ReactNode][] = [
   [
     "J'ai payé et l'application est toujours limitée",
     <>
-      Ouvrez l&apos;écran d&apos;achat et touchez <strong>Restaurer un achat</strong>. Ose+ redemande
-      alors à Apple ce que votre identifiant a acheté. Assurez-vous d&apos;être connecté au même
-      identifiant Apple que le jour de l&apos;achat.
+      Ouvrez l&apos;écran d&apos;achat et touchez <strong>Restaurer un achat</strong>. Ose+
+      redemande alors à Apple ce que votre identifiant a acheté. Assurez-vous d&apos;être connecté
+      au même identifiant Apple que le jour de l&apos;achat.
     </>,
   ],
   [
@@ -36,7 +36,7 @@ const questions: [string, React.ReactNode][] = [
     </>,
   ],
   [
-    "Comment demander un remboursement ?",
+    'Comment demander un remboursement ?',
     <>
       Les remboursements sont gérés par Apple, pas par nous. Rendez-vous sur{' '}
       <a href="https://reportaproblem.apple.com" className="text-cyan-400 underline">
@@ -62,8 +62,8 @@ const questions: [string, React.ReactNode][] = [
   [
     'Comment supprimer mes données ?',
     <>
-      Désinstallez l&apos;application. Tout ce qu&apos;Ose+ conserve est stocké sur votre appareil et
-      disparaît avec elle. Aucun compte n&apos;est créé, aucune donnée n&apos;est gardée sur un
+      Désinstallez l&apos;application. Tout ce qu&apos;Ose+ conserve est stocké sur votre appareil
+      et disparaît avec elle. Aucun compte n&apos;est créé, aucune donnée n&apos;est gardée sur un
       serveur.
     </>,
   ],
@@ -72,7 +72,7 @@ const questions: [string, React.ReactNode][] = [
 export default function OsePlusSupportPage() {
   return (
     <main className="min-h-screen bg-background overflow-x-hidden">
-      <Header />
+      <Entete />
 
       <section className="relative pt-36 pb-16 md:pt-44 overflow-hidden">
         <div
@@ -92,8 +92,8 @@ export default function OsePlusSupportPage() {
           </h1>
           <p className="text-lg text-[#A1A1AA] leading-relaxed max-w-2xl mt-7">
             Ose+ est un jeu de soirée : dix catégories de vérités et de défis, à jouer à deux ou à
-            vingt. Cette page répond aux questions les plus fréquentes. Si la vôtre n&apos;y est pas,
-            écrivez-nous, on répond.
+            vingt. Cette page répond aux questions les plus fréquentes. Si la vôtre n&apos;y est
+            pas, écrivez-nous, on répond.
           </p>
           <div className="mt-9 flex flex-col sm:flex-row gap-4">
             <a
@@ -140,7 +140,7 @@ export default function OsePlusSupportPage() {
         </div>
       </section>
 
-      <Footer />
+      <Pied />
     </main>
   );
 }

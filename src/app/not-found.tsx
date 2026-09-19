@@ -1,54 +1,106 @@
-'use client';
-
 import React from 'react';
-import { useRouter } from 'next/navigation';
-import Icon from '@/components/ui/AppIcon';
+import Link from 'next/link';
+import Entete from '@/components/Entete';
+import Pied from '@/components/Pied';
+import { apps } from '@/content/apps';
 
-export default function NotFound() {
-    const router = useRouter();
+/**
+ * Le 404 doit être utile, pas décoratif : il propose les pages vers lesquelles
+ * les liens cassés mènent le plus souvent. Les anciennes URL du site sont
+ * redirigées en 301 par le .htaccess, donc arriver ici est déjà un cas rare.
+ */
+export default function Introuvable() {
+  return (
+    <>
+      <Entete />
+      <main id="contenu">
+        <section style={{ paddingTop: 'clamp(48px, 9vw, 96px)', paddingBottom: 'var(--e-8)' }}>
+          <div className="enveloppe">
+            <div style={{ maxWidth: 640 }}>
+              <p className="etiquette" style={{ marginBottom: 'var(--e-3)' }}>
+                Erreur 404
+              </p>
+              <h1 className="t-h1">Cette page n’existe pas.</h1>
+              <p className="t-lead" style={{ marginTop: 'var(--e-4)' }}>
+                Le lien est peut-être ancien, ou l’adresse comporte une faute. Voici ce qui se
+                trouve habituellement derrière les liens qui mènent ici.
+              </p>
 
-    const handleGoHome = () => {
-        router?.push('/');
-    };
-
-    const handleGoBack = () => {
-        if (typeof window !== 'undefined') {
-            window.history?.back();
-        }
-    };
-
-    return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
-            <div className="text-center max-w-md">
-                <div className="flex justify-center mb-6">
-                    <div className="relative">
-                        <h1 className="text-9xl font-bold text-primary opacity-20">404</h1>
-                    </div>
-                </div>
-
-                <h2 className="text-2xl font-medium text-onBackground mb-2">Page Not Found</h2>
-                <p className="text-onBackground/70 mb-8">
-                    The page you're looking for doesn't exist. Let's get you back!
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button
-                        onClick={handleGoBack}
-                        className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors duration-200"
-                    >
-                        <Icon name="ArrowLeftIcon" size={16} />
-                        Go Back
-                    </button>
-
-                    <button
-                        onClick={handleGoHome}
-                        className="inline-flex items-center justify-center gap-2 border border-border bg-background text-foreground px-6 py-3 rounded-lg font-medium hover:bg-accent hover:text-accent-foreground transition-colors duration-200"
-                    >
-                        <Icon name="HomeIcon" size={16} />
-                        Back to Home
-                    </button>
-                </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 'var(--e-3)',
+                  marginTop: 'var(--e-6)',
+                }}
+              >
+                <Link href="/" className="btn btn-principal btn-large">
+                  Retour à l’accueil
+                </Link>
+                <Link href="/realisations" className="btn btn-secondaire btn-large">
+                  Les 8 applications
+                </Link>
+              </div>
             </div>
-        </div>
-    );
+
+            <div style={{ marginTop: 'clamp(48px, 7vw, 80px)', maxWidth: 720 }}>
+              <h2 className="etiquette" style={{ marginBottom: 'var(--e-4)' }}>
+                Les études de cas
+              </h2>
+              <ul
+                style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+                  gap: 'var(--e-3)',
+                }}
+              >
+                {apps.map((a) => (
+                  <li key={a.slug}>
+                    <Link href={`/realisations/${a.slug}`} className="t-petit lien-sobre">
+                      {a.nomCourt}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+              <h2
+                className="etiquette"
+                style={{ marginTop: 'var(--e-7)', marginBottom: 'var(--e-4)' }}
+              >
+                Les autres pages
+              </h2>
+              <ul
+                style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+                  gap: 'var(--e-3)',
+                }}
+              >
+                {[
+                  ['Qui je suis', '/a-propos'],
+                  ['Mission freelance', '/freelance'],
+                  ['Recrutement & CDI', '/cdi'],
+                  ['Expertise React Native', '/expertise-react-native'],
+                  ['Les guides', '/guides'],
+                  ['Me contacter', '/contact'],
+                  ['Plan du site', '/plan-du-site'],
+                ].map(([libelle, href]) => (
+                  <li key={href}>
+                    <Link href={href} className="t-petit lien-sobre">
+                      {libelle}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Pied />
+    </>
+  );
 }
