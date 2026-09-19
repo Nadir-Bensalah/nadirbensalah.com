@@ -5,6 +5,75 @@ un accès, une clé, ou une décision qui t'appartient. Le reste est livré.
 
 ---
 
+## 0. BLOQUANT : le déploiement ne part pas
+
+**Le code est poussé sur `main`, mais le site en ligne n'a pas changé.**
+
+GitHub Actions refuse de démarrer le job :
+
+> The job was not started because recent account payments have failed or your
+> spending limit needs to be increased. Please check the 'Billing & plans'
+> section in your settings.
+
+Ce n'est pas une erreur de build : le job n'a jamais commencé, il échoue en
+quatre secondes. Deux tentatives, même résultat.
+
+**Ce qu'il faut faire**, sur <https://github.com/settings/billing> :
+soit régler le moyen de paiement en échec, soit relever la limite de dépense.
+Puis relancer le déploiement :
+
+```bash
+cd ~/Downloads/00_WEBAPPS/Nadirbensalah.com
+gh run rerun --failed          # ou : gh workflow run "Deploy to Hostinger"
+gh run watch                   # suivre l'exécution
+```
+
+**En attendant, le site en ligne est intact** : il sert toujours l'ancienne
+version, rien n'est cassé.
+
+### Le repli, si tu veux publier aujourd'hui
+
+L'export est déjà construit dans `out/` : 148 fichiers, 6,1 Mo, vérifié.
+Il suffit de le téléverser par FTP dans `/public_html/`.
+
+```bash
+cd ~/Downloads/00_WEBAPPS/Nadirbensalah.com
+npm run build && npm run verifier     # reconstruire, par sécurité
+```
+
+Puis, avec un client FTP (FileZilla, Cyberduck) ou `lftp` :
+
+- serveur : `193.203.189.68`, port 21, FTP
+- identifiants : ceux de hPanel, les mêmes que les secrets `FTP_USERNAME` et
+  `FTP_PASSWORD` du dépôt
+- **vider `/public_html/`** puis y déposer **le contenu de `out/`**, pas le
+  dossier `out` lui-même
+
+En une commande, si `lftp` est installé :
+
+```bash
+lftp -u "TON_USER,TON_MOT_DE_PASSE" 193.203.189.68 \
+  -e "mirror -R --delete --verbose out/ /public_html/ ; quit"
+```
+
+**Attention au fichier `.htaccess`** : il commence par un point, et beaucoup
+de clients FTP masquent les fichiers cachés par défaut. S'il n'arrive pas,
+**tout le site répond 404**, parce que c'est lui qui sert les pages `.html` à
+plat. À vérifier en premier après l'envoi.
+
+Contrôle final :
+
+```bash
+for p in "" realisations cdi freelance contact sitemap.xml robots.txt; do
+  echo -n "/$p : "
+  curl -s -o /dev/null -w "%{http_code}\n" -L "https://nadirbensalah.com/$p"
+done
+```
+
+Les sept doivent répondre `200`.
+
+---
+
 ## 1. À faire tout de suite (gain certain, effort faible)
 
 ### Le 404 qui sort sur ton nom  ·  5 minutes dans hPanel
