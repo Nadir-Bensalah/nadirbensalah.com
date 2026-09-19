@@ -18,7 +18,7 @@ export const profil = {
   telephone: '+33 6 10 35 42 59',
   telephoneLien: 'tel:+33610354259',
   whatsapp: 'https://wa.me/33610354259',
-  linkedin: 'https://www.linkedin.com/in/nadir-ben-salah',
+  linkedin: 'https://www.linkedin.com/in/nadir-ben-salah/',
   github: 'https://github.com/Nadir-Bensalah',
   capmedia: 'https://capmedia.app',
   site: 'https://nadirbensalah.com',

@@ -3,6 +3,15 @@ RewriteEngine On
 # ==========================================================================
 # 1. Canonique : une seule adresse pour une seule page
 # ==========================================================================
+# Le .fr vers le .com, en conservant le chemin demande. Aujourd'hui le .fr
+# est servi par une autre entree d'hebergement, qui ne redirige que sa page
+# d'accueil : nadirbensalah.fr/cv-numerique repond 404 alors qu'il est encore
+# indexe et ressort sur le nom de Nadir. Cette regle ne s'applique donc que le
+# jour ou le .fr pointera sur le meme hebergement que le .com (voir
+# A-FAIRE.md). Elle est posee d'avance pour que ce basculement suffise.
+RewriteCond %{HTTP_HOST} ^(www\.)?nadirbensalah\.fr$ [NC]
+RewriteRule ^(.*)$ https://nadirbensalah.com/$1 [R=301,L]
+
 # www servait le site sans rediriger : Google voyait deux sites identiques.
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]

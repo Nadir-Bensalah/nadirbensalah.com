@@ -7,25 +7,100 @@ un accès, une clé, ou une décision qui t'appartient. Le reste est livré.
 
 ## 1. À faire tout de suite (gain certain, effort faible)
 
-### Le 404 qui sort sur ton nom
+### Le 404 qui sort sur ton nom  ·  5 minutes dans hPanel
 
-`nadirbensalah.fr/cv-numerique` répond 404 alors qu'il est encore indexé, et
-il ressort sur ton nom avant le `.com`. Le `.com` redirige correctement, c'est
-le `.fr` qui ne le fait pas.
+**Le diagnostic, vérifié le 19 septembre 2026.** Le `.fr` ne redirige que sa
+page d'accueil. Tout le reste tombe en 404 :
 
-Le fichier `public/.htaccess` du dépôt traite déjà le cas. Mais il n'est
-déployé que sur le `.com`. **Il faut poser le même `.htaccess` à la racine du
-`.fr` chez Hostinger**, ou faire pointer le `.fr` en redirection de domaine
-complète vers le `.com` depuis le panneau Hostinger. La seconde option est
-plus propre.
+| URL | Réponse |
+|---|---|
+| `nadirbensalah.fr` | 301 vers `nadirbensalah.com` ✓ |
+| `nadirbensalah.fr/cv-numerique` | **404** |
+| `nadirbensalah.fr/contact` | **404** |
 
-### Le profil LinkedIn obsolète
+Ce n'est donc pas un problème de `/cv-numerique` en particulier : **aucun
+chemin du `.fr` ne fonctionne**, et `/cv-numerique` est simplement celui qui
+reste indexé et qui ressort sur ton nom.
 
-Sur une recherche de ton nom, le premier résultat LinkedIn affiche encore
+**Pourquoi je ne peux pas le corriger depuis le dépôt.** Les deux domaines
+sont sur deux hébergements différents :
+
+- `nadirbensalah.com` → `193.203.189.68`, c'est là que le dépôt déploie ;
+- `nadirbensalah.fr` → `147.79.116.115`, une autre entrée Hostinger, qui sert
+  une page de redirection automatique.
+
+Le `.htaccess` du dépôt ne part que sur le `.com`. Il ne peut rien pour le
+`.fr` tant que celui-ci est servi ailleurs.
+
+**Ce qu'il faut faire, dans hPanel :**
+
+1. Ouvrir hPanel → **Domaines** → `nadirbensalah.fr`.
+2. Supprimer la redirection de domaine actuelle (celle qui ne renvoie que
+   l'accueil). Elle est soit dans **Redirections**, soit le domaine est
+   configuré en « Site web de redirection ».
+3. Deux options, la première est la bonne :
+   - **Recommandé** : rattacher `nadirbensalah.fr` comme **domaine
+     supplémentaire (alias)** du même hébergement que le `.com`, c'est-à-dire
+     pointant sur le même `/public_html/`. La règle qui fait le reste est
+     déjà dans `public/.htaccess` du dépôt, en tête de fichier : elle
+     redirige tout `nadirbensalah.fr/<chemin>` vers
+     `nadirbensalah.com/<chemin>` en 301, en conservant le chemin.
+   - À défaut : recréer une redirection de domaine en cochant l'option qui
+     **conserve le chemin** (souvent libellée « wildcard » ou « inclure les
+     sous-chemins »). Moins propre, mais ça règle le symptôme.
+4. Vérifier ensuite, en ligne de commande :
+   ```bash
+   curl -s -o /dev/null -w "%{http_code} %{url_effective}\n" -L \
+     https://nadirbensalah.fr/cv-numerique
+   ```
+   Le résultat attendu est `200 https://nadirbensalah.com/`.
+
+**Puis, dans la Search Console**, demander la suppression de l'URL
+`nadirbensalah.fr/cv-numerique` (Indexation → Suppressions). La redirection
+suffit à terme, mais la suppression accélère les choses sur la requête qui
+compte le plus : ton nom.
+
+### Le profil LinkedIn obsolète  ·  10 minutes sur linkedin.com
+
+Sur une recherche de ton nom, le résultat LinkedIn affiche encore
 « Assistant d'éducation, Rectorat d'Amiens ». C'est ce que voit un recruteur
-avant d'arriver sur le site. C'est une correction de cinq minutes côté
-LinkedIn, et c'est probablement le meilleur retour sur temps investi de toute
-cette liste.
+**avant** d'arriver sur le site. Aucune ligne de code ne peut corriger ça :
+c'est une donnée hébergée par LinkedIn, modifiable seulement depuis ton
+compte.
+
+C'est probablement le meilleur retour sur temps investi de toute cette liste,
+parce que ça se joue sur la requête la plus qualifiée qui existe : ton nom.
+
+Sur <https://www.linkedin.com/in/nadir-ben-salah/>, quatre champs à reprendre.
+
+**1. Le titre** (le texte sous ton nom, celui qui apparaît dans les résultats
+de recherche Google et dans chaque commentaire que tu postes). À remplacer par
+quelque chose qui dit le métier et la preuve :
+
+> Développeur mobile & full-stack · React Native, TypeScript · 8 applications
+> publiées sur l'App Store
+
+**2. Le poste actuel.** Ajouter l'expérience si elle n'y est pas :
+Développeur full-stack & mobile, indépendant, Capmedia Digital, depuis juillet
+2024, Amiens. Sans ça, LinkedIn continue d'afficher le dernier poste connu.
+
+**3. L'infobulle « À propos ».** Les trois premières lignes sont les seules
+visibles sans cliquer. Le premier paragraphe de `/a-propos` fait le travail :
+
+> Je conçois et je développe des applications mobiles, de l'idée jusqu'à la
+> mise en ligne. Huit applications sont aujourd'hui en ligne sur l'App Store,
+> conçues, développées et publiées de bout en bout.
+
+**4. Le lien vers le site.** Dans la section « Coordonnées », mettre
+`nadirbensalah.com` en site web. C'est ce qui fait le pont entre le profil et
+la preuve.
+
+Pense aussi à la section **Sélection** (featured) : y épingler deux ou trois
+applications de l'App Store donne une vignette visuelle en haut du profil.
+
+Le site, lui, pointe déjà vers ce profil : en-tête, pied de page, page
+contact, et dans les données structurées `sameAs` que Google utilise pour
+relier les deux identités.
 
 ### Search Console et Bing
 
