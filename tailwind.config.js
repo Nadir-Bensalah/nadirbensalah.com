@@ -1,72 +1,49 @@
+/**
+ * Configuration Tailwind, volontairement minimale.
+ *
+ * Le design du site ne passe pas par Tailwind : il vit dans les jetons CSS de
+ * src/styles/tailwind.css (couleurs, espaces, rayons, typographie) et dans les
+ * classes de composants qui y sont définies. Tailwind ne sert plus qu'à ses
+ * utilitaires de mise en page ponctuels.
+ *
+ * L'ancienne configuration était un résidu de gabarit : elle mappait quinze
+ * couleurs vers des variables jamais définies (--background, --foreground,
+ * --primary…), ce qui produisait du texte blanc sur fond blanc sur les pages
+ * restées sur l'ancien design. Elle déclarait aussi une police jamais chargée
+ * et cinq animations jamais utilisées.
+ */
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './src/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  darkMode: 'class',
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
-    container: {
-      center: true,
-      padding: '1rem',
-    },
     extend: {
+      // Les seules couleurs exposées à Tailwind sont celles qui existent
+      // réellement comme jetons. Toute autre valeur doit passer par le CSS.
       colors: {
-        background: { DEFAULT: 'var(--background)' },
-        foreground: { DEFAULT: 'var(--foreground)' },
-        primary: {
-          DEFAULT: 'var(--primary)',
-          foreground: 'var(--primary-foreground)',
-        },
-        secondary: {
-          DEFAULT: 'var(--secondary)',
-          foreground: 'var(--secondary-foreground)',
-        },
-        accent: {
-          DEFAULT: 'var(--accent)',
-          foreground: 'var(--accent-foreground)',
-        },
-        muted: {
-          DEFAULT: 'var(--muted)',
-          foreground: 'var(--muted-foreground)',
-        },
-        card: {
-          DEFAULT: 'var(--card)',
-          foreground: 'var(--card-foreground)',
-        },
-        border: 'var(--border)',
-        input: 'var(--input)',
-        ring: 'var(--ring)',
+        bg: 'var(--bg)',
+        'bg-2': 'var(--bg-2)',
+        'bg-3': 'var(--bg-3)',
+        texte: 'var(--texte)',
+        'texte-2': 'var(--texte-2)',
+        'texte-3': 'var(--texte-3)',
+        trait: 'var(--trait)',
+        action: 'var(--action)',
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-        xl: 'calc(var(--radius) + 4px)',
-        '2xl': 'calc(var(--radius) + 8px)',
-        '3xl': 'calc(var(--radius) + 16px)',
+        DEFAULT: 'var(--r-2)',
+        carte: 'var(--r-3)',
+        rond: 'var(--r-rond)',
       },
       fontFamily: {
-        sans: ['var(--font-plus-jakarta-sans)', 'sans-serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
-      fontSize: {
-        '5xl': ['3rem', { lineHeight: '1.1' }],
-        '6xl': ['3.75rem', { lineHeight: '1.05' }],
-        '7xl': ['4.5rem', { lineHeight: '1' }],
-        '8xl': ['6rem', { lineHeight: '0.95' }],
-      },
-      animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'float-card': 'floatCard 4s ease-in-out infinite',
-        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-        'shimmer': 'shimmer 3s linear infinite',
-        'gradient-shift': 'gradientShift 6s ease infinite',
-      },
-      backgroundImage: {
-        'hero-gradient': 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99,102,241,0.18) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 60%, rgba(6,182,212,0.1) 0%, transparent 50%), #09090B',
-        'primary-gradient': 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
-        'vivid-gradient': 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 40%, #06B6D4 100%)',
+      maxWidth: {
+        lecture: 'var(--colonne-lecture)',
+        conteneur: 'var(--conteneur)',
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [],
 };
