@@ -26,7 +26,10 @@ jobs:
       - name: Installer Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          # Node 22 minimum : les scripts de vérification utilisent le
+          # WebSocket natif, apparu en 22, pour piloter Chrome. Sous Node 20,
+          # l'audit échouait sur « WebSocket is not defined ».
+          node-version: '22'
           # Pas de `cache: npm` : il exige un package-lock.json, que le
           # .gitignore de ce dépôt exclut volontairement. Sans verrou de
           # dépendances, le cache n'a de toute façon rien de stable à
