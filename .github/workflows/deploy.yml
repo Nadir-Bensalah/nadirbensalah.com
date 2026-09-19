@@ -27,7 +27,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          # Pas de `cache: npm` : il exige un package-lock.json, que le
+          # .gitignore de ce dépôt exclut volontairement. Sans verrou de
+          # dépendances, le cache n'a de toute façon rien de stable à
+          # réutiliser.
 
       - name: Installer les dépendances
         run: npm install
