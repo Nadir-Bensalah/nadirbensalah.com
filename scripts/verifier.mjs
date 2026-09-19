@@ -197,6 +197,23 @@ for (const fichier of pages) {
     }
   }
 
+  // ── Apostrophes droites ─────────────────────────────────────────────
+  // En francais typographique l'apostrophe est courbe. Une droite dans le
+  // texte rendu trahit un passage ecrit hors du reste du site. On tolere
+  // quelques unites : un nom propre ou un extrait de code peut en porter.
+  const droites = (texteSeul.match(/\w'\w/g) || []).length;
+  if (droites > 2) {
+    problemes.push(`${nom} : ${droites} apostrophes droites dans le texte (attendu : courbes)`);
+  }
+
+  // ── Une seule identite : le pluriel de societe est banni ────────────
+  // Nadir exerce en entrepreneur individuel. « Nous » suggere une equipe
+  // qui n'existe pas, et sur une page juridique c'est trompeur.
+  const pluriel = texteSeul.match(/\b[Nn]ous (ne |n'|avons|sommes|proposons|utilisons|collectons|recevons|voyons)/g);
+  if (pluriel) {
+    problemes.push(`${nom} : « ${pluriel[0].trim()} » : le site parle a la premiere personne du singulier`);
+  }
+
   // ── Restes de la refonte ────────────────────────────────────────────
   if (/lorem ipsum/i.test(html)) problemes.push(`${nom} : « lorem ipsum » présent`);
   if (/href="#"/.test(html)) problemes.push(`${nom} : lien vide href="#"`);

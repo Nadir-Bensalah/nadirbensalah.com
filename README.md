@@ -146,6 +146,25 @@ typographie, d'espace ou de rayon ne doit être écrite ailleurs.
 
 ---
 
+## Deux règles ESLint désactivées
+
+`@next/next/no-img-element` : le site est exporté en statique avec
+`images.unoptimized`. `next/image` n'optimiserait rien et ajouterait du
+JavaScript pour rien. Les images sont converties en WebP en amont,
+dimensionnées à la main, avec `width`, `height`, `loading` et `decoding`
+explicites.
+
+`@next/next/no-page-custom-font` : règle conçue pour le routeur `pages/`. Ici
+la police est déclarée dans le layout de l'App Router, donc chargée une seule
+fois pour tout le site, avec `preconnect`.
+
+Ces justifications vivent ici parce qu'ESLint refuse toute propriété de
+premier niveau inconnue dans son fichier de configuration : y mettre un
+commentaire JSON invalidait la configuration entière, et le lint était alors
+silencieusement sauté à chaque build.
+
+---
+
 ## Les données des applications
 
 Toutes les données factuelles des huit applications (prix, dates, versions,

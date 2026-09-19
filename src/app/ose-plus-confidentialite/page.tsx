@@ -7,17 +7,17 @@ import Pied from '@/components/Pied';
 export const metadata: Metadata = {
   title: 'Ose+ – Politique de confidentialité',
   description:
-    "Politique de confidentialité de l'application Ose+ : aucune inscription, données conservées sur l'appareil, notifications et achat gérés par Apple.",
+    'Politique de confidentialité de l’application Ose+ : aucune inscription, données conservées sur l’appareil, notifications et achat gérés par Apple.',
   alternates: { canonical: '/ose-plus-confidentialite' },
 };
 
 const sections: [string, React.ReactNode][] = [
   [
-    "1. L'essentiel",
+    '1. L’essentiel',
     <>
       Ose+ ne demande aucune inscription et ne crée aucun compte. Vos prénoms de joueurs, vos
-      réglages et votre progression restent sur votre iPhone. Nous ne les recevons pas, nous ne les
-      revendons pas, nous ne faisons pas de publicité ciblée.
+      réglages et votre progression restent sur votre iPhone. Je ne les reçois pas, je ne les
+      revends pas, et il n’y a aucune publicité ciblée.
     </>,
   ],
   [
@@ -39,12 +39,12 @@ const sections: [string, React.ReactNode][] = [
     </>,
   ],
   [
-    "4. L'achat",
+    '4. L’achat',
     <>
       Ose+ propose un achat unique, sans abonnement. Il est traité entièrement par l&apos;App Store.
-      Nous ne voyons aucune coordonnée bancaire. L&apos;application demande simplement à StoreKit,
-      le service d&apos;Apple, si cet identifiant Apple a bien acheté la version complète. Base
-      légale : l&apos;exécution du contrat.
+      Je ne vois aucune coordonnée bancaire. L&apos;application demande simplement à StoreKit, le
+      service d&apos;Apple, si cet identifiant Apple a bien acheté la version complète. Base légale
+      : l&apos;exécution du contrat.
     </>,
   ],
   [
@@ -67,7 +67,7 @@ const sections: [string, React.ReactNode][] = [
     '7. Vos droits',
     <>
       Vous disposez d&apos;un droit d&apos;accès, de rectification, d&apos;effacement,
-      d&apos;opposition et de portabilité. En pratique, comme rien n&apos;est stocké chez nous, la
+      d&apos;opposition et de portabilité. En pratique, comme rien n&apos;est stocké de mon côté, la
       suppression se fait en désinstallant l&apos;application. Pour toute question, écrivez à{' '}
       <a href="mailto:contact@capmedia.app">contact@capmedia.app</a>. Vous pouvez aussi saisir la
       CNIL.

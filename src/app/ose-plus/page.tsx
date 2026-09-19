@@ -7,13 +7,13 @@ import Pied from '@/components/Pied';
 export const metadata: Metadata = {
   title: 'Ose+ – Aide et support',
   description:
-    "Support de l'application Ose+ : achat unique, restauration d'achat, notifications, langues, suppression des données et contact.",
+    'Support de l’application Ose+ : achat unique, restauration d’achat, notifications, langues, suppression des données et contact.',
   alternates: { canonical: '/ose-plus' },
 };
 
 const questions: [string, React.ReactNode][] = [
   [
-    "J'ai payé et l'application est toujours limitée",
+    'J’ai payé et l’application est toujours limitée',
     <>
       Ouvrez l&apos;écran d&apos;achat et touchez <strong>Restaurer un achat</strong>. Ose+
       redemande alors à Apple ce que votre identifiant a acheté. Assurez-vous d&apos;être connecté
@@ -21,7 +21,7 @@ const questions: [string, React.ReactNode][] = [
     </>,
   ],
   [
-    "J'ai changé d'iPhone, dois-je racheter ?",
+    'J’ai changé d’iPhone, dois-je racheter ?',
     <>
       Non. L&apos;achat est lié à votre identifiant Apple, pas à l&apos;appareil. Sur le nouvel
       iPhone, touchez <strong>Restaurer un achat</strong>. Le partage familial est activé : les
@@ -38,13 +38,13 @@ const questions: [string, React.ReactNode][] = [
   [
     'Comment demander un remboursement ?',
     <>
-      Les remboursements sont gérés par Apple, pas par nous. Rendez-vous sur{' '}
+      Les remboursements sont gérés par Apple, pas par moi. Rendez-vous sur{' '}
       <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a> avec votre identifiant
       Apple.
     </>,
   ],
   [
-    "L'application n'est pas dans ma langue",
+    'L’application n’est pas dans ma langue',
     <>
       Ose+ existe en treize langues et suit celle de votre iPhone. Vous pouvez aussi en choisir une
       autre dans Réglages, à l&apos;intérieur de l&apos;application.

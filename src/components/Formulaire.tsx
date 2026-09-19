@@ -33,6 +33,10 @@ export default function Formulaire({
   placeholder?: string;
 }) {
   const [etat, setEtat] = useState<Etat>('saisie');
+  // Le message compose est conserve : si la messagerie ne s'ouvre pas, le
+  // visiteur doit pouvoir le recuperer plutot que de tout retaper.
+  const [messageCompose, setMessageCompose] = useState('');
+  const [copie, setCopie] = useState(false);
   const [erreurs, setErreurs] = useState<Record<string, string>>({});
   const leurre = useRef<HTMLInputElement>(null);
   const idResultat = useMemo(() => `resultat-${variante}`, [variante]);
@@ -57,8 +61,11 @@ export default function Formulaire({
     const form = evt.currentTarget;
     const donnees = new FormData(form);
 
-    // Champ leurre rempli : c'est un robot. On fait semblant d'avoir réussi.
+    // Champ leurre rempli : c'est un robot, ou un gestionnaire de mots de
+    // passe trop zélé. On n'envoie rien, mais on ne détruit pas la saisie :
+    // un humain pris pour un robot doit pouvoir récupérer son texte.
     if (leurre.current?.value) {
+      setMessageCompose(String(donnees.get('message') || ''));
       setEtat('succes');
       return;
     }
@@ -95,6 +102,7 @@ export default function Formulaire({
       '\n'
     );
 
+    setMessageCompose(corps);
     suit(variante === 'challenge' ? EVENEMENTS.envoieChallenge : EVENEMENTS.envoieContact);
 
     window.location.href = `mailto:${profil.email}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
@@ -116,17 +124,58 @@ export default function Formulaire({
           <p className="t-h3" style={{ marginBottom: 'var(--e-2)' }}>
             Votre messagerie devrait s’être ouverte.
           </p>
-          <p className="t-corps t-2" style={{ marginBottom: 'var(--e-3)' }}>
-            Le message est pré-rempli : il ne reste qu’à l’envoyer. Si rien ne s’est ouvert,
-            écrivez-moi directement à{' '}
+          <p className="t-corps t-2" style={{ marginBottom: 'var(--e-4)' }}>
+            Le message est pré-rempli : il ne reste qu’à l’envoyer. Si rien ne s’est ouvert, votre
+            appareil n’a probablement pas de logiciel de messagerie configuré. Dans ce cas,
+            récupérez votre texte ci-dessous et envoyez-le à{' '}
             <a href={`mailto:${profil.email}`} style={{ fontWeight: 600 }}>
               {profil.email}
             </a>
             .
           </p>
-          <button type="button" className="btn btn-secondaire" onClick={() => setEtat('saisie')}>
-            Écrire un autre message
-          </button>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--e-3)' }}>
+            <button
+              type="button"
+              className="btn btn-secondaire"
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(messageCompose);
+                  setCopie(true);
+                  window.setTimeout(() => setCopie(false), 2500);
+                } catch {
+                  // Presse-papiers refusé : le texte reste lisible ci-dessous.
+                  setCopie(false);
+                }
+              }}
+            >
+              {copie ? 'Message copié' : 'Copier mon message'}
+            </button>
+            <button type="button" className="btn btn-fantome" onClick={() => setEtat('saisie')}>
+              Écrire un autre message
+            </button>
+          </div>
+
+          <details style={{ marginTop: 'var(--e-4)' }}>
+            <summary className="t-petit t-2" style={{ cursor: 'pointer' }}>
+              Revoir mon message
+            </summary>
+            <pre
+              style={{
+                marginTop: 'var(--e-3)',
+                whiteSpace: 'pre-wrap',
+                fontFamily: 'var(--police)',
+                fontSize: 14,
+                lineHeight: 1.6,
+                color: 'var(--texte-2)',
+                background: 'var(--bg)',
+                borderRadius: 'var(--r-2)',
+                padding: 'var(--e-3)',
+              }}
+            >
+              {messageCompose}
+            </pre>
+          </details>
         </div>
       </div>
     );
