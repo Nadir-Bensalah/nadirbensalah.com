@@ -41,6 +41,10 @@ jobs:
       - name: Construire le site
         env:
           NEXT_PUBLIC_SITE_URL: https://nadirbensalah.com
+          # Clé publique du service d'envoi du formulaire. Tant que le secret
+          # n'existe pas, la variable est vide et le formulaire retombe sur
+          # l'ouverture de la messagerie : rien ne casse.
+          NEXT_PUBLIC_CLE_FORMULAIRE: ${{ secrets.CLE_FORMULAIRE }}
         # `next build` produit directement l'export statique : la commande
         # `next export` n'existe plus depuis Next 14. Le script de build
         # génère ensuite sitemap.xml et robots.txt.

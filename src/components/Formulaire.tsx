@@ -7,11 +7,19 @@ import { profil } from '@/content/profil';
 /**
  * Le formulaire de contact.
  *
- * Le site est exporté en statique : il n'y a aucun serveur pour recevoir une
- * requête POST. Le formulaire compose donc un e-mail et l'ouvre dans le client
- * de messagerie du visiteur. C'est moins élégant qu'un envoi silencieux, mais
- * c'est honnête : le message part vraiment, et le visiteur en garde une copie
- * dans ses messages envoyés.
+ * Le site est exporté en statique : il n'y a aucun serveur à soi pour recevoir
+ * une requête POST. Le message part donc vers un service d'envoi tiers, dont
+ * la clé publique vit dans NEXT_PUBLIC_CLE_FORMULAIRE.
+ *
+ * Tant que cette clé n'est pas définie, le formulaire retombe sur l'ancien
+ * comportement : composer un e-mail et ouvrir la messagerie du visiteur. Ça
+ * marche, mais ça demande au prospect de finir le travail, et surtout aucune
+ * tentative n'est tracée : impossible de savoir combien de gens ont rempli
+ * les champs sans que le message parte.
+ *
+ * Le repli reste en place même avec la clé : si l'envoi échoue (réseau coupé,
+ * service indisponible), le visiteur récupère son texte et l'adresse directe
+ * plutôt qu'un message d'erreur sec.
  *
  * Les coordonnées directes sont affichées à côté, parce qu'un tiers des gens
  * préfèrent écrire eux-mêmes plutôt que remplir des champs.
@@ -37,6 +45,9 @@ export default function Formulaire({
   // visiteur doit pouvoir le recuperer plutot que de tout retaper.
   const [messageCompose, setMessageCompose] = useState('');
   const [copie, setCopie] = useState(false);
+  // Distingue « le message est parti » de « votre messagerie devrait s'être
+  // ouverte » : les deux méritent un texte différent.
+  const [envoiReel, setEnvoiReel] = useState(false);
   const [erreurs, setErreurs] = useState<Record<string, string>>({});
   const leurre = useRef<HTMLInputElement>(null);
   const idResultat = useMemo(() => `resultat-${variante}`, [variante]);
@@ -105,11 +116,46 @@ export default function Formulaire({
     setMessageCompose(corps);
     suit(variante === 'challenge' ? EVENEMENTS.envoieChallenge : EVENEMENTS.envoieContact);
 
-    window.location.href = `mailto:${profil.email}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+    const cle = process.env.NEXT_PUBLIC_CLE_FORMULAIRE;
 
-    // Le client de messagerie s'ouvre dans un autre processus : on repasse en
-    // état lisible pour que le visiteur comprenne ce qui vient de se passer.
-    window.setTimeout(() => setEtat('succes'), 700);
+    // Sans clé configurée : l'ancien comportement, pour que le formulaire ne
+    // soit jamais cassé pendant l'installation.
+    if (!cle) {
+      window.location.href = `mailto:${profil.email}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+      window.setTimeout(() => setEtat('succes'), 700);
+      return;
+    }
+
+    void (async () => {
+      try {
+        const reponse = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: cle,
+            subject: sujet,
+            from_name: nom,
+            // Répondre au message ouvre directement une réponse au visiteur.
+            replyto: email,
+            nom,
+            entreprise: entreprise || '—',
+            email,
+            message,
+            origine: variante,
+          }),
+        });
+
+        if (!reponse.ok) throw new Error(String(reponse.status));
+        setEnvoiReel(true);
+        setEtat('succes');
+      } catch {
+        // L'envoi a échoué : plutôt qu'un message d'erreur sec, on bascule sur
+        // la messagerie. Le visiteur n'a pas à savoir qu'un service tiers est
+        // tombé, il veut juste que son message parte.
+        window.location.href = `mailto:${profil.email}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+        window.setTimeout(() => setEtat('succes'), 700);
+      }
+    })();
   };
 
   if (etat === 'succes') {
@@ -122,16 +168,29 @@ export default function Formulaire({
       >
         <div>
           <p className="t-h3" style={{ marginBottom: 'var(--e-2)' }}>
-            Votre messagerie devrait s’être ouverte.
+            {envoiReel ? 'Message reçu.' : 'Votre messagerie devrait s’être ouverte.'}
           </p>
           <p className="t-corps t-2" style={{ marginBottom: 'var(--e-4)' }}>
-            Le message est pré-rempli : il ne reste qu’à l’envoyer. Si rien ne s’est ouvert, votre
-            appareil n’a probablement pas de logiciel de messagerie configuré. Dans ce cas,
-            récupérez votre texte ci-dessous et envoyez-le à{' '}
-            <a href={`mailto:${profil.email}`} style={{ fontWeight: 600 }}>
-              {profil.email}
-            </a>
-            .
+            {envoiReel ? (
+              <>
+                Je réponds sous 24 heures, y compris pour dire que ce n’est pas pour moi. Si vous
+                voulez ajouter quelque chose, écrivez directement à{' '}
+                <a href={`mailto:${profil.email}`} style={{ fontWeight: 600 }}>
+                  {profil.email}
+                </a>
+                .
+              </>
+            ) : (
+              <>
+                Le message est pré-rempli : il ne reste qu’à l’envoyer. Si rien ne s’est ouvert,
+                votre appareil n’a probablement pas de logiciel de messagerie configuré. Dans ce
+                cas, récupérez votre texte ci-dessous et envoyez-le à{' '}
+                <a href={`mailto:${profil.email}`} style={{ fontWeight: 600 }}>
+                  {profil.email}
+                </a>
+                .
+              </>
+            )}
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--e-3)' }}>
