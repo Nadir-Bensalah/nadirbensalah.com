@@ -5,7 +5,7 @@ import Header from '@/components/en/Header';
 import Footer from '@/components/en/Footer';
 import Apparait from '@/components/Apparait';
 import CarteApp from '@/components/CarteApp';
-import { apps, appsClient, appsPersonnelles } from '@/content/apps';
+import { apps, appsPersonnelles } from '@/content/apps';
 import { profileEn } from '@/content/en/profil';
 import { alternatives } from '@/lib/langues';
 import LienEvitement from '@/components/LienEvitement';
@@ -72,9 +72,9 @@ export default function Apps() {
               </p>
               <h1 className="t-h1">Eight apps on the App&nbsp;Store.</h1>
               <p className="t-lead" style={{ marginTop: 'var(--e-4)' }}>
-                Seven under my own developer account, one for a client. All of them downloadable
-                today. Each case study covers the constraint it started from, what that forced on
-                the architecture, and what the project demonstrates.
+                All designed, built and shipped by me. All of them downloadable today. Each case
+                study covers the constraint it started from, what that forced on the architecture,
+                and what the project demonstrates.
               </p>
               <p className="t-petit t-3" style={{ marginTop: 'var(--e-4)' }}>
                 Figures taken from the App&nbsp;Store on 19 September 2026. No ratings and no
@@ -90,7 +90,7 @@ export default function Apps() {
             <section className="section" aria-labelledby="t-own">
               <div className="section-tete">
                 <h2 id="t-own" className="t-h2">
-                  My own products
+                  The apps
                 </h2>
                 <p className="t-lead" style={{ maxWidth: 640 }}>
                   Designed, built, shipped and maintained alone. Nobody else to arbitrate, draw, fix
@@ -101,24 +101,6 @@ export default function Apps() {
                 {appsPersonnelles.map((app, i) => (
                   <Apparait key={app.slug} retard={(i % 3) as 0 | 1 | 2}>
                     <CarteApp app={app} prioritaire={i < 3} langue="en" />
-                  </Apparait>
-                ))}
-              </div>
-            </section>
-
-            <section className="section" aria-labelledby="t-client">
-              <div className="section-tete">
-                <h2 id="t-client" className="t-h2">
-                  For a client
-                </h2>
-                <p className="t-lead" style={{ maxWidth: 640 }}>
-                  The same work, with somebody else&apos;s calendar, scope and trade-offs.
-                </p>
-              </div>
-              <div className="grille grille-3">
-                {appsClient.map((app) => (
-                  <Apparait key={app.slug}>
-                    <CarteApp app={app} langue="en" />
                   </Apparait>
                 ))}
               </div>

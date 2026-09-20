@@ -21,8 +21,6 @@ export type App = {
   categorie: string;
   /** La catégorie telle qu'Apple la nomme sur l'App Store anglophone. */
   categoryEn: string;
-  /** Le client, quand l'app a été développée pour un tiers. */
-  client?: string;
   appStoreId: string;
   appStoreUrl: string;
   /** Date de première mise en ligne sur l'App Store (ISO). */
@@ -346,7 +344,6 @@ export const apps: App[] = [
     baselineEn: 'Goals, tasks, habits, journal and projects in one place.',
     categorie: 'Productivité',
     categoryEn: 'Productivity',
-    client: 'Perseus Capital',
     appStoreId: '6760335253',
     appStoreUrl: 'https://apps.apple.com/fr/app/id6760335253',
     sortie: '2026-08-07',
@@ -376,12 +373,12 @@ export const apps: App[] = [
     ],
     stack: ['React Native', 'React', 'Firebase', 'Firestore', 'Cloud Functions', 'Node.js'],
     demontre: [
-      'Livrer pour un client, avec ses contraintes, ses délais et ses arbitrages',
+      'Tenir un périmètre imposé, avec son calendrier et ses arbitrages',
       'Tenir un écosystème complet : mobile, web et fonctions serveur',
       'Assurer le suivi après la mise en ligne : l’application a été mise à jour un mois après sa sortie',
     ],
     saillant:
-      'Le seul projet client de cette sélection. Publié sous le compte du client, Perseus Capital, et maintenu après la mise en ligne.',
+      'Le projet le plus large de cette sélection : mobile, web et back-office, maintenu après la mise en ligne.',
     site: 'https://forgeme.net/fr',
   },
   {
@@ -426,11 +423,8 @@ export const apps: App[] = [
   },
 ];
 
-/** Les applications publiées sous mon propre compte développeur. */
-export const appsPersonnelles = apps.filter((a) => !a.client);
-
-/** Les applications livrées pour un client. */
-export const appsClient = apps.filter((a) => a.client);
+/** Toutes les applications publiées, sans distinction d'origine. */
+export const appsPersonnelles = apps;
 
 export function appParSlug(slug: string): App | undefined {
   return apps.find((a) => a.slug === slug);

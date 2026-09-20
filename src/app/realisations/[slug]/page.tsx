@@ -45,14 +45,8 @@ function Fiche({ app }: { app: App }) {
     ['Poids', `${app.tailleMo} Mo`],
     ['iOS minimum', app.iosMini],
     ['Langues', app.langues.join(', ')],
-    [
-      'Mon rôle',
-      app.client
-        ? 'Conception, développement, publication'
-        : 'Tout : idée, conception, développement, publication, maintenance',
-    ],
+    ['Mon rôle', 'Tout : idée, conception, développement, publication, maintenance'],
   ];
-  if (app.client) lignes.splice(1, 0, ['Client', app.client]);
 
   return (
     <dl
@@ -174,7 +168,6 @@ export default async function EtudeDeCas({ params }: { params: Params }) {
                 <h1 className="t-h1">{app.nomCourt}</h1>
                 <p className="t-petit t-3" style={{ marginTop: 6 }}>
                   {app.categorie} · {app.prix}
-                  {app.client ? ` · pour ${app.client}` : ''}
                 </p>
               </div>
             </div>

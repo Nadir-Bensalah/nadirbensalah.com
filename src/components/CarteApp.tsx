@@ -66,9 +66,6 @@ export default function CarteApp({
             {date}
           </p>
         </div>
-        {app.client && (
-          <span className="pastille pastille--client">{en ? 'Client work' : 'Client'}</span>
-        )}
       </div>
 
       <p className="t-petit t-2" style={{ flex: 1 }}>

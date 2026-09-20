@@ -528,10 +528,6 @@
     background: var(--voile-vert);
     color: var(--texte);
   }
-  .pastille--client {
-    background: var(--voile-bleu);
-    color: var(--texte);
-  }
 
   .point-vert {
     width: 7px;

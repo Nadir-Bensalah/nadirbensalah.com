@@ -68,9 +68,8 @@ export default function MentionsLegales() {
                 </p>
                 <p>
                   Les captures d’écran et les icônes des applications présentées proviennent de
-                  leurs fiches App&nbsp;Store respectives. L’application ForgeMe est publiée par
-                  Perseus Capital ; elle est présentée ici au titre d’une prestation de
-                  développement.
+                  leurs fiches App&nbsp;Store respectives. L’application ForgeMe est éditée par
+                  Perseus Capital.
                 </p>
                 <p>
                   Les données du réseau de transport amiénois utilisées par l’application Amiens ·

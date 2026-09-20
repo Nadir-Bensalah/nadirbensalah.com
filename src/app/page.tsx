@@ -143,8 +143,8 @@ export default function Accueil() {
                   }}
                 >
                   <span className="point-vert" aria-hidden />
-                  Huit applications en ligne sur l’App&nbsp;Store : sept sous mon nom, une pour un
-                  client
+                  Huit applications en ligne sur l’App&nbsp;Store, toutes conçues, développées et
+                  publiées par mes soins
                 </p>
               </Apparait>
 

@@ -5,7 +5,7 @@ import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
 import Apparait from '@/components/Apparait';
 import CarteApp from '@/components/CarteApp';
-import { apps, appsClient, appsPersonnelles } from '@/content/apps';
+import { apps, appsPersonnelles } from '@/content/apps';
 import { profil } from '@/content/profil';
 import { alternatives } from '@/lib/langues';
 import LienEvitement from '@/components/LienEvitement';
@@ -72,9 +72,9 @@ export default function Realisations() {
               </p>
               <h1 className="t-h1">Huit applications conçues, développées et publiées.</h1>
               <p className="t-lead" style={{ marginTop: 'var(--e-4)' }}>
-                Sept sous mon propre compte développeur, une pour un client. Toutes sont
-                téléchargeables aujourd’hui. Chaque étude de cas raconte la contrainte de départ, ce
-                qu’elle a imposé à l’architecture, et ce que le projet démontre.
+                Toutes conçues, développées et publiées par mes soins. Toutes sont téléchargeables
+                aujourd’hui. Chaque étude de cas raconte la contrainte de départ, ce qu’elle a
+                imposé à l’architecture, et ce que le projet démontre.
               </p>
               <p className="t-petit t-3" style={{ marginTop: 'var(--e-4)' }}>
                 Données relevées sur l’App&nbsp;Store le 19 septembre 2026. Aucune note ni aucun
@@ -90,10 +90,10 @@ export default function Realisations() {
             <section className="section" aria-labelledby="titre-perso">
               <div className="section-tete">
                 <h2 id="titre-perso" className="t-h2">
-                  Mes produits
+                  Les applications
                 </h2>
                 <p className="t-lead" style={{ maxWidth: 620 }}>
-                  Conçus, développés, publiés et maintenus seul. Personne d’autre pour arbitrer,
+                  Conçues, développées, publiées et maintenues seul. Personne d’autre pour arbitrer,
                   dessiner, corriger ou répondre à la revue Apple.
                 </p>
               </div>
@@ -101,25 +101,6 @@ export default function Realisations() {
                 {appsPersonnelles.map((app, i) => (
                   <Apparait key={app.slug} retard={(i % 3) as 0 | 1 | 2}>
                     <CarteApp app={app} prioritaire={i < 3} />
-                  </Apparait>
-                ))}
-              </div>
-            </section>
-
-            <section className="section" aria-labelledby="titre-client">
-              <div className="section-tete">
-                <h2 id="titre-client" className="t-h2">
-                  Pour un client
-                </h2>
-                <p className="t-lead" style={{ maxWidth: 620 }}>
-                  Le même travail, avec les contraintes de quelqu’un d’autre : son calendrier, son
-                  périmètre et ses arbitrages.
-                </p>
-              </div>
-              <div className="grille grille-3">
-                {appsClient.map((app) => (
-                  <Apparait key={app.slug}>
-                    <CarteApp app={app} />
                   </Apparait>
                 ))}
               </div>
