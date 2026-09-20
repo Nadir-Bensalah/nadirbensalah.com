@@ -146,7 +146,7 @@ export default function Pied() {
               >
                 {c.liens.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="lien-sobre t-petit">
+                    <Link prefetch={false} href={l.href} className="lien-sobre t-petit">
                       {l.libelle}
                     </Link>
                   </li>

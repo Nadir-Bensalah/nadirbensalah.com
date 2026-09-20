@@ -11,7 +11,7 @@ import { alternatives } from '@/lib/langues';
 import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
-  title: 'Hire a React Native Developer — Remote, EU-Based',
+  title: 'Hire a React Native Developer, Remote',
   description:
     'Freelance or full-time React Native developer, available remotely. European invoicing, overlapping hours with the UK and US East Coast.',
   alternates: alternatives('/en/hire'),

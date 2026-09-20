@@ -86,6 +86,7 @@ export default function SelecteurIntention() {
       <div className="grille grille-3">
         {portes.map((p) => (
           <Link
+            prefetch={false}
             key={p.cle}
             href={p.href}
             onClick={() => choisir(p)}

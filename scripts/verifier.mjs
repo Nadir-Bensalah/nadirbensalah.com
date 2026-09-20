@@ -88,8 +88,15 @@ for (const fichier of pages) {
   // ── Liens internes ──────────────────────────────────────────────────
   for (const m of html.matchAll(/href="(\/[^"#?]*)"/g)) {
     const cible = m[1].replace(/\/$/, '') || '/';
-    if (cible.startsWith('/_next') || cible.startsWith('/assets')) {
-      // Ressource : on vérifie le fichier sur le disque.
+    // Une ressource se reconnaît à son extension, pas seulement à son
+    // dossier : /favicon.ico vit à la racine et n'est pas une page. Le
+    // comparer à la liste des pages le déclarait mort alors qu'il était
+    // bien présent dans l'export.
+    const estRessource =
+      cible.startsWith('/_next') ||
+      cible.startsWith('/assets') ||
+      /\.(ico|png|jpe?g|webp|svg|gif|pdf|woff2?|txt|xml|webmanifest)$/i.test(cible);
+    if (estRessource) {
       if (!existsSync(join(sortie, cible))) {
         problemes.push(`${nom} : ressource absente ${cible}`);
       }

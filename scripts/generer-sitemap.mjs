@@ -77,10 +77,15 @@ function alternances(chemin) {
   const paire = paires.find((p) => p[0] === chemin || p[1] === chemin);
   if (!paire) return '';
   const [fr, en] = paire;
+  // L'accueil s'auto-declare « nadirbensalah.com » dans sa canonique et ses
+  // hreflang, sans barre finale. Le sitemap doit dire exactement la meme
+  // chose : deux ecritures de la meme URL sont deux signaux qui se
+  // contredisent, et rendent le rapport de couverture illisible.
+  const abs = (c) => `${site}${c === '/' ? '' : c}`;
   return (
-    `\n    <xhtml:link rel="alternate" hreflang="fr" href="${site}${fr}"/>` +
-    `\n    <xhtml:link rel="alternate" hreflang="en" href="${site}${en}"/>` +
-    `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${site}${en}"/>`
+    `\n    <xhtml:link rel="alternate" hreflang="fr" href="${abs(fr)}"/>` +
+    `\n    <xhtml:link rel="alternate" hreflang="en" href="${abs(en)}"/>` +
+    `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(en)}"/>`
   );
 }
 
@@ -105,7 +110,7 @@ ${urls
   .map((u) => {
     const { priorite, frequence } = reglage(u);
     return `  <url>
-    <loc>${site}${u === '/' ? '/' : u}</loc>${alternances(u)}
+    <loc>${site}${u === '/' ? '' : u}</loc>${alternances(u)}
     <lastmod>${aujourdhui}</lastmod>
     <changefreq>${frequence}</changefreq>
     <priority>${priorite}</priority>
@@ -122,6 +127,11 @@ const robots = `# robots.txt · ${site}
 User-agent: *
 Allow: /
 Disallow: /_next/
+# Charges React Server Components : le meme texte que la page HTML, mais
+# illisible. Elles vivent a la racine et non sous /_next/, donc la regle
+# ci-dessus ne les couvre pas. Les laisser explorables ferait decouvrir a
+# Google un doublon de chaque page, en charabia.
+Disallow: /*.txt$
 
 Sitemap: ${site}/sitemap.xml
 `;

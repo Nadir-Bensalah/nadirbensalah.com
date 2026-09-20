@@ -72,6 +72,7 @@ export default function Entete() {
         }}
       >
         <Link
+          prefetch={false}
           href="/"
           style={{
             display: 'inline-flex',
@@ -115,6 +116,7 @@ export default function Entete() {
         >
           {liens.map((l) => (
             <Link
+              prefetch={false}
               key={l.href}
               href={l.href}
               aria-current={actif(l.href) ? 'page' : undefined}
@@ -135,6 +137,7 @@ export default function Entete() {
             existe, et renvoie à l'accueil anglais sinon : personne ne veut
             recommencer sa navigation en changeant de langue. */}
         <Link
+          prefetch={false}
           href={equivalentAnglais}
           hrefLang="en"
           className="btn btn-fantome cta-bureau"
@@ -156,7 +159,12 @@ export default function Entete() {
           Le CV
         </a>
 
-        <Link href="/contact" className="btn btn-principal cta-bureau" style={{ flex: 'none' }}>
+        <Link
+          prefetch={false}
+          href="/contact"
+          className="btn btn-principal cta-bureau"
+          style={{ flex: 'none' }}
+        >
           Me contacter
         </Link>
 
@@ -222,6 +230,7 @@ export default function Entete() {
           <nav aria-label="Navigation mobile" style={{ display: 'flex', flexDirection: 'column' }}>
             {liens.map((l) => (
               <Link
+                prefetch={false}
                 key={l.href}
                 href={l.href}
                 style={{
@@ -236,6 +245,7 @@ export default function Entete() {
               </Link>
             ))}
             <Link
+              prefetch={false}
               href="/contact"
               className="btn btn-principal btn-large btn-bloc"
               style={{ marginTop: 'var(--e-6)' }}

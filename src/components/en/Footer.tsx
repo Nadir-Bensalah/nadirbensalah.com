@@ -135,7 +135,7 @@ export default function Footer() {
               >
                 {c.links.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="lien-sobre t-petit">
+                    <Link prefetch={false} href={l.href} className="lien-sobre t-petit">
                       {l.label}
                     </Link>
                   </li>
@@ -158,7 +158,7 @@ export default function Footer() {
               }}
             >
               <li>
-                <Link href="/" hrefLang="fr" className="lien-sobre t-petit">
+                <Link prefetch={false} href="/" hrefLang="fr" className="lien-sobre t-petit">
                   Version française
                 </Link>
               </li>

@@ -77,6 +77,7 @@ export default function BarreCollante() {
             Le CV
           </a>
           <Link
+            prefetch={false}
             href="/contact"
             onClick={() => suit(EVENEMENTS.ouvreContact, { depuis: 'barre_collante' })}
             className="btn btn-principal"
@@ -89,6 +90,7 @@ export default function BarreCollante() {
       ) : (
         <>
           <Link
+            prefetch={false}
             href="/realisations"
             className="btn btn-secondaire"
             style={{ flex: 1 }}
@@ -97,6 +99,7 @@ export default function BarreCollante() {
             Réalisations
           </Link>
           <Link
+            prefetch={false}
             href="/contact"
             onClick={() => suit(EVENEMENTS.ouvreContact, { depuis: 'barre_collante' })}
             className="btn btn-principal"

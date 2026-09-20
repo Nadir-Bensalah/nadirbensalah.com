@@ -45,7 +45,10 @@
     0 9px 24px rgba(15, 15, 15, 0.2);
 
   /* typographie */
-  --police: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* --police-inter est posee par next/font/local dans layout.tsx. La suite
+     sert de repli tant que le fichier n'est pas arrive, et si jamais il
+     n'arrive pas. */
+  --police: var(--police-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --police-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --ls-display: -0.03em;

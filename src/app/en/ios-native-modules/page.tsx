@@ -11,7 +11,7 @@ import { alternatives } from '@/lib/langues';
 import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
-  title: 'Live Activities & Widgets for React Native Apps',
+  title: 'Live Activities and Widgets in React Native',
   description:
     'Live Activities, Dynamic Island, App Intents, widgets and Watch apps added to existing React Native projects. Written in Swift, shipped in production.',
   alternates: alternatives('/en/ios-native-modules'),

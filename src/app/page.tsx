@@ -177,10 +177,14 @@ export default function Accueil() {
                     marginTop: 'var(--e-6)',
                   }}
                 >
-                  <Link href="/realisations" className="btn btn-principal btn-large">
+                  <Link
+                    prefetch={false}
+                    href="/realisations"
+                    className="btn btn-principal btn-large"
+                  >
                     Voir mes réalisations
                   </Link>
-                  <Link href="/contact" className="btn btn-secondaire btn-large">
+                  <Link prefetch={false} href="/contact" className="btn btn-secondaire btn-large">
                     Parler d’un projet
                   </Link>
                 </div>
@@ -248,7 +252,7 @@ export default function Accueil() {
               </div>
 
               <div>
-                <Link href="/realisations" className="btn btn-secondaire">
+                <Link prefetch={false} href="/realisations" className="btn btn-secondaire">
                   Toutes les études de cas
                 </Link>
               </div>
@@ -410,7 +414,7 @@ export default function Accueil() {
               </div>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--e-3)' }}>
-                <Link href="/a-propos" className="btn btn-secondaire">
+                <Link prefetch={false} href="/a-propos" className="btn btn-secondaire">
                   Le parcours complet
                 </Link>
                 <a href={profil.cv} className="btn btn-fantome" download>
@@ -434,10 +438,10 @@ export default function Accueil() {
                   justifie. Je réponds sous {disponibilite.delaiReponse}.
                 </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--e-3)' }}>
-                  <Link href="/contact" className="btn btn-principal btn-large">
+                  <Link prefetch={false} href="/contact" className="btn btn-principal btn-large">
                     Me contacter
                   </Link>
-                  <Link href="/challenge" className="btn btn-secondaire btn-large">
+                  <Link prefetch={false} href="/challenge" className="btn btn-secondaire btn-large">
                     Me soumettre un problème
                   </Link>
                 </div>

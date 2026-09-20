@@ -62,6 +62,7 @@ export default function Header() {
         style={{ height: 60, display: 'flex', alignItems: 'center', gap: 'var(--e-4)' }}
       >
         <Link
+          prefetch={false}
           href="/en"
           style={{
             display: 'inline-flex',
@@ -101,6 +102,7 @@ export default function Header() {
         >
           {links.map((l) => (
             <Link
+              prefetch={false}
               key={l.href}
               href={l.href}
               aria-current={active(l.href) ? 'page' : undefined}
@@ -121,6 +123,7 @@ export default function Header() {
             que de renvoyer à l'accueil : personne ne veut recommencer. */}
         {other && (
           <Link
+            prefetch={false}
             href={other.href}
             hrefLang={other.langue}
             className="btn btn-fantome cta-bureau"
@@ -140,7 +143,12 @@ export default function Header() {
           CV
         </a>
 
-        <Link href="/en/contact" className="btn btn-principal cta-bureau" style={{ flex: 'none' }}>
+        <Link
+          prefetch={false}
+          href="/en/contact"
+          className="btn btn-principal cta-bureau"
+          style={{ flex: 'none' }}
+        >
           Get in touch
         </Link>
 
@@ -206,6 +214,7 @@ export default function Header() {
           <nav aria-label="Mobile navigation" style={{ display: 'flex', flexDirection: 'column' }}>
             {links.map((l) => (
               <Link
+                prefetch={false}
                 key={l.href}
                 href={l.href}
                 style={{
@@ -220,6 +229,7 @@ export default function Header() {
               </Link>
             ))}
             <Link
+              prefetch={false}
               href="/en/contact"
               className="btn btn-principal btn-large btn-bloc"
               style={{ marginTop: 'var(--e-6)' }}
@@ -236,6 +246,7 @@ export default function Header() {
             </a>
             {other && (
               <Link
+                prefetch={false}
                 href={other.href}
                 hrefLang={other.langue}
                 className="btn btn-fantome btn-bloc"

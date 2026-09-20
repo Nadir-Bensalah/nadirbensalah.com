@@ -25,6 +25,7 @@ export default function RangeeApps({ langue = 'fr' }: { langue?: 'fr' | 'en' }) 
         {apps.map((app, i) => (
           <li key={app.slug} className="tuile-app" style={{ ['--i' as string]: i }}>
             <Link
+              prefetch={false}
               href={en ? '/en/apps' : `/realisations/${app.slug}`}
               aria-label={
                 en

@@ -53,6 +53,7 @@ export default function CarteApp({
         <div style={{ minWidth: 0, flex: 1 }}>
           <h3 className="t-h3" style={{ marginBottom: 2 }}>
             <Link
+              prefetch={false}
               href={`/realisations/${app.slug}`}
               style={{ color: 'var(--texte)' }}
               className="lien-carte"
@@ -100,6 +101,7 @@ export default function CarteApp({
         }}
       >
         <Link
+          prefetch={false}
           href={lien}
           className="t-petit t-fort lien-action-carte"
           style={{ color: 'var(--action)' }}

@@ -37,13 +37,16 @@ export default function EnHome() {
       inLanguage: 'en',
       mainEntity: {
         '@type': 'Person',
-        '@id': `${profileEn.site}/#person`,
+        // Le meme identifiant que la version francaise : c'est la meme
+        // personne. Deux @id declareraient deux humains homonymes et
+        // diviseraient en deux le seul signal d'entite du site.
+        '@id': `${profileEn.site}/#personne`,
         name: profileEn.name,
         jobTitle: profileEn.role,
         url: `${profileEn.site}/en`,
         email: `mailto:${profileEn.email}`,
         address: { '@type': 'PostalAddress', addressLocality: 'Amiens', addressCountry: 'FR' },
-        sameAs: [profileEn.linkedin, profileEn.github],
+        sameAs: [profileEn.linkedin, profileEn.github, 'https://capmedia.app'],
         knowsAbout: [
           'React Native',
           'Swift',
