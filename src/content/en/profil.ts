@@ -34,14 +34,14 @@ export const profileEn = {
  * what four of the eight published apps actually prove.
  */
 export const positioningEn =
-  'Most React Native work stops where iOS begins. Live Activities, the Dynamic Island, App Intents, widgets, a Watch companion: none of them have a JavaScript equivalent, and that is usually where a project stalls. I write the Swift, wire it to the React Native side, and ship it through App Review.';
+  'Most React Native work stops where iOS begins. Live Activities, the Dynamic Island, App Intents, widgets, a Watch companion: none of them have a JavaScript equivalent, and that is usually where a project stalls. I write the Swift, wire it to the React Native side, and ship it through App Review. Twice I decided the bridge was not worth paying for, and wrote the whole app in Swift.';
 
 export type ProofEn = { title: string; body: string };
 
 export const proofsEn: ProofEn[] = [
   {
     title: 'I write the native layer',
-    body: 'Four of my published apps contain Swift I wrote: ActivityKit for Live Activities, App Intents for Siri and Control Center, Core NFC, and a SwiftUI Watch app. That is the part most React Native teams outsource or abandon.',
+    body: 'Six of my published apps contain Swift I wrote, and two are written in Swift from top to bottom: ActivityKit for Live Activities, App Intents for Siri and the Control Center, WidgetKit, SwiftData, a SwiftUI Watch app. That is the part most React Native teams outsource or abandon.',
   },
   {
     title: 'I ship through App Review',

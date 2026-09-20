@@ -78,7 +78,7 @@ export default function CarteApp({
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
         {/* On en montre cinq plutôt que trois : les technologies qui
             distinguent réellement un profil (ActivityKit, App Intents,
-            SwiftUI, Core NFC) arrivent en fin de liste, et un « +3 » les
+            SwiftUI, SwiftData) arrivent en fin de liste, et un « +3 » les
             rendait invisibles à qui survole. */}
         {app.stack.slice(0, 5).map((t) => (
           <span key={t} className="pastille">

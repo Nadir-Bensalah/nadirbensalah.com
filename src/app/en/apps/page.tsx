@@ -13,7 +13,7 @@ import LienEvitement from '@/components/LienEvitement';
 export const metadata: Metadata = {
   title: 'Apps I’ve Shipped on the App Store',
   description:
-    'Eight apps published on the App Store, from ActivityKit and App Intents to Core NFC and a SwiftUI Watch companion. What each one demanded.',
+    'Eight apps published on the App Store, from ActivityKit and App Intents to SwiftData and a SwiftUI Watch companion. What each one demanded.',
   alternates: alternatives('/en/apps'),
   openGraph: {
     title: 'Eight apps on the App Store',

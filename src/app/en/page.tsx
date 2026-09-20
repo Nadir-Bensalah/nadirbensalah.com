@@ -54,7 +54,7 @@ export default function EnHome() {
           'App Intents',
           'WidgetKit',
           'SwiftUI',
-          'Core NFC',
+          'SwiftData',
           'TypeScript',
           'iOS development',
           'App Store submission',

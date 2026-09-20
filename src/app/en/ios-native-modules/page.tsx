@@ -60,11 +60,12 @@ const modules = [
     app: 'qindil',
   },
   {
-    api: 'Core NFC',
-    title: 'NFC tags',
-    body: 'Reading a tag to trigger an action, with the entitlement and the background reading mode that makes it work without opening the app first.',
-    proof: 'Ticket starts a parking session from a tag stuck to the dashboard.',
-    app: 'ticket',
+    api: 'SwiftData',
+    title: 'A local database that survives the app',
+    body: 'A real domain model, not a bag of key-value pairs: relationships, migrations, and queries that stay fast as the data grows. On device, with no server and no account.',
+    proof:
+      'Pilou holds the full vaccination schedule, weight history and observations for each animal.',
+    app: 'pilou',
   },
   {
     api: 'Offline first',
