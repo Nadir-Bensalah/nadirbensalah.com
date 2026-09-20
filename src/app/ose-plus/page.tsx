@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Ose+ – Aide et support',
@@ -70,9 +71,7 @@ const questions: [string, React.ReactNode][] = [
 export default function OsePlusSupportPage() {
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
 
       <main id="contenu">

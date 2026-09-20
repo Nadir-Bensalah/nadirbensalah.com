@@ -8,6 +8,7 @@ import CarteApp from '@/components/CarteApp';
 import { appParSlug } from '@/content/apps';
 import { profileEn } from '@/content/en/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Live Activities & Widgets for React Native Apps',
@@ -89,9 +90,7 @@ export default function NativeModules() {
 
   return (
     <>
-      <a href="#content" className="saute-au-contenu">
-        Skip to content
-      </a>
+      <LienEvitement cible="#content">Skip to content</LienEvitement>
       <Header />
       <script
         type="application/ld+json"

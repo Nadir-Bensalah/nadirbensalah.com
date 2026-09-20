@@ -6,6 +6,7 @@ import Pied from '@/components/Pied';
 import Apparait from '@/components/Apparait';
 import Formulaire from '@/components/Formulaire';
 import { disponibilite } from '@/content/profil';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Ne me croyez pas sur parole',
@@ -53,9 +54,7 @@ const ceQueJeNeFaisPas = [
 export default function Challenge() {
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
 
       <main id="contenu">

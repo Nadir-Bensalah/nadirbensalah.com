@@ -8,6 +8,7 @@ import CarteApp from '@/components/CarteApp';
 import { appParSlug } from '@/content/apps';
 import { objectionsEn, profileEn } from '@/content/en/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Hire a React Native Developer — Remote, EU-Based',
@@ -61,9 +62,7 @@ export default function Hire() {
 
   return (
     <>
-      <a href="#content" className="saute-au-contenu">
-        Skip to content
-      </a>
+      <LienEvitement cible="#content">Skip to content</LienEvitement>
       <Header />
       <script
         type="application/ld+json"

@@ -7,6 +7,7 @@ import Apparait from '@/components/Apparait';
 import { dateFrCourte, guides } from '@/content/guides';
 import { profil } from '@/content/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Guides',
@@ -38,9 +39,7 @@ export default function Guides() {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
       <script
         type="application/ld+json"

@@ -8,6 +8,7 @@ import CarteApp from '@/components/CarteApp';
 import { apps, appsClient, appsPersonnelles } from '@/content/apps';
 import { profil } from '@/content/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Les 8 applications publiées sur l’App Store',
@@ -43,9 +44,7 @@ export default function Realisations() {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
       <script
         type="application/ld+json"

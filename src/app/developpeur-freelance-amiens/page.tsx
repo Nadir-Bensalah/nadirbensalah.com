@@ -5,6 +5,7 @@ import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
 import Apparait from '@/components/Apparait';
 import { disponibilite, profil } from '@/content/profil';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Développeur freelance à Amiens',
@@ -81,9 +82,7 @@ export default function FreelanceAmiens() {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
       <script
         type="application/ld+json"

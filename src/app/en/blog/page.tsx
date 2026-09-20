@@ -7,6 +7,7 @@ import Apparait from '@/components/Apparait';
 import { articles, dateEn } from '@/content/en/articles';
 import { profileEn } from '@/content/en/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Writing',
@@ -40,9 +41,7 @@ export default function Blog() {
 
   return (
     <>
-      <a href="#content" className="saute-au-contenu">
-        Skip to content
-      </a>
+      <LienEvitement cible="#content">Skip to content</LienEvitement>
       <Header />
       <script
         type="application/ld+json"

@@ -4,6 +4,7 @@ import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
 import type { Metadata } from 'next';
 import { apps } from '@/content/apps';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Page introuvable',
@@ -20,9 +21,7 @@ export const metadata: Metadata = {
 export default function Introuvable() {
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
       <main id="contenu">
         <section style={{ paddingTop: 'clamp(48px, 9vw, 96px)', paddingBottom: 'var(--e-8)' }}>

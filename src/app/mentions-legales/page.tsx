@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
 import { profil } from '@/content/profil';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Mentions légales',
@@ -16,9 +17,7 @@ export const metadata: Metadata = {
 export default function MentionsLegales() {
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
 
       <main id="contenu">

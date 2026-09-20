@@ -762,10 +762,16 @@
     text-decoration: none;
   }
 
+  /* La mise hors écran est posée en style en ligne par le composant
+     LienEvitement, pour qu'elle s'applique dès le premier rendu sans attendre
+     cette feuille : sur une connexion lente, le lien restait affiché en haut
+     de page pendant plusieurs secondes.
+
+     Un style en ligne l'emporte sur une classe, donc la règle de focus a
+     besoin de !important pour reprendre la main. C'est l'un des rares cas où
+     il est justifié : il n'y a pas d'autre façon de battre un style en ligne
+     en CSS. */
   .saute-au-contenu {
-    position: absolute;
-    left: -9999px;
-    top: 0;
     z-index: 999;
     background: var(--bg);
     color: var(--texte);
@@ -774,8 +780,8 @@
     border-radius: var(--r-2);
   }
   .saute-au-contenu:focus {
-    left: var(--marge-mobile);
-    top: 12px;
+    left: var(--marge-mobile) !important;
+    top: 12px !important;
     text-decoration: none;
   }
 }

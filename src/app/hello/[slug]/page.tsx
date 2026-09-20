@@ -10,6 +10,7 @@ import BoutonCv from '@/components/BoutonCv';
 import { appParSlug } from '@/content/apps';
 import { prospectParSlug, prospects } from '@/content/prospects';
 import { disponibilite } from '@/content/profil';
+import LienEvitement from '@/components/LienEvitement';
 
 /**
  * La page de prospection nominative.
@@ -69,9 +70,7 @@ export default async function Hello({ params }: { params: Params }) {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
 
       <main id="contenu">

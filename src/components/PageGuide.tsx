@@ -4,6 +4,7 @@ import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
 import { Guide, dateFrCourte, guides } from '@/content/guides';
 import { profil } from '@/content/profil';
+import LienEvitement from '@/components/LienEvitement';
 
 /** L'enveloppe commune à tous les guides : fil d'ariane, en-tête, corps, suite. */
 export default function PageGuide({
@@ -46,9 +47,7 @@ export default function PageGuide({
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
       <script
         type="application/ld+json"

@@ -5,6 +5,7 @@ import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
 import { apps } from '@/content/apps';
 import { guides } from '@/content/guides';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Plan du site',
@@ -68,9 +69,7 @@ export default function PlanDuSite() {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
 
       <main id="contenu">

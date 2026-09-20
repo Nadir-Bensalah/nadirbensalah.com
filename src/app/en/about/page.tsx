@@ -6,6 +6,7 @@ import Footer from '@/components/en/Footer';
 import Apparait from '@/components/Apparait';
 import { profileEn } from '@/content/en/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'About Nadir Ben Salah — React Native Developer',
@@ -24,9 +25,7 @@ export const metadata: Metadata = {
 export default function About() {
   return (
     <>
-      <a href="#content" className="saute-au-contenu">
-        Skip to content
-      </a>
+      <LienEvitement cible="#content">Skip to content</LienEvitement>
       <Header />
 
       <main id="content">

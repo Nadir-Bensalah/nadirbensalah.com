@@ -7,6 +7,7 @@ import Formulaire from '@/components/Formulaire';
 import LiensDirects from '@/components/LiensDirects';
 import { disponibilite, profil } from '@/content/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Me contacter',
@@ -37,9 +38,7 @@ export default function Contact() {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
       <script
         type="application/ld+json"

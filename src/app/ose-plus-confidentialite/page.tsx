@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Ose+ – Politique de confidentialité',
@@ -86,9 +87,7 @@ const sections: [string, React.ReactNode][] = [
 export default function OsePlusConfidentialitePage() {
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
 
       <main id="contenu">

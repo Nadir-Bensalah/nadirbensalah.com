@@ -8,6 +8,7 @@ import CarteApp from '@/components/CarteApp';
 import { apps, appsClient, appsPersonnelles } from '@/content/apps';
 import { profileEn } from '@/content/en/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Apps I’ve Shipped on the App Store',
@@ -43,9 +44,7 @@ export default function Apps() {
 
   return (
     <>
-      <a href="#content" className="saute-au-contenu">
-        Skip to content
-      </a>
+      <LienEvitement cible="#content">Skip to content</LienEvitement>
       <Header />
       <script
         type="application/ld+json"

@@ -4,6 +4,7 @@ import Header from '@/components/en/Header';
 import Footer from '@/components/en/Footer';
 import { Article, articles, dateEn } from '@/content/en/articles';
 import { profileEn } from '@/content/en/profil';
+import LienEvitement from '@/components/LienEvitement';
 
 /** The shell every English article shares: breadcrumb, header, body, next. */
 export default function ArticlePage({
@@ -49,9 +50,7 @@ export default function ArticlePage({
 
   return (
     <>
-      <a href="#content" className="saute-au-contenu">
-        Skip to content
-      </a>
+      <LienEvitement cible="#content">Skip to content</LienEvitement>
       <Header />
       <script
         type="application/ld+json"

@@ -7,6 +7,7 @@ import Apparait from '@/components/Apparait';
 import CarteApp from '@/components/CarteApp';
 import { appParSlug, apps } from '@/content/apps';
 import { disponibilite, profil } from '@/content/profil';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Développeur application mobile à Amiens',
@@ -67,9 +68,7 @@ export default function AmiensMobile() {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
       <script
         type="application/ld+json"

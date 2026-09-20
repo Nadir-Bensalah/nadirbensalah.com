@@ -237,6 +237,17 @@ for (const fichier of pages) {
     }
   }
 
+  // ── Le lien d'évitement doit être caché sans attendre le CSS ────────
+  // Il est le premier élément du <body>. Si sa mise hors écran ne vit que
+  // dans la feuille de style, une connexion lente l'affiche en haut de page
+  // pendant plusieurs secondes. Mesuré à plus de trois secondes en 3G.
+  const evitement = html.match(/<a[^>]*class="[^"]*saute-au-contenu[^"]*"[^>]*>/);
+  if (evitement && !/style="[^"]*left:\s*-9999px/.test(evitement[0])) {
+    problemes.push(
+      `${nom} : le lien d'évitement n'est pas caché en style en ligne, il clignotera sur connexion lente`
+    );
+  }
+
   // ── Restes de la refonte ────────────────────────────────────────────
   if (/lorem ipsum/i.test(html)) problemes.push(`${nom} : « lorem ipsum » présent`);
   if (/href="#"/.test(html)) problemes.push(`${nom} : lien vide href="#"`);

@@ -9,6 +9,7 @@ import CarteApp from '@/components/CarteApp';
 import { apps, appParSlug } from '@/content/apps';
 import { objectionsEn, positioningEn, proofsEn, profileEn, servicesEn } from '@/content/en/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'React Native Developer Who Writes the Swift Too',
@@ -71,9 +72,7 @@ export default function EnHome() {
 
   return (
     <>
-      <a href="#content" className="saute-au-contenu">
-        Skip to content
-      </a>
+      <LienEvitement cible="#content">Skip to content</LienEvitement>
       <Header />
       <script
         type="application/ld+json"

@@ -8,6 +8,7 @@ import CarteApp from '@/components/CarteApp';
 import BoutonCv from '@/components/BoutonCv';
 import { apps } from '@/content/apps';
 import { disponibilite } from '@/content/profil';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Avant de publier votre offre de développeur',
@@ -47,9 +48,7 @@ export default function RecruterDeveloppeur() {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
 
       <main id="contenu">

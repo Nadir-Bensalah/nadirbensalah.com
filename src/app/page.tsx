@@ -11,6 +11,7 @@ import BarreCollante from '@/components/BarreCollante';
 import { apps } from '@/content/apps';
 import { competences, disponibilite, experiences, preuves, profil } from '@/content/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Nadir Ben Salah · Développeur mobile & full-stack à Amiens',
@@ -109,9 +110,7 @@ export default function Accueil() {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
       <script
         type="application/ld+json"

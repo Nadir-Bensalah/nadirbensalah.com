@@ -7,6 +7,7 @@ import Apparait from '@/components/Apparait';
 import BoutonCv from '@/components/BoutonCv';
 import { experiences, formations, profil } from '@/content/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Qui je suis',
@@ -25,9 +26,7 @@ export const metadata: Metadata = {
 export default function APropos() {
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
 
       <main id="contenu">

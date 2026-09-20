@@ -8,6 +8,7 @@ import CarteApp from '@/components/CarteApp';
 import BoutonCv from '@/components/BoutonCv';
 import { appParSlug } from '@/content/apps';
 import { competences, disponibilite, experiences, formations, profil } from '@/content/profil';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Recrutement & CDI · le dossier complet',
@@ -69,9 +70,7 @@ export default function Cdi() {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
       <script
         type="application/ld+json"

@@ -8,6 +8,7 @@ import Apparait from '@/components/Apparait';
 import GalerieCaptures from '@/components/GalerieCaptures';
 import { App, appParSlug, apps, dateFr } from '@/content/apps';
 import { profil } from '@/content/profil';
+import LienEvitement from '@/components/LienEvitement';
 
 export function generateStaticParams() {
   return apps.map((a) => ({ slug: a.slug }));
@@ -121,9 +122,7 @@ export default async function EtudeDeCas({ params }: { params: Params }) {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
       <script
         type="application/ld+json"

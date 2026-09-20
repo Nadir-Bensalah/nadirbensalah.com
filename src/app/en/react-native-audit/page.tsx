@@ -6,6 +6,7 @@ import Footer from '@/components/en/Footer';
 import Apparait from '@/components/Apparait';
 import { profileEn } from '@/content/en/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'React Native Code Audit — Fixed Scope, One Week',
@@ -74,9 +75,7 @@ export default function Audit() {
 
   return (
     <>
-      <a href="#content" className="saute-au-contenu">
-        Skip to content
-      </a>
+      <LienEvitement cible="#content">Skip to content</LienEvitement>
       <Header />
       <script
         type="application/ld+json"

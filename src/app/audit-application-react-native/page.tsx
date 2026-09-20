@@ -6,6 +6,7 @@ import Pied from '@/components/Pied';
 import Apparait from '@/components/Apparait';
 import { profil } from '@/content/profil';
 import { alternatives } from '@/lib/langues';
+import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
   title: 'Audit d’application React Native',
@@ -73,9 +74,7 @@ export default function Audit() {
 
   return (
     <>
-      <a href="#contenu" className="saute-au-contenu">
-        Aller au contenu
-      </a>
+      <LienEvitement />
       <Entete />
       <script
         type="application/ld+json"
