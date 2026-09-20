@@ -254,6 +254,25 @@ for (const fichier of pages) {
   if (/\bTODO\b/.test(html)) avertissements.push(`${nom} : « TODO » visible dans le HTML`);
 }
 
+// ── Le lien d'évitement doit relâcher le focus en changeant de page ───
+// Next.js navigue sans recharger le document : le focus survit donc d'une
+// page à l'autre. Sans blur(), le lien reste affiché en haut à gauche de
+// toutes les pages suivantes dès qu'on a tabulé une fois. Le navigateur
+// restaure aussi le focus au retour arrière et à la réouverture d'un onglet.
+{
+  const composant = readFileSync('src/components/LienEvitement.tsx', 'utf8');
+  if (!/\.blur\(\)/.test(composant)) {
+    problemes.push(
+      "LienEvitement.tsx : le focus n'est pas relâché, le lien restera visible après une navigation interne"
+    );
+  }
+  if (!/usePathname/.test(composant)) {
+    problemes.push(
+      'LienEvitement.tsx : sans usePathname, rien ne déclenche le relâchement du focus au changement de page'
+    );
+  }
+}
+
 // ── Cohérence bilingue ────────────────────────────────────────────────
 // Le hreflang doit être réciproque : si le français déclare l'anglais,
 // l'anglais doit déclarer le français en retour. Sans cette réciprocité
