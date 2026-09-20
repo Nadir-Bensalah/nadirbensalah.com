@@ -91,9 +91,9 @@ export const apps: App[] = [
       'Aucun serveur, aucun compte : photos et positions chiffrées par iOS et exclues de la sauvegarde iCloud',
       'Compatible VoiceOver, grandes tailles de texte et mode sombre',
     ],
-    stack: ['React Native', 'TypeScript', 'Swift', 'ActivityKit', 'App Intents', 'Core NFC'],
+    stack: ['Swift', 'SwiftUI', 'ActivityKit', 'App Intents', 'WidgetKit', 'StoreKit'],
     demontre: [
-      'Écrire du Swift natif quand React Native ne suffit pas, et faire dialoguer les deux proprement',
+      'Choisir la pile au lieu de la subir : tout se passant hors de l’application, celle-ci est écrite entièrement en Swift',
       'Maîtriser les intégrations système iOS les plus récentes : Dynamic Island, Centre de contrôle, App Intents',
       'Tenir 3,3 Mo, quand l’app moyenne du lot en pèse dix fois plus',
     ],
@@ -137,7 +137,7 @@ export const apps: App[] = [
       'Centres antipoison vétérinaires français avec horaires et coût de l’appel, aliments et plantes toxiques',
       'Aucun serveur, aucun compte, aucun traqueur : la fiche App Store invite à le vérifier en mode avion',
     ],
-    stack: ['React Native', 'TypeScript', 'SQLite', 'Notifications locales', 'WidgetKit'],
+    stack: ['Swift', 'SwiftUI', 'SwiftData', 'WidgetKit', 'Swift Charts', 'StoreKit'],
     demontre: [
       'Concevoir un modèle de données médical avec des règles métier réelles (calendrier vaccinal français)',
       'Générer des PDF exploitables depuis une application mobile',

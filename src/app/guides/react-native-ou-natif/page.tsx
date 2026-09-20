@@ -36,16 +36,23 @@ export default function Article() {
 
       <h2>Ce qui a réellement exigé du natif</h2>
       <p>
-        Sur mes huit applications, <strong>toutes</strong> ont un tronc commun en React Native.
-        Quatre ont nécessité d’écrire du Swift. Pas pour des raisons de performance : pour des
-        raisons d’accès au système.
+        Sur mes huit applications, <strong>six</strong> ont un tronc commun en React Native, et{' '}
+        <strong>deux sont écrites entièrement en Swift</strong>. Les six React Native contiennent
+        toutes du Swift, à des degrés très différents. Jamais pour des raisons de performance :
+        toujours pour des raisons d’accès au système.
       </p>
       <p>
         <Link href="/realisations/ticket">Ticket</Link>, un horodateur de stationnement, doit
         afficher un compte à rebours dans la Dynamic Island et proposer des boutons « +15 min »
-        actionnables depuis l’écran verrouillé. Cela passe par ActivityKit et App Intents. Ces API
-        n’ont pas d’équivalent JavaScript : il faut écrire le widget en Swift, et faire dialoguer
-        les deux mondes. Même chose pour le bouton dans le Centre de contrôle.
+        actionnables depuis l’écran verrouillé. Cela passe par ActivityKit et App Intents, qui n’ont
+        pas d’équivalent JavaScript.
+      </p>
+      <p>
+        Celui-là, je l’ai écrit <strong>entièrement en Swift</strong>, et c’est l’exemple le plus
+        net de l’arbitrage. Presque tout ce que fait Ticket se passe <em>en dehors</em> de
+        l’application : la Dynamic Island, le Centre de contrôle, Siri, un tag NFC sur le tableau de
+        bord. Il restait trois écrans. Mettre React Native sous trois écrans pour ensuite écrire en
+        Swift tout ce qui compte, c’était payer un pont sans rien transporter dessus.
       </p>
       <p>
         <Link href="/realisations/qindil">Qindil</Link> et{' '}

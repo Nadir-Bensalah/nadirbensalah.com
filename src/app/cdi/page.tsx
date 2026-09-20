@@ -193,10 +193,12 @@ export default function Cdi() {
               <div className="encadre encadre--astuce" style={{ maxWidth: 760 }}>
                 <div>
                   <strong style={{ color: 'var(--texte)' }}>Comment lire ces trois-là.</strong>{' '}
-                  Ticket prouve que je descends en Swift natif quand React Native ne suffit pas, et
-                  que je tiens 3,3 Mo. Pilou prouve que je sais modéliser un domaine métier réel et
-                  générer des documents exploitables. Amiens prouve que je sais ingérer un jeu de
-                  données ouvert normalisé et le rendre utilisable hors ligne.
+                  Ticket et Pilou sont écrits entièrement en Swift : ils prouvent que je choisis la
+                  pile au lieu de la subir, et Ticket tient en 3,3 Mo. Pilou prouve en plus que je
+                  sais modéliser un domaine métier réel et générer des documents exploitables.
+                  Amiens, lui, est en React Native avec une application Apple Watch en SwiftUI : il
+                  prouve que je sais ingérer un jeu de données ouvert normalisé et le rendre
+                  utilisable hors ligne.
                 </div>
               </div>
 

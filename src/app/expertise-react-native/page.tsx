@@ -171,9 +171,10 @@ export default function Expertise() {
               </div>
 
               <p className="t-petit t-3" style={{ maxWidth: 680 }}>
-                Ticket pilote la Dynamic Island, le Centre de contrôle, Siri et le NFC depuis une
-                base React Native, en 3,3 Mo. Qindil et Amiens embarquent une application Apple
-                Watch en SwiftUI.
+                Ticket pilote la Dynamic Island, le Centre de contrôle et Siri en 3,3 Mo : celui-là
+                est entièrement natif, parce que tout ce qu’il fait vit en dehors de l’application.
+                Qindil et Amiens sont en React Native et embarquent une application Apple Watch en
+                SwiftUI.
               </p>
             </section>
 

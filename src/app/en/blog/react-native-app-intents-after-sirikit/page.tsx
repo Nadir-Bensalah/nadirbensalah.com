@@ -88,9 +88,14 @@ export default function Post() {
       <p>
         In <Link href="/realisations/ticket">Ticket</Link>, a parking timer, I used the second
         approach: starting a session from Siri, from the Control Center or from an NFC tag on the
-        dashboard has to work without unlocking the phone, so the intent writes to the shared store
+        dashboard has to work without unlocking the phone, so the intent writes to a shared store
         and the app catches up later. The shared surface is deliberately tiny — a start time and a
         duration — because every field you share is a field that can drift.
+      </p>
+      <p>
+        Ticket is fully native, so in its case both sides of that store are Swift. In a React Native
+        app the same pattern holds, with one extra cost: the JavaScript side has to read the store
+        on wake and reconcile, because the intent may have run while the app was not even in memory.
       </p>
 
       <h2>What to check if you are migrating</h2>

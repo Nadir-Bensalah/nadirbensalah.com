@@ -29,9 +29,10 @@ export default function Post() {
         afterwards, when the thing is in front of real users on real devices.
       </p>
       <p>
-        I have shipped two: a parking countdown in <Link href="/realisations/ticket">Ticket</Link>{' '}
-        and prayer times in <Link href="/realisations/qindil">Qindil</Link>. These are the things
-        that cost me time.
+        I have shipped two: a parking countdown in <Link href="/realisations/ticket">Ticket</Link>,
+        which is fully native, and prayer times in <Link href="/realisations/qindil">Qindil</Link>,
+        which is React Native. Everything below applies to both, because the Live Activity itself is
+        Swift either way. These are the things that cost me time.
       </p>
 
       <h2>It is a widget extension, not part of your app</h2>
