@@ -340,9 +340,9 @@ export default async function EtudeDeCas({ params }: { params: Params }) {
             {app.apresPublication && (
               <section className="section" aria-labelledby="t-apres">
                 <div className="section-tete">
-                  <p className="etiquette">Après la mise en ligne</p>
+                  <p className="etiquette">La décision</p>
                   <h2 id="t-apres" className="t-h2">
-                    Ce qui a été corrigé, et comment je le sais
+                    Le problème, l’arbitrage, et comment je sais qu’il tient
                   </h2>
                 </div>
                 <div style={{ display: 'grid', gap: 'var(--e-4)', maxWidth: 720 }}>

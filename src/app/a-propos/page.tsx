@@ -95,8 +95,9 @@ export default function APropos() {
               <p>
                 Mais la technologie n’est pas le sujet. Le sujet, c’est qu’un produit arrive entre
                 les mains de quelqu’un. Entre un dépôt Git et une application installée sur le
-                téléphone d’un inconnu, il y a un travail entier que beaucoup de projets
-                sous-estiment : c’est là que la plupart s’arrêtent.
+                téléphone d’un inconnu, il reste la signature, les fiches de magasin, les captures,
+                la revue Apple et les correctifs qui suivent la mise en ligne. C’est la partie que
+                je préfère, et celle que j’ai faite huit fois.
               </p>
 
               <h2>Comment je travaille</h2>
@@ -108,8 +109,9 @@ export default function APropos() {
               </p>
               <p>
                 J’aime les contraintes explicites, les décisions écrites, et les versions
-                installables tôt. Une maquette ne dit pas la vérité sur un produit : un téléphone
-                dans une main la dit tout de suite.
+                installables tôt. Une maquette se juge à l’œil ; une application sur un téléphone se
+                juge au poignet qui se fatigue, au réseau qui tombe et à la batterie qui descend. Je
+                préfère découvrir ça la première semaine plutôt qu’après la mise en ligne.
               </p>
 
               <h2>Où j’en suis</h2>

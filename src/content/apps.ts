@@ -264,6 +264,14 @@ export const apps: App[] = [
     ],
     saillant:
       'Publiée sous le nom MindDrop pendant son développement, puis renommée CocoMind. Le modèle ne se contente pas de ranger : il rédige.',
+    apresPublication: {
+      constat:
+        'Chaque phrase envoyée au modèle coûte, consomme le quota quotidien de la personne, exige du réseau et prend deux secondes. Envoyer tout à l’assistant rendait le produit lent et cher ; tout traiter sur l’appareil le rendait bête. La première règle envisagée, « envoyer dès que le moteur local ne trouve pas de date », était mauvaise : « acheter du lait » n’a pas de date et n’a pourtant rien de difficile.',
+      decision:
+        'La question posée n’est plus « le moteur local a-t-il compris » mais « cette phrase demande-t-elle quelque chose qu’il ne sait pas faire, quel que soit son effort ». Il n’y a que trois cas : plusieurs éléments dans une phrase, une question plutôt qu’une capture, et un texte au-delà d’environ 140 caractères. Tout le reste est traité sur l’appareil, y compris ce qui n’a pas été compris : une phrase mal lue se corrige en deux tapes, une phrase envoyée au serveur produit une facture. Le seuil de 140 caractères est un jugement, pas une science, et il est écrit à un seul endroit pour pouvoir être discuté.',
+      verification:
+        'Le découpage est couvert par des tests qui distinguent ce qui reste local de ce qui part à l’assistant : une énumération de choses reste un seul élément, un mot interrogatif au milieu d’une phrase ne la transforme pas en question, et une phrase seulement un peu longue ne déclenche pas d’appel. La lecture des dates est testée séparément, sur les pièges du français : « à 7h » se pose sur le prochain 7 h, un jour nommé est toujours à venir même si on y est, une date sans année désigne la prochaine occurrence, et le motif le plus précis l’emporte. Côté serveur, le quota est vérifié avant la transcription et consommé après : sans ce garde-fou, un compte à sec payait la reconnaissance vocale à chaque tentative pour se faire refuser juste derrière.',
+    },
   },
   {
     slug: 'qindil',
