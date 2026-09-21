@@ -88,7 +88,7 @@ jobs:
         # des mois alors que robots.txt en annonçait quatre.
         run: |
           sleep 25
-          for chemin in "" "realisations" "cdi" "freelance" "contact" "expertise-react-native" "parcours" "sitemap.xml" "robots.txt"; do
+          for chemin in "" "realisations" "cdi" "freelance" "contact" "expertise-react-native" "a-propos" "sitemap.xml" "robots.txt"; do
             code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 20 "https://nadirbensalah.com/$chemin")
             echo "$code  /$chemin"
             if [ "$code" != "200" ]; then
