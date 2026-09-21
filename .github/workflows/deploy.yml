@@ -72,9 +72,15 @@ jobs:
           port: 21
           local-dir: ./out/
           server-dir: /public_html/
-          # Vide entièrement /public_html/ avant l'envoi. Tout ce qui doit
-          # vivre sur le serveur doit donc exister dans le dépôt.
-          dangerous-clean-slate: true
+          # Surtout PAS de `dangerous-clean-slate` : cette option vidait
+          # /public_html/ avant l'envoi, et le site répondait 403 puis 404
+          # pendant les sept à neuf minutes du transfert. L'action écrase
+          # désormais fichier par fichier, en s'appuyant sur l'état du dernier
+          # envoi pour supprimer ce qui a disparu du dépôt : le ménage est
+          # toujours fait, mais le site ne tombe jamais.
+          dangerous-clean-slate: false
+          # Le journal d'état vit sur le serveur, à côté du site.
+          state-name: .ftp-deploy-sync-state.json
 
       - name: Contrôler le site en ligne
         # Dernier filet : on vérifie que les pages stratégiques répondent 200
@@ -82,7 +88,7 @@ jobs:
         # des mois alors que robots.txt en annonçait quatre.
         run: |
           sleep 25
-          for chemin in "" "realisations" "cdi" "freelance" "contact" "sitemap.xml" "robots.txt"; do
+          for chemin in "" "realisations" "cdi" "freelance" "contact" "expertise-react-native" "parcours" "sitemap.xml" "robots.txt"; do
             code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 20 "https://nadirbensalah.com/$chemin")
             echo "$code  /$chemin"
             if [ "$code" != "200" ]; then
