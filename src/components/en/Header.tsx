@@ -260,7 +260,8 @@ export default function Header() {
       )}
 
       <style>{`
-        @media (max-width: 980px) {
+        /* 1020 px : en dessous, la barre complete depassait a droite. */
+        @media (max-width: 1020px) {
           .nav-bureau { display: none !important; }
           .cta-bureau { display: none !important; }
           .bouton-menu { display: inline-flex !important; }

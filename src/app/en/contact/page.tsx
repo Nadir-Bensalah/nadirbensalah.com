@@ -82,7 +82,7 @@ export default function Contact() {
               }}
             >
               <Formulaire
-                titreChamp="What are you building?"
+                titreChamp="Your project, or your role"
                 placeholder="A few lines: what the product does, who it is for, and where you are stuck. Technical detail is welcome."
               />
 

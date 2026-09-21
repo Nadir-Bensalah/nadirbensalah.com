@@ -274,7 +274,9 @@ export default function Entete() {
           :root:not([data-theme='light']) .marque-sombre { display: block; }
         }
 
-        @media (max-width: 900px) {
+        /* 1020 px et non 900 : en dessous, la barre complete depassait a
+           droite et « Me contacter » se retrouvait coupe. */
+        @media (max-width: 1020px) {
           .nav-bureau { display: none !important; }
           .cta-bureau { display: none !important; }
           .bouton-menu { display: inline-flex !important; }

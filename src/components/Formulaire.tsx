@@ -33,7 +33,7 @@ type Etat = 'saisie' | 'envoi' | 'succes' | 'erreur';
 
 export default function Formulaire({
   variante = 'contact',
-  titreChamp = 'Que voulez-vous construire ?',
+  titreChamp = 'Votre projet, ou votre proposition de poste',
   placeholder = 'Décrivez votre besoin en quelques lignes : ce que le produit doit faire, pour qui, et sous quelle contrainte de temps.',
 }: {
   variante?: 'contact' | 'challenge';
@@ -41,6 +41,10 @@ export default function Formulaire({
   placeholder?: string;
 }) {
   const [etat, setEtat] = useState<Etat>('saisie');
+
+  // Une cle Web3Forms permet l'envoi reel ; sans elle on ouvre la messagerie.
+  const cleFormulaire = process.env.NEXT_PUBLIC_CLE_FORMULAIRE;
+  const envoiDirect = Boolean(cleFormulaire);
   // Le message compose est conserve : si la messagerie ne s'ouvre pas, le
   // visiteur doit pouvoir le recuperer plutot que de tout retaper.
   const [messageCompose, setMessageCompose] = useState('');
@@ -116,7 +120,7 @@ export default function Formulaire({
     setMessageCompose(corps);
     suit(variante === 'challenge' ? EVENEMENTS.envoieChallenge : EVENEMENTS.envoieContact);
 
-    const cle = process.env.NEXT_PUBLIC_CLE_FORMULAIRE;
+    const cle = cleFormulaire;
 
     // Sans clé configurée : l'ancien comportement, pour que le formulaire ne
     // soit jamais cassé pendant l'installation.
@@ -366,10 +370,18 @@ export default function Formulaire({
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--e-3)', alignItems: 'center' }}>
         <button type="submit" className="btn btn-principal btn-large" disabled={etat === 'envoi'}>
-          {etat === 'envoi' ? 'Ouverture de votre messagerie…' : 'Envoyer'}
+          {etat === 'envoi'
+            ? envoiDirect
+              ? 'Envoi en cours…'
+              : 'Ouverture de votre messagerie…'
+            : envoiDirect
+              ? 'Envoyer'
+              : 'Préparer l’e-mail'}
         </button>
         <p className="t-petit t-3" style={{ maxWidth: 340 }}>
-          Le message s’ouvre dans votre messagerie. Rien n’est stocké sur ce site.
+          {envoiDirect
+            ? 'Le message m’est envoyé directement. Je réponds sous 24 heures ouvrées.'
+            : 'Le message s’ouvre dans votre messagerie. Rien n’est stocké sur ce site.'}
         </p>
       </div>
     </form>

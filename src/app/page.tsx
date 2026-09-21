@@ -150,7 +150,7 @@ export default function Accueil() {
 
               <Apparait retard={1}>
                 <h1 className="t-display" style={{ marginTop: 'var(--e-4)' }}>
-                  Vous cherchez un développeur.
+                  Développeur mobile React&nbsp;Native et Swift.
                   <br />
                   Voici ce que j’ai déjà construit.
                 </h1>
@@ -162,8 +162,8 @@ export default function Accueil() {
                   style={{ marginTop: 'var(--e-5)', maxWidth: 620, marginInline: 'auto' }}
                 >
                   Je conçois et je développe des applications mobiles, de l’idée jusqu’à la mise en
-                  ligne. Pas des maquettes, pas des dépôts Git : des produits que vous pouvez
-                  installer maintenant.
+                  ligne : conception, développement iOS et Android, publication et maintenance après
+                  la sortie. Toutes celles présentées ici sont installables aujourd’hui.
                 </p>
               </Apparait>
 

@@ -100,9 +100,10 @@ export default function Expertise() {
               </p>
               <h1 className="t-h1">Expertise React Native : audit, conseil, reprise de projet.</h1>
               <p className="t-lead" style={{ marginTop: 'var(--e-4)' }}>
-                Huit applications React Native conçues et publiées sur l’App&nbsp;Store, dont quatre
-                avec des modules natifs en Swift. Quand un projet React Native se bloque, c’est
-                presque toujours à l’un des endroits que je connais bien.
+                Huit applications mobiles publiées sur l’App&nbsp;Store : six en React Native, deux
+                entièrement en Swift. Trois des applications React Native embarquent du code natif
+                Swift ou Kotlin. Quand un projet React Native se bloque, c’est presque toujours à
+                l’un des endroits que je connais bien.
               </p>
 
               <div
