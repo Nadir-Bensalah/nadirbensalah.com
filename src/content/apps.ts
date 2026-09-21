@@ -215,7 +215,7 @@ export const apps: App[] = [
       decision:
         'Une alerte ne sonne plus qu’une seule fois par plage, avant le premier bus, et affiche l’heure du suivant plutôt que de resonner pour lui. Les horaires d’alerte sont ancrés sur l’heure d’Amiens, quel que soit le fuseau du téléphone. Le compromis est assumé : on perd le rappel pour un bus plus tardif dans la même plage, au profit d’une notification qu’on ne coupe pas.',
       verification:
-        'Correctif publié dans la version 1.3.1 le 8 septembre 2026, et décrit dans les notes de version de la fiche App Store.',
+        'Deux séries de tests automatisés couvrent ces cas : le déclencheur n’est jamais posé dans le passé, il se resserre quand le bus est plus proche que le réglage, et l’alerte annonce le délai réel plutôt que celui demandé. Côté fuseau, l’heure d’Amiens est confrontée à la base IANA sur six ans, minute par minute autour des quatre prochains changements d’heure, et un départ publié « 24:40 » doit tomber au bon moment. Un test vérifie enfin qu’un voyageur voit la même heure depuis Amiens, Tunis ou Montréal. Correctif publié en version 1.3.1 le 8 septembre 2026, décrit dans les notes de version de la fiche App Store.',
     },
     site: undefined,
   },

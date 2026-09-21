@@ -35,7 +35,7 @@ const questions = [
   },
   {
     q: 'A-t-il déjà travaillé en équipe et en entreprise ?',
-    r: 'Oui, deux ans chez Decayeux à Abbeville, sur des applications React Native destinées à des opérateurs en atelier. Le travail s’y faisait avec des gens dont ce n’est pas le métier de rédiger une spécification : il fallait aller voir sur le terrain ce que l’application devait réellement faire, puis revenir défendre les arbitrages techniques devant l’équipe produit. C’est un exercice très différent de celui de mes propres applications, où je suis à la fois celui qui demande et celui qui décide.',
+    r: 'Oui, deux ans chez Decayeux à Abbeville, dans une équipe de cinq, sur l’application Android qui tourne sur les écrans tactiles posés dans les halls d’immeubles, à côté des boîtes aux lettres connectées du fabricant. On y consulte la météo et les informations de la résidence, on ouvre sa boîte, on dépose ou on récupère un colis. Mon principal apport a été la refonte : le produit fonctionnait mais était lent et daté, et un écran mural ne pardonne pas l’attente, personne ne patiente devant un hall. J’ai repris l’interface et la fluidité de bout en bout, puis assuré le suivi en production. C’est un exercice très différent de celui de mes propres applications, où je suis à la fois celui qui demande et celui qui décide.',
   },
   {
     q: 'Qu’est-ce qui change quand il rejoint une équipe déjà constituée ?',
@@ -47,7 +47,7 @@ const questions = [
   },
   {
     q: 'Pourquoi un CDI, après avoir monté sa propre structure ?',
-    r: 'Parce que je veux travailler sur un produit plus gros que ce qu’une personne seule peut porter, et avec des gens qui relisent mon code. Construire seul apprend beaucoup, mais personne ne me contredit et personne ne me montre une autre façon de faire. Ce que je cherche en équipe, c’est exactement ce qui me manque aujourd’hui : de la revue, des arbitrages discutés, et une échelle d’utilisateurs que je n’atteins pas seul. Je continue en parallèle à publier mes propres applications, et je n’en fais pas un secret auprès d’un employeur.',
+    r: 'Parce que je veux travailler sur un produit plus gros que ce qu’une personne seule peut porter, et avec des gens qui relisent mon code. Construire seul apprend beaucoup, mais personne ne me contredit et personne ne me montre une autre façon de faire. Ce que je cherche en équipe, c’est exactement ce qui me manque aujourd’hui : de la revue, des arbitrages discutés, et une échelle d’utilisateurs que je n’atteins pas seul. Je souhaite conserver mes projets personnels, et définir clairement leur place avec mon futur employeur.',
   },
   {
     q: 'Est-ce qu’il code encore, ou est-ce qu’il gère ?',
@@ -152,7 +152,11 @@ export default function Cdi() {
                 {[
                   ['Poste', 'Développeur mobile & full-stack'],
                   ['Spécialité', 'React Native, TypeScript, iOS & Android'],
-                  ['Expérience', 'Dix ans, dont un à publier mes propres produits'],
+                  [
+                    'Parcours',
+                    'Premières missions en 2015, activité régulière depuis 2020, mobile React Native depuis 2022',
+                  ],
+                  ['Disponibilité', 'Immédiate, sans préavis'],
                   ['Localisation', `${profil.ville}, ${profil.region}`],
                   ['Mobilité', 'À distance, ou géographique pour un poste pertinent'],
                   ['Ouvert à', disponibilite.ouvertA.join(', ')],
@@ -220,6 +224,11 @@ export default function Cdi() {
                 <h2 id="t-questions" className="t-h2">
                   Autant y répondre tout de suite.
                 </h2>
+                <p className="t-lead" style={{ maxWidth: 680 }}>
+                  Ce que je cherche en équipe : un produit plus gros que ce qu’une personne seule
+                  peut porter, des gens qui relisent mon code, et des arbitrages qu’on discute au
+                  lieu de les trancher tout seul.
+                </p>
               </div>
 
               <div style={{ maxWidth: 780 }}>

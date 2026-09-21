@@ -343,7 +343,8 @@ export default function Accueil() {
               <div className="section-tete">
                 <p className="etiquette">Le parcours</p>
                 <h2 id="titre-parcours" className="t-h2">
-                  Dix ans de métier, dont un à publier mes propres produits.
+                  Premières missions en 2015, activité régulière depuis 2020, et le mobile en React
+                  Native depuis 2022.
                 </h2>
               </div>
 

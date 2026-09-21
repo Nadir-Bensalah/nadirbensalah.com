@@ -66,11 +66,11 @@ export const experiences: Experience[] = [
     debut: 'Septembre 2022',
     fin: 'Octobre 2024',
     faits: [
-      'Développement et évolution d’applications React Native destinées à un environnement industriel.',
-      'Participation à la conception technique et à l’amélioration continue des fonctionnalités existantes.',
-      'Intégration d’API et de services backend.',
-      'Optimisation des performances, de la stabilité et de l’expérience utilisateur.',
-      'Contribution aux choix techniques et aux évolutions de l’architecture applicative.',
+      'Application Android installée sur les écrans tactiles que Decayeux pose dans les halls d’immeubles et d’entreprises, à côté de ses boîtes aux lettres connectées. Le résident y consulte la météo, les actualités et les informations de sa résidence, ouvre sa boîte, dépose ou récupère un colis.',
+      'Écran d’accueil composé de widgets indépendants, réordonnables par appui long : météo, actualités, trafic, colis, casiers, résidents, contacts, documents, réservation d’espaces communs.',
+      'Refonte visuelle complète et travail de fluidité sur une application devenue lente et datée. C’est la contribution dont je suis le plus satisfait : le produit était fonctionnel mais pénible à utiliser sur un écran mural, là où l’utilisateur ne patiente pas.',
+      'Un écran de hall n’a pas le droit d’afficher une page blanche : l’état du réseau est traité comme un cas normal, pas comme une erreur, chaque widget continuant d’afficher ce qu’il a en mémoire.',
+      'Équipe de cinq personnes, avec suivi et maintenance en production sur deux ans.',
     ],
   },
   {
