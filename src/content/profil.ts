@@ -51,6 +51,7 @@ export const experiences: Experience[] = [
     fin: 'Aujourd’hui',
     courant: true,
     faits: [
+      'Entreprise individuelle en France, doublée d’une SUARL en Tunisie. Créée en juillet 2024, pendant mes derniers mois chez Decayeux, et devenue mon activité principale à mon départ en octobre.',
       'Conception et développement d’applications mobiles en React Native et TypeScript, de l’idée à la publication sur les stores.',
       'Applications publiées sur l’App Store, conçues et développées de l’idée à la mise en vente.',
       'Développement de plateformes web, de solutions SaaS et d’applications métier sur mesure.',
@@ -78,7 +79,7 @@ export const experiences: Experience[] = [
     debut: 'Novembre 2015',
     fin: 'Août 2022',
     faits: [
-      'Activité indépendante déclarée en novembre 2015 (SIREN 814 051 769).',
+      'Entreprise individuelle déclarée en novembre 2015 (SIREN 814 051 769), d’abord pour quelques missions ponctuelles. L’activité devient régulière à partir de 2020, avec la reprise d’études en développement web et mobile.',
       'Développement de sites et d’applications web pour des clients directs : commerces, artisans, associations.',
       'Intégration front-end, back-end PHP et JavaScript, bases de données MySQL.',
       'Gestion complète de la relation client : cadrage du besoin, devis, livraison, maintenance.',
@@ -95,27 +96,30 @@ export type Formation = {
 
 export const formations: Formation[] = [
   {
-    diplome: 'Concepteur développeur d’applications',
+    diplome: 'Concepteur développeur d’applications · titre RNCP niveau 6',
     ecole: 'LA MANU · Amiens',
     periode: 'Oct. 2022 – Nov. 2023',
-    precision: 'Programmation informatique, parcours général.',
+    precision: 'Conception et développement d’applications, du besoin à la mise en production.',
   },
   {
     diplome: 'Développeur d’applications mobiles',
     ecole: 'LA MANU · Amiens',
     periode: 'Juin 2022 – Oct. 2022',
-    precision: 'Développement d’applications mobiles en React Native.',
+    precision: 'Spécialisation mobile : React Native, iOS et Android.',
   },
   {
-    diplome: 'Licence · programmation informatique',
+    diplome: 'Développeur web et web mobile · titre RNCP niveau 5',
     ecole: 'LA MANU · Amiens',
     periode: 'Déc. 2020 – Juin 2022',
+    precision:
+      'Reprise d’études pour passer du développement web au développement mobile, puis spécialisation progressive jusqu’au titre de concepteur développeur.',
   },
   {
     diplome: 'Master MIAGE · informatique appliquée à la gestion des entreprises',
     ecole: 'Université de Picardie Jules Verne · Amiens',
     periode: 'Oct. 2013 – Juin 2015',
-    precision: 'Développement logiciel, gestion des systèmes d’information.',
+    precision:
+      'Développement logiciel et systèmes d’information. Les formations suivantes, à partir de 2020, sont une spécialisation choisie vers le développement mobile.',
   },
 ];
 

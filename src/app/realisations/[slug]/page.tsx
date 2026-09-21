@@ -336,6 +336,38 @@ export default async function EtudeDeCas({ params }: { params: Params }) {
               </ul>
             </section>
 
+            {/* ── APRÈS LA PUBLICATION ─────────────────────────────────── */}
+            {app.apresPublication && (
+              <section className="section" aria-labelledby="t-apres">
+                <div className="section-tete">
+                  <p className="etiquette">Après la mise en ligne</p>
+                  <h2 id="t-apres" className="t-h2">
+                    Ce qui a été corrigé, et comment je le sais
+                  </h2>
+                </div>
+                <div style={{ display: 'grid', gap: 'var(--e-4)', maxWidth: 720 }}>
+                  <div>
+                    <p className="etiquette" style={{ marginBottom: 6 }}>
+                      Le constat
+                    </p>
+                    <p style={{ fontSize: 16.5 }}>{app.apresPublication.constat}</p>
+                  </div>
+                  <div>
+                    <p className="etiquette" style={{ marginBottom: 6 }}>
+                      L’arbitrage
+                    </p>
+                    <p style={{ fontSize: 16.5 }}>{app.apresPublication.decision}</p>
+                  </div>
+                  <div>
+                    <p className="etiquette" style={{ marginBottom: 6 }}>
+                      La vérification
+                    </p>
+                    <p style={{ fontSize: 16.5 }}>{app.apresPublication.verification}</p>
+                  </div>
+                </div>
+              </section>
+            )}
+
             {/* ── SUITE & CONTACT ──────────────────────────────────────── */}
             <section className="section">
               <div

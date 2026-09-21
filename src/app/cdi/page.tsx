@@ -43,7 +43,11 @@ const questions = [
   },
   {
     q: 'Est-il disponible, et où ?',
-    r: `Ouvert à une mission freelance, à un CDI pertinent ou à une collaboration produit. Basé à ${profil.ville}, parfaitement à l’aise à distance, et la mobilité géographique est envisageable pour un poste qui le justifie.`,
+    r: `Disponible immédiatement : je suis indépendant, il n’y a aucun préavis à purger. Basé à ${profil.ville}, à l’aise à distance, et la mobilité géographique est envisageable pour un poste qui le justifie.`,
+  },
+  {
+    q: 'Pourquoi un CDI, après avoir monté sa propre structure ?',
+    r: 'Parce que je veux travailler sur un produit plus gros que ce qu’une personne seule peut porter, et avec des gens qui relisent mon code. Construire seul apprend beaucoup, mais personne ne me contredit et personne ne me montre une autre façon de faire. Ce que je cherche en équipe, c’est exactement ce qui me manque aujourd’hui : de la revue, des arbitrages discutés, et une échelle d’utilisateurs que je n’atteins pas seul. Je continue en parallèle à publier mes propres applications, et je n’en fais pas un secret auprès d’un employeur.',
   },
   {
     q: 'Est-ce qu’il code encore, ou est-ce qu’il gère ?',

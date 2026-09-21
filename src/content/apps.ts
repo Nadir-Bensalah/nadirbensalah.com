@@ -46,6 +46,19 @@ export type App = {
   demontre: string[];
   /** Le fait saillant, celui qu'on retient. */
   saillant: string;
+  /**
+   * Ce qui s'est passé après la mise en ligne : un défaut remonté par les
+   * utilisateurs, l'arbitrage retenu, et comment on sait qu'il tient.
+   * Optionnel : ne se remplit que sur un fait public et vérifiable.
+   */
+  apresPublication?: {
+    /** Le problème tel qu'il s'est manifesté chez les utilisateurs. */
+    constat: string;
+    /** La décision prise, et ce qu'elle coûte. */
+    decision: string;
+    /** Ce qui permet d'affirmer que c'est réglé. */
+    verification: string;
+  };
   /** Site officiel du produit, s'il existe. */
   site?: string;
 };
@@ -196,6 +209,14 @@ export const apps: App[] = [
     ],
     saillant:
       'Construite sur les données ouvertes du réseau, sans dépendre d’une API privée, et honnête sur ses propres limites.',
+    apresPublication: {
+      constat:
+        'Après la mise en ligne, des utilisateurs ont reçu beaucoup trop de notifications : l’alerte se redéclenchait à chaque passage de bus de la plage horaire au lieu de sonner une fois. Un second défaut est apparu en déplacement : les alertes suivaient le fuseau du téléphone, et non l’heure d’Amiens.',
+      decision:
+        'Une alerte ne sonne plus qu’une seule fois par plage, avant le premier bus, et affiche l’heure du suivant plutôt que de resonner pour lui. Les horaires d’alerte sont ancrés sur l’heure d’Amiens, quel que soit le fuseau du téléphone. Le compromis est assumé : on perd le rappel pour un bus plus tardif dans la même plage, au profit d’une notification qu’on ne coupe pas.',
+      verification:
+        'Correctif publié dans la version 1.3.1 le 8 septembre 2026, et décrit dans les notes de version de la fiche App Store.',
+    },
     site: undefined,
   },
   {

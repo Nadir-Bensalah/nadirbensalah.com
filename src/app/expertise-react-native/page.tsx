@@ -43,7 +43,7 @@ const interventions = [
   {
     titre: 'Ajouter ce que le framework ne fait pas',
     texte:
-      'Widgets, Live Activities, App Intents, Apple Watch, NFC. Ce sont des modules natifs à écrire, et c’est souvent là que les équipes JavaScript s’arrêtent.',
+      'Widgets, Live Activities, App Intents, Apple Watch, NFC. Ce sont des modules natifs à écrire en Swift ou en Kotlin, puis à relier proprement au reste de l’application.',
   },
   {
     titre: 'Renforcer une équipe',
@@ -156,10 +156,11 @@ export default function Expertise() {
                   React Native s’arrête là où le système commence.
                 </h2>
                 <p className="t-lead" style={{ maxWidth: 680 }}>
-                  C’est le plafond de verre de la plupart des équipes JavaScript. Dynamic Island,
-                  Live Activities, App Intents, Apple Watch, widgets : rien de tout cela n’a
-                  d’équivalent en JavaScript. Il faut écrire le module natif, et le faire dialoguer
-                  proprement avec le reste.
+                  Dynamic Island, Live Activities, App Intents, Apple Watch, widgets : rien de tout
+                  cela n’a d’équivalent en JavaScript. Il faut écrire le module en Swift ou en
+                  Kotlin, décider ce qui traverse le pont et ce qui reste côté natif, et gérer le
+                  cas où l’application est fermée pendant que l’extension, elle, continue de
+                  tourner. C’est ce travail-là que j’ai fait sur les applications ci-dessous.
                 </p>
               </div>
 
