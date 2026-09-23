@@ -76,6 +76,32 @@ Les sept doivent répondre `200`.
 
 ## 1. À faire tout de suite (gain certain, effort faible)
 
+### La mesure d'audience PostHog  ·  15 minutes
+
+La mesure est en ligne depuis le 23 septembre 2026 (voir `MESURE.md`). Il
+reste quatre gestes qui ne se font que dans tes comptes.
+
+1. **Poser la clé Web3Forms.** Sans elle, AUCUN lead ne peut être compté :
+   le formulaire ouvre la messagerie du visiteur, et on ne sait jamais si le
+   message est parti. Crée la clé sur web3forms.com avec ton adresse, puis
+   dans GitHub : Settings > Secrets and variables > Actions > New repository
+   secret, nom `CLE_FORMULAIRE`. Le prochain déploiement l'utilise. La
+   politique de sécurité du site autorise déjà le service.
+2. **Créer les tableaux de bord.** PostHog > Settings > Personal API keys,
+   droits « dashboard: write » et « insight: write ». Puis
+   `POSTHOG_CLE_PERSO=phx_... POSTHOG_PROJET=<id du projet> npm run posthog-tableaux`.
+   L'identifiant du projet est dans l'URL de PostHog. Révoque la clé après.
+3. **Autoriser le domaine** pour la carte de chaleur : Settings > Web
+   analytics / Toolbar > Authorized URLs, ajouter `https://nadirbensalah.com`.
+4. **Replay** : Settings > Session replay, régler la durée minimale à 2
+   secondes pour écarter les rebonds instantanés. Les journaux de la console
+   sont déjà coupés côté site.
+
+Décision qui t'appartient : dans Settings > Project, « Discard client IP
+data ». Activé, l'adresse IP n'est pas conservée ; vérifie dans la
+documentation de PostHog si le pays reste alors disponible.
+
+
 ### Le 404 qui sort sur ton nom  ·  5 minutes dans hPanel
 
 **Le diagnostic, vérifié le 19 septembre 2026.** Le `.fr` ne redirige que sa

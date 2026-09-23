@@ -95,7 +95,9 @@ function attendre(ms) {
 }
 
 async function cible(port) {
-  for (let essai = 0; essai < 25; essai++) {
+  // Vingt secondes : sur les machines de GitHub, Chrome met parfois plus de
+  // sept secondes à ouvrir son port, et l'audit échouait avant lui.
+  for (let essai = 0; essai < 66; essai++) {
     try {
       const liste = await new Promise((res, rej) => {
         http
@@ -220,11 +222,21 @@ async function principal() {
     '--disable-gpu',
     '--no-first-run',
     '--hide-scrollbars',
+    // Les runners Ubuntu récents interdisent les espaces de noms dont le bac
+    // à sable de Chrome a besoin : sans ce drapeau, Chrome meurt au démarrage
+    // sans un mot. Uniquement en intégration continue.
+    ...(process.env.CI ? ['--no-sandbox', '--disable-dev-shm-usage'] : []),
     `--remote-debugging-port=${port}`,
     'about:blank',
   ]);
+  let journalChrome = '';
+  chrome.stderr?.on('data', (d) => (journalChrome += d));
 
-  const url = await cible(port);
+  const url = await cible(port).catch((err) => {
+    // Sans ce journal, l'échec ne disait jamais POURQUOI Chrome ne répondait pas.
+    console.error(journalChrome.slice(-2000));
+    throw err;
+  });
   const ws = new WebSocket(url);
   await new Promise((r) => ws.addEventListener('open', r, { once: true }));
 
