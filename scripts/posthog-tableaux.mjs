@@ -21,7 +21,11 @@ const PROJET = process.env.POSTHOG_PROJET;
 const A_BLANC = process.argv.includes('--a-blanc');
 
 const HORS_TEST = [
+  // Banc de test et développement : servis depuis la machine.
   { key: '$host', operator: 'not_regex', value: '^(localhost|127\\.0\\.0\\.1)', type: 'event' },
+  // Visites de contrôle faites EN PRODUCTION après chaque mise en ligne,
+  // toutes marquées utm_source=verification_… (deploiement, stockage, refus).
+  { key: 'source', operator: 'not_regex', value: '^verification_', type: 'event' },
 ];
 const PERIODE = { date_from: '-30d' };
 const PERIODE_LONGUE = { date_from: '-90d' };
@@ -117,7 +121,6 @@ const TABLEAUX = [
     nom: 'Acquisition',
     description: 'D’où viennent les visiteurs, et par où ils entrent.',
     graphiques: [
-      ['Visites par semaine', tendance([sessions('$pageview')])],
       [
         'Visites par canal',
         tendance([sessions('$pageview')], {
@@ -130,14 +133,6 @@ const TABLEAUX = [
         'Sources et campagnes (UTM)',
         tendance([sessions('$pageview')], {
           ventilation: ventile('source', 'campagne'),
-          affichage: 'ActionsTable',
-          periode: PERIODE,
-        }),
-      ],
-      [
-        'Sites référents',
-        tendance([sessions('$pageview')], {
-          ventilation: ventile('referrer_domaine'),
           affichage: 'ActionsTable',
           periode: PERIODE,
         }),
@@ -159,14 +154,6 @@ const TABLEAUX = [
         }),
       ],
       [
-        'Pays',
-        tendance([sessions('$pageview')], {
-          ventilation: ventile('$geoip_country_name'),
-          affichage: 'ActionsTable',
-          periode: PERIODE,
-        }),
-      ],
-      [
         'Pages introuvables atteintes (404)',
         tendance([ev('$pageview', { properties: [prop('page_type', 'erreur_404')] })], {
           ventilation: ventile('$pathname'),
@@ -181,27 +168,10 @@ const TABLEAUX = [
     description: 'Ce que les visiteurs consultent, et ce qui ne sert à rien.',
     graphiques: [
       [
-        'Pages les plus vues',
-        tendance([ev('$pageview')], {
-          ventilation: ventile('$pathname'),
-          affichage: 'ActionsTable',
-          periode: PERIODE,
-        }),
-      ],
-      [
-        'Visites par type de page',
-        tendance([sessions('$pageview')], {
-          ventilation: ventile('page_type'),
-          affichage: 'ActionsBarValue',
-          periode: PERIODE,
-        }),
-      ],
-      [
         'Études de cas consultées',
         tendance([sessions('$pageview', { properties: [prop('page_type', 'etude_de_cas')] })], {
           ventilation: ventile('contenu_id'),
           affichage: 'ActionsBarValue',
-          periode: PERIODE_LONGUE,
         }),
       ],
       [
@@ -209,15 +179,6 @@ const TABLEAUX = [
         tendance([sessions('$pageview')], {
           ventilation: ventile('intention', 'intention_origine'),
           affichage: 'ActionsTable',
-          periode: PERIODE_LONGUE,
-        }),
-      ],
-      [
-        'Portes de l’accueil choisies',
-        tendance([ev('intent_select')], {
-          ventilation: ventile('intention_choisie'),
-          affichage: 'ActionsBarValue',
-          periode: PERIODE_LONGUE,
         }),
       ],
       [
@@ -225,7 +186,6 @@ const TABLEAUX = [
         tendance([ev('cv_download')], {
           ventilation: ventile('emplacement'),
           affichage: 'ActionsTable',
-          periode: PERIODE_LONGUE,
         }),
       ],
       [
@@ -233,7 +193,6 @@ const TABLEAUX = [
         tendance([ev('app_store_click')], {
           ventilation: ventile('app'),
           affichage: 'ActionsBarValue',
-          periode: PERIODE_LONGUE,
         }),
       ],
       [
@@ -241,15 +200,6 @@ const TABLEAUX = [
         tendance([ev('scroll_depth', { properties: [prop('profondeur', 90)] })], {
           ventilation: ventile('page_type'),
           affichage: 'ActionsBarValue',
-          periode: PERIODE_LONGUE,
-        }),
-      ],
-      [
-        'Sorties vers GitHub, LinkedIn, Capmedia',
-        tendance([ev('outbound_click')], {
-          ventilation: ventile('destination'),
-          affichage: 'ActionsBarValue',
-          periode: PERIODE_LONGUE,
         }),
       ],
     ],
@@ -264,49 +214,18 @@ const TABLEAUX = [
         'Taux de conversion visite → lead (%)',
         tendance(
           [sessions('$pageview'), sessions('submit_contact'), sessions('challenge_submit')],
-          { formule: '(B + C) / A * 100' }
+          {
+            formule: '(B + C) / A * 100',
+          }
         ),
       ],
+      // Un seul entonnoir : la ventilation (intention, canal, appareil…) se
+      // change dans l'interface, plutôt que six entonnoirs presque vides.
       ['Parcours vers le lead', entonnoir(PARCOURS_LEAD)],
       [
-        'Parcours vers le lead, par intention',
-        entonnoir(PARCOURS_LEAD, { ventilation: 'intention' }),
-      ],
-      ['Parcours vers le lead, par canal', entonnoir(PARCOURS_LEAD, { ventilation: 'canal' })],
-      [
-        'Parcours vers le lead, par campagne',
-        entonnoir(PARCOURS_LEAD, { ventilation: 'campagne' }),
-      ],
-      [
-        'Parcours vers le lead, par page d’arrivée',
-        entonnoir(PARCOURS_LEAD, { ventilation: 'landing_type' }),
-      ],
-      [
-        'Parcours vers le lead, ordinateur ou mobile',
-        entonnoir(PARCOURS_LEAD, { ventilation: '$device_type' }),
-      ],
-      [
-        'Du contenu consulté au lead, par page',
-        entonnoir([PARCOURS_LEAD[1], VERS_CONTACT, LEAD_CONTACT], { ventilation: 'contenu_id' }),
-      ],
-      [
-        'Leads par source et campagne',
+        'Leads par canal, campagne et intention',
         tendance([LEAD_CONTACT, LEAD_CHALLENGE], {
-          ventilation: ventile('canal', 'source', 'campagne'),
-          affichage: 'ActionsTable',
-        }),
-      ],
-      [
-        'Leads par intention',
-        tendance([LEAD_CONTACT, LEAD_CHALLENGE], {
-          ventilation: ventile('intention', 'intention_origine'),
-          affichage: 'ActionsTable',
-        }),
-      ],
-      [
-        'Leads par page d’arrivée',
-        tendance([LEAD_CONTACT, LEAD_CHALLENGE], {
-          ventilation: ventile('landing_page'),
+          ventilation: ventile('canal', 'campagne', 'intention'),
           affichage: 'ActionsTable',
         }),
       ],
@@ -315,7 +234,7 @@ const TABLEAUX = [
         tendance([VERS_CONTACT], { ventilation: ventile('cta_id'), affichage: 'ActionsTable' }),
       ],
       [
-        'Formulaires : commencés, envoyés, en erreur, réussis',
+        'Formulaires : commencés, envoyés, en erreur, en échec, réussis',
         tendance([
           ev('form_start'),
           ev('form_submit_attempt'),
@@ -383,7 +302,16 @@ if (!CLE || !PROJET) {
   process.exit(1);
 }
 
+const existants = await fetch(`${HOTE}/api/projects/${PROJET}/dashboards/?limit=200`, {
+  headers: { Authorization: `Bearer ${CLE}` },
+}).then((r) => (r.ok ? r.json() : { results: [] }));
+const noms = new Set((existants.results ?? []).filter((d) => !d.deleted).map((d) => d.name));
+
 for (const t of TABLEAUX) {
+  if (noms.has(t.nom)) {
+    console.log(`\n${t.nom} existe déjà : rien n'est recréé.`);
+    continue;
+  }
   const tableau = await api('/dashboards/', { name: t.nom, description: t.description });
   console.log(`\n${t.nom} → ${HOTE}/project/${PROJET}/dashboard/${tableau.id}`);
   for (const [nom, requete] of t.graphiques) {
