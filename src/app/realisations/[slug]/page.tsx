@@ -188,6 +188,7 @@ export default async function EtudeDeCas({ params }: { params: Params }) {
                 href={app.appStoreUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-app={app.slug}
                 className="btn btn-principal"
               >
                 Voir sur l’App&nbsp;Store
@@ -197,6 +198,7 @@ export default async function EtudeDeCas({ params }: { params: Params }) {
                   href={app.site}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-sortie="site_produit"
                   className="btn btn-secondaire"
                 >
                   Le site du produit

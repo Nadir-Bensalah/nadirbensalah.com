@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { EVENEMENTS, suit } from '@/lib/analytics';
 import { equivalent } from '@/lib/langues';
 import { profileEn } from '@/content/en/profil';
 
@@ -136,7 +135,6 @@ export default function Header() {
         <a
           href={profileEn.cv}
           download
-          onClick={() => suit(EVENEMENTS.telechargeCv, { depuis: 'en_header' })}
           className="btn btn-fantome cta-bureau"
           style={{ flex: 'none' }}
         >

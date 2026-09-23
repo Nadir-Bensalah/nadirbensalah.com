@@ -1,11 +1,9 @@
-'use client';
-
 import React from 'react';
-import { EVENEMENTS, suit } from '@/lib/analytics';
 import { profil } from '@/content/profil';
 
 /**
- * Le bouton de téléchargement du CV, avec le suivi d'événement attaché.
+ * Le bouton de téléchargement du CV. Le clic est mesuré par l'écouteur global,
+ * et `depuis` devient l'emplacement rapporté avec l'événement.
  * Le fichier existe réellement dans public/assets/cv/ : ce lien ne peut pas
  * tomber en 404 sans que le build le signale.
  */
@@ -25,12 +23,7 @@ export default function BoutonCv({
   }[variante];
 
   return (
-    <a
-      href={profil.cv}
-      download
-      onClick={() => suit(EVENEMENTS.telechargeCv, { depuis })}
-      className={classes}
-    >
+    <a href={profil.cv} download data-emplacement={depuis} className={classes}>
       <svg
         width="16"
         height="16"

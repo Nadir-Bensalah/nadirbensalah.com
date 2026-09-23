@@ -12,10 +12,13 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
     "serve": "next start",
     "type-check": "tsc --noEmit",
-    "audit": "node scripts/audit-responsive.mjs"
+    "audit": "node scripts/audit-responsive.mjs",
+    "tester-mesure": "node scripts/tester-mesure.mjs",
+    "posthog-tableaux": "node scripts/posthog-tableaux.mjs"
   },
   "dependencies": {
     "next": "15.1.11",
+    "posthog-js": "1.434.11",
     "react": "19.0.3",
     "react-dom": "19.0.3"
   },

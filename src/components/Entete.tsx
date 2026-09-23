@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { EVENEMENTS, suit } from '@/lib/analytics';
 import { profil } from '@/content/profil';
 import { equivalent } from '@/lib/langues';
 
@@ -152,7 +151,6 @@ export default function Entete() {
         <a
           href={profil.cv}
           download
-          onClick={() => suit(EVENEMENTS.telechargeCv, { depuis: 'entete' })}
           className="btn btn-fantome cta-bureau"
           style={{ flex: 'none' }}
         >

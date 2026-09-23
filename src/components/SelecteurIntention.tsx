@@ -2,7 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { EVENEMENTS, suit } from '@/lib/analytics';
+import {
+  EVENEMENTS,
+  declareIntention,
+  suit,
+  type Intention as IntentionMesuree,
+} from '@/lib/analytics';
 
 /**
  * Le routage par intention.
@@ -22,28 +27,29 @@ const portes: {
   libelle: string;
   sous: string;
   href: string;
-  evenement: (typeof EVENEMENTS)[keyof typeof EVENEMENTS];
+  /** Le nom de l'intention dans la mesure, commun à tout le site. */
+  mesure: IntentionMesuree;
 }[] = [
   {
     cle: 'recrute',
     libelle: 'Je recrute',
     sous: 'Poste, CDI, mission longue',
     href: '/cdi',
-    evenement: EVENEMENTS.intentionRecrute,
+    mesure: 'recruteur',
   },
   {
     cle: 'projet',
     libelle: 'J’ai un projet',
     sous: 'Une application à construire',
     href: '/freelance',
-    evenement: EVENEMENTS.intentionProjet,
+    mesure: 'projet',
   },
   {
     cle: 'travaux',
     libelle: 'Je regarde son travail',
     sous: 'Ce qui est déjà en ligne',
     href: '/realisations',
-    evenement: EVENEMENTS.intentionTravaux,
+    mesure: 'portfolio',
   },
 ];
 
@@ -67,7 +73,10 @@ export default function SelecteurIntention() {
     } catch {
       /* sans stockage, le lien fonctionne quand même */
     }
-    suit(p.evenement);
+    // L'intention est posée AVANT l'événement : il la porte déjà, comme toutes
+    // les pages vues et tous les clics qui suivront dans la session.
+    declareIntention(p.mesure);
+    suit(EVENEMENTS.intention, { intention_choisie: p.mesure, destination: p.href });
   };
 
   return (
@@ -90,6 +99,7 @@ export default function SelecteurIntention() {
             key={p.cle}
             href={p.href}
             onClick={() => choisir(p)}
+            data-porte-intention={p.mesure}
             className="porte-intention"
             style={{
               display: 'flex',

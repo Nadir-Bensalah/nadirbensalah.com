@@ -1,17 +1,13 @@
-'use client';
-
 import React from 'react';
-import { EVENEMENTS, suit } from '@/lib/analytics';
 import { profil } from '@/content/profil';
 
-/** Les coordonnées directes, avec le suivi attaché à chaque canal. */
+/** Les coordonnées directes. Chaque clic est qualifié par l'écouteur global. */
 export default function LiensDirects() {
   const liens = [
     {
       libelle: 'E-mail',
       valeur: profil.email,
       href: `mailto:${profil.email}`,
-      evenement: EVENEMENTS.clicEmail,
       externe: false,
       icone: (
         <>
@@ -24,7 +20,6 @@ export default function LiensDirects() {
       libelle: 'Téléphone',
       valeur: profil.telephone,
       href: profil.telephoneLien,
-      evenement: EVENEMENTS.clicTelephone,
       externe: false,
       icone: (
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
@@ -34,7 +29,6 @@ export default function LiensDirects() {
       libelle: 'GitHub',
       valeur: 'Le code public',
       href: profil.github,
-      evenement: EVENEMENTS.clicGithub,
       externe: true,
       // Tracé en contour : dans cette liste toutes les icônes sont dessinées
       // au trait, un glyphe plein y ferait une tache.
@@ -46,7 +40,6 @@ export default function LiensDirects() {
       libelle: 'LinkedIn',
       valeur: 'Le profil',
       href: profil.linkedin,
-      evenement: EVENEMENTS.clicLinkedin,
       externe: true,
       icone: (
         <>
@@ -60,6 +53,7 @@ export default function LiensDirects() {
 
   return (
     <ul
+      data-emplacement="contact_coordonnees"
       style={{
         listStyle: 'none',
         padding: 0,
@@ -74,7 +68,6 @@ export default function LiensDirects() {
             href={l.href}
             target={l.externe ? '_blank' : undefined}
             rel={l.externe ? 'noopener noreferrer' : undefined}
-            onClick={() => suit(l.evenement, { depuis: 'contact' })}
             style={{
               display: 'flex',
               alignItems: 'center',

@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import '../styles/tailwind.css';
 import { profil } from '@/content/profil';
+import Mesure from '@/components/Mesure';
 
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://nadirbensalah.com').replace(
   /\/$/,
@@ -96,7 +97,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fr" className={inter.variable}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Mesure />
+      </body>
     </html>
   );
 }

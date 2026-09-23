@@ -18,3 +18,4 @@ jest-test-results.json
 .env
 .env.local
 captures/
+.rapport-mesure.json

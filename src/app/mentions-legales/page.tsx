@@ -5,6 +5,13 @@ import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
 import { profil } from '@/content/profil';
 import LienEvitement from '@/components/LienEvitement';
+import RefusMesure from '@/components/RefusMesure';
+
+// Lus ici, au build, et non importés du module de mesure : une constante
+// exportée d'un module « use client » vaut undefined côté serveur. La page
+// décrit ainsi exactement ce qui est actif dans la version publiée.
+const MESURE = process.env.NEXT_PUBLIC_MESURE !== 'off';
+const ENVOI_DIRECT = Boolean(process.env.NEXT_PUBLIC_CLE_FORMULAIRE);
 
 export const metadata: Metadata = {
   title: 'Mentions légales',
@@ -84,23 +91,63 @@ export default function MentionsLegales() {
                 </p>
 
                 <h2>Données personnelles</h2>
-                <p>
-                  Ce site est entièrement statique. Il ne comporte aucun formulaire qui
-                  transmettrait vos données à un serveur : le formulaire de contact compose un
-                  message et l’ouvre dans votre propre logiciel de messagerie. Rien n’est stocké
-                  ici.
-                </p>
+                {ENVOI_DIRECT ? (
+                  <p>
+                    Le formulaire de contact transmet votre nom, votre adresse électronique, votre
+                    entreprise si vous l’indiquez et votre message au service d’envoi Web3Forms, qui
+                    me les remet par e-mail. Si cet envoi échoue, le message s’ouvre dans votre
+                    propre logiciel de messagerie. Rien n’est conservé sur ce site.
+                  </p>
+                ) : (
+                  <p>
+                    Ce site est entièrement statique. Le formulaire de contact compose un message et
+                    l’ouvre dans votre propre logiciel de messagerie : il ne transmet vos données à
+                    aucun serveur, et rien n’est conservé ici.
+                  </p>
+                )}
                 <p>
                   Le choix que vous exprimez éventuellement dans la section « Qu’est-ce qui vous
                   amène ? » est conservé dans le stockage local de votre navigateur, sur votre
-                  appareil uniquement. Il sert à adapter un bouton, et il n’est jamais transmis.
+                  appareil uniquement. Il sert à adapter un bouton.
+                  {MESURE
+                    ? ' Pendant la visite, il accompagne aussi les statistiques de fréquentation décrites ci-dessous, sans jamais être relié à votre identité.'
+                    : ' Il n’est jamais transmis.'}{' '}
                   Vider les données du site dans votre navigateur l’efface.
                 </p>
-                <p>
-                  Aucun cookie publicitaire n’est déposé, et aucun traceur tiers n’est chargé par
-                  défaut. Si une mesure d’audience respectueuse de la vie privée est ajoutée
-                  ultérieurement, cette page sera mise à jour avant sa mise en service.
-                </p>
+                {MESURE ? (
+                  <>
+                    <h3>Mesure d’audience</h3>
+                    <p>
+                      Pour comprendre comment le site est utilisé et l’améliorer, sa fréquentation
+                      est mesurée avec PostHog, hébergé dans l’Union européenne (Francfort). Sont
+                      collectés : les pages consultées, la page d’arrivée, le site, le moteur ou la
+                      campagne d’où vous venez, le type d’appareil et de navigateur, le pays déduit
+                      de la connexion, et les actions sur le site : clic sur un bouton,
+                      téléchargement du CV, début et envoi d’un formulaire.
+                    </p>
+                    <p>
+                      Les visites peuvent être rediffusées sous forme d’enregistrement des
+                      défilements et des clics. Tous les champs de formulaire, les adresses
+                      électroniques et les numéros de téléphone y sont masqués dans votre
+                      navigateur, avant tout envoi. Le contenu des formulaires, votre adresse et
+                      votre numéro ne sont jamais transmis à cet outil.
+                    </p>
+                    <p>
+                      Aucun cookie n’est déposé. Un identifiant technique, sans lien avec votre
+                      identité, est conservé dans le stockage de session du navigateur et s’efface à
+                      la fermeture de l’onglet : une nouvelle visite est donc une nouvelle visite.
+                      Aucun profil n’est constitué, et ces données ne sont ni vendues, ni utilisées
+                      à des fins publicitaires, ni croisées avec d’autres sources.
+                    </p>
+                    <p>
+                      Aucune mesure n’a lieu si votre navigateur envoie le signal Global Privacy
+                      Control ou « Do Not Track ». Vous pouvez aussi la refuser ici :
+                    </p>
+                    <RefusMesure />
+                  </>
+                ) : (
+                  <p>Aucun cookie n’est déposé et aucun outil de mesure d’audience n’est chargé.</p>
+                )}
                 <p>
                   Lorsque vous m’écrivez, votre message et votre adresse électronique sont traités
                   uniquement pour vous répondre, et conservés le temps de l’échange puis de la

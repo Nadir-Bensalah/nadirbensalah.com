@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useIntention } from '@/components/SelecteurIntention';
-import { EVENEMENTS, memoriseOrigine, suit } from '@/lib/analytics';
 import { profil } from '@/content/profil';
 
 /**
@@ -17,11 +16,6 @@ import { profil } from '@/content/profil';
 export default function BarreCollante() {
   const [visible, setVisible] = useState(false);
   const intention = useIntention();
-
-  useEffect(() => {
-    memoriseOrigine();
-    suit(EVENEMENTS.vueAccueil);
-  }, []);
 
   useEffect(() => {
     const auDefilement = () => {
@@ -69,7 +63,6 @@ export default function BarreCollante() {
           <a
             href={profil.cv}
             download
-            onClick={() => suit(EVENEMENTS.telechargeCv, { depuis: 'barre_collante' })}
             className="btn btn-secondaire"
             style={{ flex: 1 }}
             tabIndex={visible ? 0 : -1}
@@ -79,7 +72,6 @@ export default function BarreCollante() {
           <Link
             prefetch={false}
             href="/contact"
-            onClick={() => suit(EVENEMENTS.ouvreContact, { depuis: 'barre_collante' })}
             className="btn btn-principal"
             style={{ flex: 1 }}
             tabIndex={visible ? 0 : -1}
@@ -101,7 +93,6 @@ export default function BarreCollante() {
           <Link
             prefetch={false}
             href="/contact"
-            onClick={() => suit(EVENEMENTS.ouvreContact, { depuis: 'barre_collante' })}
             className="btn btn-principal"
             style={{ flex: 1 }}
             tabIndex={visible ? 0 : -1}

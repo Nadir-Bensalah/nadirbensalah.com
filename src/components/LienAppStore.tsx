@@ -1,14 +1,9 @@
-'use client';
-
 import React from 'react';
-import { EVENEMENTS, suit } from '@/lib/analytics';
 
 /**
- * Un lien vers l'App Store, avec le suivi attaché.
- *
- * Isolé dans son propre composant client pour que les cartes et les pages qui
- * l'utilisent restent des composants serveur : seul ce bouton embarque du
- * JavaScript, pas la grille entière.
+ * Un lien vers l'App Store. Le clic est mesuré par l'écouteur global
+ * (Mesure.tsx) ; l'attribut data-app lui dit de quelle application il
+ * s'agit, sous le même identifiant que l'étude de cas.
  */
 export default function LienAppStore({
   url,
@@ -18,7 +13,7 @@ export default function LienAppStore({
   style,
 }: {
   url: string;
-  /** Le nom de l'application, pour savoir laquelle a été cliquée. */
+  /** L'identifiant de l'application (son slug), pour savoir laquelle a été cliquée. */
   app: string;
   children: React.ReactNode;
   className?: string;
@@ -29,7 +24,7 @@ export default function LienAppStore({
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => suit(EVENEMENTS.clicAppStore, { app })}
+      data-app={app}
       className={className}
       style={style}
     >

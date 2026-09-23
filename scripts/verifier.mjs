@@ -223,9 +223,13 @@ for (const fichier of pages) {
   // qui n'existe pas, et sur une page juridique c'est trompeur.
   const pluriel = estAnglais
     ? null
-    : texteSeul.match(/\b[Nn]ous (ne |n'|avons|sommes|proposons|utilisons|collectons|recevons|voyons)/g);
+    : texteSeul.match(
+        /\b[Nn]ous (ne |n'|avons|sommes|proposons|utilisons|collectons|recevons|voyons)/g
+      );
   if (pluriel) {
-    problemes.push(`${nom} : « ${pluriel[0].trim()} » : le site parle a la premiere personne du singulier`);
+    problemes.push(
+      `${nom} : « ${pluriel[0].trim()} » : le site parle a la premiere personne du singulier`
+    );
   }
 
   // ── Fuite de langue ─────────────────────────────────────────────────
@@ -234,9 +238,16 @@ for (const fichier of pages) {
   // à l'écran. Liste de mots qui n'existent pas en anglais.
   if (estAnglais) {
     const fuites = [
-      'étude de cas', 'en ligne depuis', 'Style de vie', 'Divertissement',
-      'Productivité', 'Éducation', 'Télécharger', 'Me contacter',
-      'applications publiées', 'Réalisations',
+      'étude de cas',
+      'en ligne depuis',
+      'Style de vie',
+      'Divertissement',
+      'Productivité',
+      'Éducation',
+      'Télécharger',
+      'Me contacter',
+      'applications publiées',
+      'Réalisations',
     ];
     const trouvee = fuites.find((f) => texteSeul.includes(f) || html.includes(`aria-label="${f}`));
     if (trouvee) {
@@ -276,6 +287,46 @@ for (const fichier of pages) {
   if (!/usePathname/.test(composant)) {
     problemes.push(
       'LienEvitement.tsx : sans usePathname, rien ne déclenche le relâchement du focus au changement de page'
+    );
+  }
+}
+
+// ── La mesure et le formulaire doivent pouvoir sortir ─────────────────
+// La CSP du .htaccess ne s'applique qu'en production : un appel bloqué n'y
+// fait aucun bruit. Avant septembre 2026, connect-src 'self' aurait fait
+// échouer TOUS les envois du formulaire le jour où la clé Web3Forms serait
+// posée, chacun repartant silencieusement vers la messagerie.
+{
+  const csp =
+    readFileSync('public/.htaccess', 'utf8').match(/Content-Security-Policy "([^"]+)"/)?.[1] ?? '';
+  const connect = csp.match(/connect-src ([^;]+)/)?.[1] ?? '';
+  const script = csp.match(/script-src ([^;]+)/)?.[1] ?? '';
+  for (const origine of ['https://api.web3forms.com', 'https://eu.i.posthog.com']) {
+    if (!connect.includes(origine)) {
+      problemes.push(
+        `.htaccess : connect-src n'autorise pas ${origine}, les envois vers ce service seront bloqués`
+      );
+    }
+  }
+  if (!script.includes('https://eu-assets.i.posthog.com')) {
+    problemes.push(
+      ".htaccess : script-src n'autorise pas eu-assets.i.posthog.com, le replay ne se chargera pas"
+    );
+  }
+}
+
+// ── Un lead n'est compté qu'après confirmation ────────────────────────
+// submit_contact et challenge_submit ne doivent partir qu'une fois le
+// service d'envoi ayant répondu { success: true }. Le banc de mesure
+// (scripts/tester-mesure.mjs) le prouve en navigateur ; cette garde vérifie
+// seulement que la condition de confirmation n'a pas disparu du code.
+{
+  const formulaire = readFileSync('src/components/Formulaire.tsx', 'utf8');
+  const lead = formulaire.indexOf('EVENEMENTS.leadContact');
+  const confirmation = formulaire.indexOf('success !== true');
+  if (lead < 0 || confirmation < 0 || confirmation > lead) {
+    problemes.push(
+      "Formulaire.tsx : le lead n'est plus conditionné à la confirmation { success: true } du service d'envoi"
     );
   }
 }

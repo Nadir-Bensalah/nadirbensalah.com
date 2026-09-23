@@ -83,11 +83,16 @@ ErrorDocument 404 /404.html
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), interest-cohort=()"
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 
-  # Le site est statique : pas de script tiers, pas de XHR, pas d'iframe.
-  # Les seules origines externes sont les polices Google, chargees par le
-  # layout. 'unsafe-inline' reste necessaire pour les styles en ligne des
-  # composants et pour les blocs JSON-LD.
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
+  # Trois origines externes, et aucune autre :
+  # - eu.i.posthog.com recoit les evenements de mesure et les replays ;
+  # - eu-assets.i.posthog.com sert le script d'enregistrement des sessions,
+  #   charge a la demande, et la configuration du projet ;
+  # - api.web3forms.com recoit les messages du formulaire. Avant cette ligne,
+  #   connect-src 'self' bloquait l'envoi : le jour ou la cle aurait ete posee,
+  #   chaque message serait tombe en echec et reparti vers la messagerie.
+  # 'unsafe-inline' reste necessaire pour les styles en ligne des composants
+  # et pour les blocs JSON-LD. worker-src blob: pour la compression des replays.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://eu-assets.i.posthog.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://eu.i.posthog.com https://eu-assets.i.posthog.com https://api.web3forms.com; worker-src 'self' blob:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
 </IfModule>
 
 # ==========================================================================

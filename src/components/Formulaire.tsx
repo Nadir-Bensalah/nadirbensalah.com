@@ -54,6 +54,17 @@ export default function Formulaire({
   const [envoiReel, setEnvoiReel] = useState(false);
   const [erreurs, setErreurs] = useState<Record<string, string>>({});
   const leurre = useRef<HTMLInputElement>(null);
+  // Pour la mesure : le formulaire a-t-il été commencé, et quand.
+  const commence = useRef(false);
+  const debut = useRef<number | null>(null);
+
+  const auPremierCaractere = (evt: React.FormEvent<HTMLFormElement>) => {
+    // Le champ leurre ne compte pas : seul un robot le remplit.
+    if ((evt.target as HTMLInputElement).name === 'site' || commence.current) return;
+    commence.current = true;
+    debut.current = Date.now();
+    suit(EVENEMENTS.formulaireCommence, { formulaire: variante });
+  };
   const idResultat = useMemo(() => `resultat-${variante}`, [variante]);
 
   const valider = (donnees: FormData) => {
@@ -85,9 +96,18 @@ export default function Formulaire({
       return;
     }
 
+    suit(EVENEMENTS.formulaireTentative, { formulaire: variante, envoi_direct: envoiDirect });
+
     const e = valider(donnees);
     setErreurs(e);
     if (Object.keys(e).length > 0) {
+      // Le NOM des champs refusés, jamais leur contenu.
+      const champs = ['nom', 'email', 'message'].filter((n) => e[n]);
+      suit(EVENEMENTS.formulaireErreur, {
+        formulaire: variante,
+        champs_en_erreur: champs,
+        nb_erreurs: champs.length,
+      });
       setEtat('erreur');
       // On vise le champ par son nom, pas par [aria-invalid] : setErreurs est
       // asynchrone, l'attribut n'est pas encore posé dans le DOM à cet
@@ -118,15 +138,22 @@ export default function Formulaire({
     );
 
     setMessageCompose(corps);
-    suit(variante === 'challenge' ? EVENEMENTS.envoieChallenge : EVENEMENTS.envoieContact);
 
     const cle = cleFormulaire;
+    const ouvreMessagerie = (raison: 'sans_cle' | 'echec_envoi') => {
+      // Ce n'est PAS un lead : on sait seulement que la messagerie du
+      // visiteur a été ouverte, pas qu'il a réellement envoyé le message.
+      suit(EVENEMENTS.formulaireMessagerie, { formulaire: variante, raison });
+      window.location.href = `mailto:${profil.email}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+      window.setTimeout(() => setEtat('succes'), 700);
+    };
+    const echec = (raison: string, statut?: number) =>
+      suit(EVENEMENTS.formulaireEchec, { formulaire: variante, raison, statut_http: statut });
 
     // Sans clé configurée : l'ancien comportement, pour que le formulaire ne
     // soit jamais cassé pendant l'installation.
     if (!cle) {
-      window.location.href = `mailto:${profil.email}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
-      window.setTimeout(() => setEtat('succes'), 700);
+      ouvreMessagerie('sans_cle');
       return;
     }
 
@@ -149,15 +176,36 @@ export default function Formulaire({
           }),
         });
 
-        if (!reponse.ok) throw new Error(String(reponse.status));
+        // Le service répond en JSON { success: true } : un code 200 seul ne
+        // suffit pas à compter un lead.
+        const corpsReponse = (await reponse.json().catch(() => null)) as {
+          success?: boolean;
+        } | null;
+
+        if (!reponse.ok || corpsReponse?.success !== true) {
+          echec(
+            !reponse.ok ? (reponse.status >= 500 ? 'http_5xx' : 'http_4xx') : 'reponse_invalide',
+            reponse.status
+          );
+          ouvreMessagerie('echec_envoi');
+          return;
+        }
+
+        // LE LEAD. Seul endroit du site où il est compté, après confirmation.
+        suit(variante === 'challenge' ? EVENEMENTS.leadChallenge : EVENEMENTS.leadContact, {
+          formulaire: variante,
+          duree_saisie_s: debut.current
+            ? Math.round((Date.now() - debut.current) / 1000)
+            : undefined,
+        });
         setEnvoiReel(true);
         setEtat('succes');
       } catch {
-        // L'envoi a échoué : plutôt qu'un message d'erreur sec, on bascule sur
-        // la messagerie. Le visiteur n'a pas à savoir qu'un service tiers est
-        // tombé, il veut juste que son message parte.
-        window.location.href = `mailto:${profil.email}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
-        window.setTimeout(() => setEtat('succes'), 700);
+        // Réseau coupé, service injoignable ou requête bloquée : plutôt qu'un
+        // message d'erreur sec, on bascule sur la messagerie. Le visiteur n'a
+        // pas à savoir qu'un service tiers est tombé.
+        echec('reseau');
+        ouvreMessagerie('echec_envoi');
       }
     })();
   };
@@ -168,6 +216,7 @@ export default function Formulaire({
         className="encadre encadre--action"
         role="status"
         id={idResultat}
+        data-ph-masque
         style={{ alignItems: 'flex-start' }}
       >
         <div>
@@ -214,7 +263,16 @@ export default function Formulaire({
             >
               {copie ? 'Message copié' : 'Copier mon message'}
             </button>
-            <button type="button" className="btn btn-fantome" onClick={() => setEtat('saisie')}>
+            <button
+              type="button"
+              className="btn btn-fantome"
+              onClick={() => {
+                // Un nouveau message est un nouveau formulaire commencé.
+                commence.current = false;
+                debut.current = null;
+                setEtat('saisie');
+              }}
+            >
               Écrire un autre message
             </button>
           </div>
@@ -224,6 +282,7 @@ export default function Formulaire({
               Revoir mon message
             </summary>
             <pre
+              className="ph-no-capture"
               style={{
                 marginTop: 'var(--e-3)',
                 whiteSpace: 'pre-wrap',
@@ -247,6 +306,7 @@ export default function Formulaire({
   return (
     <form
       onSubmit={soumettre}
+      onInput={auPremierCaractere}
       noValidate
       style={{ display: 'flex', flexDirection: 'column', gap: 'var(--e-4)' }}
     >

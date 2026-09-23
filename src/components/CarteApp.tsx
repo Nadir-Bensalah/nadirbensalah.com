@@ -107,7 +107,7 @@ export default function CarteApp({
         </Link>
         <LienAppStore
           url={app.appStoreUrl}
-          app={app.nomCourt}
+          app={app.slug}
           className="t-petit lien-sobre lien-action-carte"
           style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}
         >

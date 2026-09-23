@@ -23,7 +23,7 @@ export default function Introuvable() {
     <>
       <LienEvitement />
       <Entete />
-      <main id="contenu">
+      <main id="contenu" data-page-404>
         <section style={{ paddingTop: 'clamp(48px, 9vw, 96px)', paddingBottom: 'var(--e-8)' }}>
           <div className="enveloppe">
             <div style={{ maxWidth: 640 }}>
