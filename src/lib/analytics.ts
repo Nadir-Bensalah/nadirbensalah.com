@@ -452,14 +452,35 @@ export function mesureRefusee(): boolean {
 /** Enregistre le choix du visiteur. Le seul stockage durable de la mesure : le refus. */
 export function changeRefusMesure(refus: boolean): void {
   try {
-    if (refus) localStorage.setItem(CLE_REFUS, '1');
-    else localStorage.removeItem(CLE_REFUS);
+    if (refus) {
+      localStorage.setItem(CLE_REFUS, '1');
+    } else {
+      localStorage.removeItem(CLE_REFUS);
+      // Le refus a deux mémoires : la nôtre, et celle que PostHog écrit lui-même
+      // quand on l'arrête. Tant que la sienne reste à « 0 », PostHog se charge
+      // mais n'envoie plus rien : la réactivation n'avait donc aucun effet.
+      localStorage.removeItem(`__ph_opt_in_out_${CLE_POSTHOG}`);
+    }
   } catch {
     /* stockage refusé : le choix vaudra pour cette page seulement */
   }
-  if (refus && client) {
-    client.stopSessionRecording();
-    client.opt_out_capturing();
+
+  if (refus) {
+    if (client) {
+      client.stopSessionRecording();
+      client.opt_out_capturing();
+    }
+    return;
+  }
+
+  if (client) {
+    // PostHog déjà chargé sur cette page, arrêté par un refus : on efface son
+    // refus et on relance le replay.
+    client.clear_opt_in_out_capturing();
+    client.startSessionRecording();
+  } else {
+    // Refus venu d'une page précédente : PostHog n'a jamais été chargé ici.
+    void initialiseMesure();
   }
 }
 
