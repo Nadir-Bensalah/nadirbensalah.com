@@ -8,6 +8,7 @@
  * déploiement à partir des secrets GitHub, jamais versionné.
  *
  * Ce qui arrive sur le téléphone de Nadir :
+ * - l'arrivée d'un visiteur, une fois par visite (coupable par la config) ;
  * - un message reçu par le formulaire (confirmé par Web3Forms) ;
  * - un CV téléchargé ;
  * - un prospect arrivé par un lien de prospection (utm_source=prospection) ;
@@ -356,10 +357,32 @@ $profil = $intention !== '' && $intention !== 'inconnue' ? $intention : '';
 $prefixe = $test ? '[TEST] ' : '';
 
 switch ($type) {
-    case 'visite':
     case 'lecture':
-        // Comptés pour le résumé, jamais notifiés un par un.
+        // Comptée pour le résumé, jamais notifiée une par une.
         repondre(202, ['ok' => true, 'compte' => true]);
+        break;
+
+    case 'visite':
+        // Une notification par visite, à la première page. Coupée par la
+        // configuration le jour où le trafic la rendrait envahissante, et
+        // jamais pour un prospect, qui a déjà la sienne à chaque page.
+        $prospect = in_array($canal, ['email', 'prospection'], true);
+        if ((!$test && ($config['visites'] ?? true) === false) || ($prospect && !$test)) {
+            repondre(202, ['ok' => true, 'compte' => true]);
+        }
+        if (!$test && !plafondNotifications($donnees, $maintenant)) {
+            repondre(202, ['ok' => true, 'compte' => true, 'ignore' => 'plafond']);
+        }
+        $ua = (string) ($_SERVER['HTTP_USER_AGENT'] ?? '');
+        $appareil = preg_match('/iPad|Tablet/i', $ua) ? 'tablette'
+            : (preg_match('/Mobi|Android|iPhone/i', $ua) ? 'mobile' : 'ordinateur');
+        $lignes = array_filter([
+            'Arrivé sur : ' . ($page !== '' ? $page : '/'),
+            'Venu de : ' . ($provenance !== '' ? $provenance : 'direct'),
+            'Appareil : ' . $appareil,
+        ]);
+        $ok = envoyerNtfy($ntfy, (string) $config['sujet'], $prefixe . 'Quelqu’un est sur votre site', implode("\n", $lignes), ['eyes'], 3);
+        repondre($ok ? 200 : 502, ['ok' => $ok]);
         break;
 
     case 'lead':

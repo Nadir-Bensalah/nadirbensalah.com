@@ -23,6 +23,7 @@ jobs:
             echo "$reponse" | grep -q '"ok":true' || echo "::error::$1 n'est pas parti"
             sleep 3
           }
+          envoie "visite" '{"type":"visite","page":"/realisations/ticket","canal":"recherche","source":"","intention":"portfolio"}'
           envoie "message reçu" '{"type":"lead","formulaire":"contact","canal":"social","source":"linkedin","intention":"recruteur","landing_page":"/cdi"}'
           envoie "problème soumis" '{"type":"lead","formulaire":"challenge","canal":"recherche","intention":"projet","landing_page":"/expertise-react-native"}'
           envoie "CV téléchargé" '{"type":"cv","page":"/cdi","canal":"recherche","intention":"recruteur"}'

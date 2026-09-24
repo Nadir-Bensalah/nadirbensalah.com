@@ -116,3 +116,6 @@ Banc : `node scripts/tester-notifier.mjs` (il faut PHP), lancé aussi avant
 chaque déploiement.
 
 Pour un lien de prospection : `https://nadirbensalah.com/?utm_source=prospection&utm_campaign=nom-du-prospect`.
+
+| `visite` | immédiate, une fois par visite, à la première page (sauf prospect, qui a déjà la sienne). Se coupe avec le secret `NOTIF_VISITES = off` |
+| `lecture` | comptée une fois par visite, pour le résumé de 19 h |

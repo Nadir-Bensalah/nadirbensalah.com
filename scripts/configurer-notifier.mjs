@@ -8,7 +8,7 @@
  */
 import fs from 'node:fs';
 
-const { NTFY_SUJET, MES_IP, RESUME_JETON } = process.env;
+const { NTFY_SUJET, MES_IP, RESUME_JETON, NOTIF_VISITES } = process.env;
 
 if (!NTFY_SUJET || !RESUME_JETON) {
   console.warn('Relais de notifications : secrets absents, le relais restera inactif (503).');
@@ -21,9 +21,15 @@ const config = {
   domaine: 'nadirbensalah.com',
   jeton: RESUME_JETON,
   exclure_ip: MES_IP ?? '',
+  // Une notification à chaque visite, tant que le trafic reste faible. Pour
+  // la couper : secret GitHub NOTIF_VISITES = off, puis redéployer.
+  visites: NOTIF_VISITES !== 'off',
 };
 const b64 = Buffer.from(JSON.stringify(config)).toString('base64');
-fs.writeFileSync('out/notifier-config.php', `<?php return json_decode(base64_decode('${b64}'), true);\n`);
+fs.writeFileSync(
+  'out/notifier-config.php',
+  `<?php return json_decode(base64_decode('${b64}'), true);\n`
+);
 console.log(
   `Relais de notifications configuré (${(MES_IP ?? '').split(',').filter(Boolean).length} adresse(s) exclue(s)).`
 );

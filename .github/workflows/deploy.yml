@@ -75,6 +75,7 @@ jobs:
           NTFY_SUJET: ${{ secrets.NTFY_SUJET }}
           MES_IP: ${{ secrets.MES_IP }}
           RESUME_JETON: ${{ secrets.RESUME_JETON }}
+          NOTIF_VISITES: ${{ secrets.NOTIF_VISITES }}
         run: node scripts/configurer-notifier.mjs
 
       - name: Déployer par FTP chez Hostinger

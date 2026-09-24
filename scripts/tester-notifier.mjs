@@ -23,13 +23,14 @@ const JETON = 'jeton-de-test';
 console.log(execFileSync('php', ['-l', 'public/notifier.php']).toString().trim());
 fs.copyFileSync('public/notifier.php', path.join(DOSSIER, 'notifier.php'));
 
-async function reconfigure(exclureIp) {
-  configure(exclureIp);
+async function reconfigure(exclureIp, visites = true) {
+  configure(exclureIp, visites);
   await attends(200);
 }
 
-function configure(exclureIp) {
+function configure(exclureIp, visites = true) {
   const config = {
+    visites,
     sujet: 'sujet-de-test',
     ntfy: `http://127.0.0.1:${PORT_NTFY}`,
     domaine: 'nadirbensalah.com',
@@ -191,11 +192,28 @@ verifie(
   n[0]?.title === 'Prospect sur votre site : ville-albert'
 );
 
-// 6. Visites et lectures : comptées, jamais notifiées une par une
+// 6. Visites : une notification chacune ; lectures : comptées seulement
 for (let i = 0; i < 3; i++)
   await appel({ type: 'visite', page: '/', canal: i === 0 ? 'social' : 'recherche' });
+n = nouvelles();
+verifie(
+  'visites : une notification par visite',
+  n.length === 3 && n.every((x) => x.title === 'Quelqu’un est sur votre site'),
+  JSON.stringify(n.map((x) => x.title))
+);
+verifie(
+  'visite : page, provenance et appareil',
+  n[1]?.message.includes('Arrivé sur : /') &&
+    n[1]?.message.includes('Venu de : recherche') &&
+    n[1]?.message.includes('Appareil : ordinateur'),
+  n[1]?.message
+);
 await appel({ type: 'lecture', page: '/realisations' });
-verifie('visites et lectures : aucune notification', nouvelles().length === 0);
+verifie('lecture : comptée, jamais notifiée', nouvelles().length === 0);
+
+// Un prospect a déjà sa notification à chaque page : pas de doublon « visite ».
+await appel({ type: 'visite', page: '/', ...PROVENANCE });
+verifie('visite d’un prospect : pas de doublon', nouvelles().length === 0);
 
 // 7. Le résumé du soir
 r = await appel(null, { action: 'action=resume', entetes: { 'Content-Type': 'application/json' } });
@@ -219,7 +237,7 @@ verifie(
 );
 verifie(
   'résumé : les bons chiffres',
-  resume.includes('3 visites') &&
+  resume.includes('4 visites') &&
     resume.includes('1 a regardé vos réalisations') &&
     resume.includes('1 CV téléchargé') &&
     resume.includes('2 messages reçus') &&
@@ -228,7 +246,7 @@ verifie(
 );
 verifie(
   'résumé : d’où viennent les visiteurs',
-  resume.includes('D’où : recherche 2 · social 1'),
+  /D’où : recherche 2 · (email 1 · social 1|social 1 · email 1)/.test(resume),
   resume
 );
 
@@ -275,7 +293,18 @@ r = await appel(
   { type: 'lead' },
   { entetes: { ...MEME_SITE, 'X-Forwarded-For': '2001:db8:ffff:1::1' } }
 );
-verifie('une autre IPv6 du même opérateur : notifiée', r.statut === 200 && nouvelles().length === 1);
+verifie(
+  'une autre IPv6 du même opérateur : notifiée',
+  r.statut === 200 && nouvelles().length === 1
+);
+
+// Visites coupées par la configuration : comptées, plus notifiées.
+await reconfigure('10.9.9.9', false);
+r = await appel({ type: 'visite', page: '/' });
+verifie(
+  'visites coupées : comptées sans notification',
+  r.corps?.compte === true && nouvelles().length === 0
+);
 
 // 10. La limite anti-abus
 await reconfigure('10.9.9.9');
