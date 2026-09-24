@@ -3,21 +3,25 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 
 /**
- * L'entrée de l'accueil : le texte du héros se reforme à partir de poussière,
- * comme un claquement de doigts à l'envers, puis les icônes arrivent une par
- * une de la même façon.
+ * L'entrée de l'accueil : le texte du héros se reforme à partir de poussière
+ * portée par le vent, comme un claquement de doigts à l'envers, puis les
+ * icônes arrivent une par une de la même façon.
  *
- * Principe : chaque bloc marqué data-intro est redessiné, lettre par lettre
- * à sa place exacte, dans un canevas hors écran. Les pixels de ce dessin
- * deviennent les points d'arrivée de milliers de grains, partis en nappes de
- * plusieurs côtés. Quand les grains sont posés, le vrai texte apparaît en
- * fondu par-dessus et le canevas s'efface : ce qu'on lit à la fin est
- * toujours le vrai HTML.
+ * Principe : chaque bloc marqué data-intro est redessiné, lettre par lettre à
+ * sa place exacte, dans un canevas hors écran. Les pixels de ce dessin
+ * deviennent les points d'arrivée de dizaines de milliers de grains fins. Les
+ * grains voyagent dans un champ de vent continu : des grains voisins suivent
+ * les mêmes remous, ce qui donne des volutes de fumée au lieu de trajectoires
+ * indépendantes. Des nappes de brume, des taches floues et très pâles, les
+ * accompagnent et se dissipent en route, surtout sur le bas du héros. Le texte
+ * se pose de gauche à droite, dans le sens du vent, et le vrai texte apparaît
+ * derrière le front des grains posés, sous un masque qui balaie dans le même
+ * sens : ce qu'on lit à la fin est toujours le vrai HTML.
  *
  * Le texte est dans le HTML quoi qu'il arrive, seule son opacité est tenue à
- * zéro pendant l'entrée. Mouvement réduit, défilement, clic ou touche :
- * tout s'affiche immédiatement. Une seule fois par chargement de page, pas à
- * chaque retour sur l'accueil.
+ * zéro pendant l'entrée. Mouvement réduit, défilement, clic ou touche : tout
+ * s'affiche immédiatement. Une seule fois par chargement de page, pas à chaque
+ * retour sur l'accueil.
  */
 
 let dejaJoue = false;
@@ -29,7 +33,16 @@ type Groupe = {
   pose: boolean;
 };
 
-const FONDU = 0.35;
+/** Durée du fondu entre les grains et le vrai texte, en secondes. */
+const FONDU = 0.5;
+/**
+ * Les lettres se posent de gauche à droite. Une colonne située à la fraction
+ * `a` de la largeur du texte a reçu tous ses grains à REVELE + a * BALAYAGE :
+ * c'est à ce moment que le vrai texte y apparaît.
+ */
+const BALAYAGE = 1.3;
+const REVELE = 2.9;
+const FIN_TEXTE = REVELE + BALAYAGE + 0.15 + FONDU;
 
 export default function IntroHeros({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -59,6 +72,10 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
       cancelAnimationFrame(image);
       racine.querySelectorAll('[data-intro], .tuile-app').forEach((e) => e.classList.add('pose'));
       canevas?.remove();
+      racine.querySelectorAll<HTMLElement>('[data-intro]').forEach((b) => {
+        b.style.removeProperty('mask-image');
+        b.style.removeProperty('-webkit-mask-image');
+      });
       racine.classList.remove('heros-intro');
       retireEcouteurs();
     };
@@ -66,8 +83,8 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
     const retireEcouteurs = () =>
       evenements.forEach((e) => window.removeEventListener(e, montreTout));
     evenements.forEach((e) => window.addEventListener(e, montreTout, { passive: true }));
-    // Filet de sécurité : quoi qu'il arrive, tout est visible après 6 s.
-    const secours = window.setTimeout(montreTout, 6000);
+    // Filet de sécurité : quoi qu'il arrive, tout est visible après 10 s.
+    const secours = window.setTimeout(montreTout, 10000);
 
     demarre().catch(montreTout);
 
@@ -81,7 +98,6 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
       const L = window.innerWidth;
       const H = window.innerHeight;
       const mobile = L < 700;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
       // 1. Le dessin hors écran : texte, pastilles et boutons à leur place.
       const hors = document.createElement('canvas');
@@ -91,42 +107,50 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
 
       const blocs = Array.from(racine!.querySelectorAll<HTMLElement>('[data-intro]'));
       blocs.forEach((b) => dessineBloc(hc, b));
-      const texte = echantillonne(hc, L, H, mobile ? 4500 : 10000);
+      const texte = echantillonne(hc, L, H, mobile ? 9000 : 26000);
+      const zone = etendue(texte);
 
       const icones = tuiles.map((t, i) => {
         hc.clearRect(0, 0, L, H);
         if (images[i]) dessineTuile(hc, t, images[i]!);
-        return echantillonne(hc, L, H, mobile ? 260 : 480);
+        return echantillonne(hc, L, H, mobile ? 500 : 1100);
       });
 
       // 2. Les groupes : le texte d'abord, puis chaque icône, l'une après l'autre.
-      const groupes: Groupe[] = [];
+      const groupes: Groupe[] = [{ elements: blocs, debut: 0, fin: FIN_TEXTE, pose: false }];
       const grains: Grain[] = [];
-      const cx = L / 2;
-      const cy = Math.min(H, racine!.getBoundingClientRect().bottom) / 2;
+      const nappes: Grain[] = [];
 
-      groupes.push({ elements: blocs, debut: 0, fin: 2.1, pose: false });
-      texte.forEach((c) => grains.push(grainTexte(c, 0, L, H, cx, cy, false)));
-      // La brume : des grains qui partent avec les autres et se dissipent en route.
-      for (let i = 0; i < texte.length * 0.3; i++) {
-        const c = texte[Math.floor(Math.random() * texte.length)];
-        grains.push(grainTexte(c, 0, L, H, cx, cy, true));
+      texte.forEach((c) => grains.push(grainTexte(c, zone, L)));
+      const largeur = zone.droite - zone.gauche || 1;
+      const cadres = blocs.map((b) => b.getBoundingClientRect());
+      // La brume : de grandes taches pâles qui voyagent avec les grains et se
+      // dissipent avant d'arriver. Deux fois plus nombreuses sur le bas du héros.
+      const nbNappes = mobile ? 260 : 700;
+      for (let i = 0; i < nbNappes; i++) {
+        let c = texte[Math.floor(Math.random() * texte.length)];
+        const bas = (c.y - zone.haut) / (zone.bas - zone.haut || 1);
+        if (Math.random() > 0.35 + 0.65 * bas) c = texte[Math.floor(Math.random() * texte.length)];
+        nappes.push(nappe(grainTexte(c, zone, L)));
       }
 
       icones.forEach((cibles, i) => {
-        const debut = 1.85 + i * 0.13;
-        const g = groupes.push({ elements: [tuiles[i]], debut, fin: debut + 0.9, pose: false }) - 1;
+        const debut = FIN_TEXTE - 0.6 + i * 0.22;
+        const g = groupes.push({ elements: [tuiles[i]], debut, fin: debut + 1.6, pose: false }) - 1;
         cibles.forEach((c) => grains.push(grainIcone(c, g)));
+        for (let k = 0; k < (mobile ? 5 : 10); k++) {
+          const n = nappe(grainIcone(cibles[Math.floor(Math.random() * cibles.length)], g));
+          nappes.push({ ...n, cote: n.cote * 0.5 });
+        }
       });
 
-      // Les grains de même couleur sont dessinés d'une traite.
-      grains.sort((a, b) => (a.couleur < b.couleur ? -1 : a.couleur > b.couleur ? 1 : 0));
-
       // 3. Le canevas visible, par-dessus la page, sans capter un seul clic.
+      // Les grains s'écrivent directement dans les pixels : c'est ce qui permet
+      // d'en animer des dizaines de milliers sans ralentir.
       canevas = document.createElement('canvas');
       canevas.setAttribute('aria-hidden', 'true');
-      canevas.width = Math.round(L * dpr);
-      canevas.height = Math.round(H * dpr);
+      canevas.width = L;
+      canevas.height = H;
       Object.assign(canevas.style, {
         position: 'fixed',
         inset: '0',
@@ -137,55 +161,92 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
       });
       document.body.appendChild(canevas);
       const ctx = canevas.getContext('2d')!;
-      ctx.scale(dpr, dpr);
+      const pixels = ctx.createImageData(L, H);
+      const mots = new Uint32Array(pixels.data.buffer);
+      const tache = fabriqueTache();
 
       const t0 = performance.now();
       const finTotale = Math.max(...groupes.map((g) => g.fin)) + FONDU;
 
+      // Le vrai texte est révélé par un masque qui balaie de gauche à droite,
+      // derrière le front des grains posés.
+      blocs.forEach((b) => b.classList.add('pose'));
+      const masque = (b: HTMLElement, valeur: string) => {
+        b.style.setProperty('mask-image', valeur);
+        b.style.setProperty('-webkit-mask-image', valeur);
+      };
+      const revele = (t: number) => {
+        const front = zone.gauche + ((t - REVELE) / BALAYAGE) * largeur;
+        blocs.forEach((b, i) => {
+          const x = front - cadres[i].left;
+          masque(b, `linear-gradient(90deg, #000 ${x - 90}px, transparent ${x}px)`);
+        });
+      };
+      revele(0);
+
       const trame = () => {
         if (arrete) return;
         const t = (performance.now() - t0) / 1000;
-        ctx.clearRect(0, 0, L, H);
+
+        if (t < REVELE + BALAYAGE + 0.2) revele(t);
+        else if (blocs[0].style.getPropertyValue('mask-image')) blocs.forEach((b) => masque(b, ''));
 
         for (const g of groupes) {
-          // Le vrai texte commence à apparaître juste avant que les derniers
-          // grains se posent : on ne voit jamais les lettres en pixels figées.
-          if (!g.pose && t >= g.fin - 0.3) {
+          // Le vrai texte commence à apparaître pendant que les derniers
+          // grains se posent : on ne voit jamais les lettres figées en points.
+          if (!g.pose && g !== groupes[0] && t >= g.fin - 0.5) {
             g.pose = true;
             g.elements.forEach((e) => e.classList.add('pose'));
           }
         }
 
-        let couleur = '';
+        mots.fill(0);
+        const d = pixels.data;
         for (const p of grains) {
           const g = groupes[p.groupe];
-          const local = (t - g.debut - p.retard) / p.duree;
-          if (local <= 0) continue;
+          const u = (t - g.debut - p.retard) / p.duree;
+          if (u <= 0) continue;
           let alpha = p.alpha;
-          if (t > g.fin - 0.15) {
-            const f = 1 - (t - (g.fin - 0.15)) / FONDU;
+          // Un grain de texte s'efface quand le vrai texte est apparu à sa place,
+          // un grain d'icône quand son icône apparaît.
+          const effacement = p.groupe === 0 ? REVELE + p.avance * BALAYAGE + 0.15 : g.fin - 0.3;
+          if (t > effacement) {
+            const f = 1 - (t - effacement) / FONDU;
             if (f <= 0) continue;
             alpha *= f;
           }
-          const u = Math.min(local, 1);
-          // Départ lent, arrivée douce : une brume qui se rassemble.
-          const e = u * u * (3 - 2 * u);
-          const derive = Math.sin(u * p.frequence + p.phase) * p.ampleur * (1 - e);
-          const x = p.sx + (p.tx - p.sx) * e + p.nx * derive;
-          const y = p.sy + (p.ty - p.sy) * e + p.ny * derive;
-          const taille = p.taille0 + (p.taille1 - p.taille0) * e;
-          if (p.brume) {
-            if (u >= 1) continue;
-            alpha *= Math.sin(Math.PI * u) * 0.35;
-          } else {
-            alpha *= Math.min(1, u * 2) * (0.35 + 0.65 * e * e);
+          const { x, y, e } = position(p, Math.min(u, 1), t);
+          alpha *= Math.min(1, u * 3) * (0.45 + 0.55 * e);
+          const px = x | 0;
+          const py = y | 0;
+          // Un grain fait un pixel en vol, et deux une fois posé pour remplir la lettre.
+          const cote = e > 0.92 ? p.cote : 1;
+          const a = (alpha * 255) | 0;
+          for (let dy = 0; dy < cote; dy++) {
+            const yy = py + dy;
+            if (yy < 0 || yy >= H) continue;
+            for (let dx = 0; dx < cote; dx++) {
+              const xx = px + dx;
+              if (xx < 0 || xx >= L) continue;
+              const i = (yy * L + xx) * 4;
+              if (d[i + 3] >= a) continue;
+              d[i] = p.r;
+              d[i + 1] = p.v;
+              d[i + 2] = p.b;
+              d[i + 3] = a;
+            }
           }
-          if (couleur !== p.couleur) {
-            couleur = p.couleur;
-            ctx.fillStyle = couleur;
-          }
-          ctx.globalAlpha = alpha;
-          ctx.fillRect(x - taille / 2, y - taille / 2, taille, taille);
+        }
+        ctx.putImageData(pixels, 0, 0);
+
+        for (const p of nappes) {
+          const g = groupes[p.groupe];
+          const u = (t - g.debut - p.retard) / p.duree;
+          if (u <= 0 || u >= 1) continue;
+          const { x, y } = position(p, u, t);
+          const taille = p.cote * (1.3 - 0.5 * u);
+          ctx.globalAlpha = p.alpha * Math.sin(Math.PI * u) ** 1.5;
+          ctx.drawImage(tache(p), x - taille / 2, y - taille / 2, taille, taille);
         }
         ctx.globalAlpha = 1;
 
@@ -302,7 +363,8 @@ function dessineTuile(c: CanvasRenderingContext2D, tuile: HTMLElement, img: HTML
   c.restore();
 }
 
-type Cible = { x: number; y: number; couleur: string; alpha: number; pas: number };
+type Cible = { x: number; y: number; r: number; v: number; b: number; alpha: number; pas: number };
+type Zone = { gauche: number; droite: number; haut: number; bas: number };
 
 /** Transforme le dessin en points d'arrivée, au plus `maximum`. */
 function echantillonne(
@@ -313,22 +375,19 @@ function echantillonne(
 ): Cible[] {
   const { data } = c.getImageData(0, 0, L, H);
   let pleins = 0;
-  for (let i = 3; i < data.length; i += 16) if (data[i] > 90) pleins++;
-  // pleins compte un pixel sur quatre : on règle le pas pour tomber sous le maximum.
-  const pas = Math.max(1, Math.ceil(Math.sqrt((pleins * 4) / maximum)));
+  for (let i = 3; i < data.length; i += 4) if (data[i] > 90) pleins++;
+  const pas = Math.max(1, Math.ceil(Math.sqrt(pleins / maximum)));
   const cibles: Cible[] = [];
   for (let y = 0; y < H; y += pas) {
     for (let x = 0; x < L; x += pas) {
       const i = (y * L + x) * 4;
       if (data[i + 3] <= 90) continue;
-      // Couleurs arrondies, pour dessiner beaucoup de grains d'une même traite.
-      const q = (v: number) => Math.round(v / 24) * 24;
       cibles.push({
-        // Le centre du pixel lu, pas le centre de la case : sinon le dessin
-        // glisse d'un demi-pas vers le bas à droite et double le vrai texte.
-        x: x + 0.5,
-        y: y + 0.5,
-        couleur: `rgb(${q(data[i])},${q(data[i + 1])},${q(data[i + 2])})`,
+        x,
+        y,
+        r: data[i],
+        v: data[i + 1],
+        b: data[i + 2],
         alpha: data[i + 3] / 255,
         pas,
       });
@@ -337,8 +396,19 @@ function echantillonne(
   return cibles;
 }
 
+function etendue(cibles: Cible[]): Zone {
+  const z = { gauche: Infinity, droite: -Infinity, haut: Infinity, bas: -Infinity };
+  for (const c of cibles) {
+    if (c.x < z.gauche) z.gauche = c.x;
+    if (c.x > z.droite) z.droite = c.x;
+    if (c.y < z.haut) z.haut = c.y;
+    if (c.y > z.bas) z.bas = c.y;
+  }
+  return z;
+}
+
 /* ------------------------------------------------------------------------ */
-/* Les grains                                                                 */
+/* Le vent                                                                    */
 /* ------------------------------------------------------------------------ */
 
 type Grain = {
@@ -347,91 +417,127 @@ type Grain = {
   sy: number;
   tx: number;
   ty: number;
-  nx: number;
-  ny: number;
   retard: number;
   duree: number;
+  /** Force des remous, en pixels : forte au départ, nulle à l'arrivée. */
   ampleur: number;
-  frequence: number;
-  phase: number;
-  taille0: number;
-  taille1: number;
-  couleur: string;
+  graine: number;
+  /** Position de la cible dans la largeur du texte, de 0 à 1. */
+  avance: number;
+  cote: number;
+  r: number;
+  v: number;
+  b: number;
   alpha: number;
-  brume: boolean;
 };
 
 const hasard = (a: number, b: number) => a + Math.random() * (b - a);
-/** Une valeur en cloche, pour des nappes aux bords flous. */
-const cloche = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
 
-// Les nappes de brume partent de ces directions (en fractions de l'écran).
-const SOURCES = [
-  { x: -0.25, y: 0.35 },
-  { x: 1.25, y: 0.45 },
-  { x: 0.15, y: -0.3 },
-  { x: 0.9, y: -0.25 },
-  { x: 0.3, y: 1.2 },
-  { x: 0.8, y: 1.15 },
-];
-
-function acheve(p: Omit<Grain, 'nx' | 'ny'>): Grain {
-  const dx = p.tx - p.sx;
-  const dy = p.ty - p.sy;
-  const d = Math.hypot(dx, dy) || 1;
-  // La dérive se fait en travers du trajet : les nappes ondulent au lieu de filer droit.
-  return { ...p, nx: -dy / d, ny: dx / d };
+/**
+ * Le champ de vent : une somme d'ondes qui dépend du lieu et du temps. Deux
+ * grains proches reçoivent presque le même souffle, et c'est ce qui dessine
+ * des volutes au lieu d'un nuage de points indépendants.
+ */
+function souffle(x: number, y: number, t: number, graine: number) {
+  const a = Math.sin(x * 0.0061 + t * 0.9 + Math.sin(y * 0.0093 + t * 0.6) * 1.8 + graine);
+  const b = Math.cos(y * 0.0078 - t * 0.7 + Math.sin(x * 0.0047 - t * 0.5) * 1.6 + graine * 0.7);
+  return { x: a + 0.35 * Math.sin(y * 0.021 + t * 1.7), y: b * 0.8 };
 }
 
-function grainTexte(
-  c: Cible,
-  groupe: number,
-  L: number,
-  H: number,
-  cx: number,
-  cy: number,
-  brume: boolean
-): Grain {
-  const s = SOURCES[Math.floor(Math.random() * SOURCES.length)];
-  const sx = cx + (s.x - 0.5) * L + cloche() * L * 0.22;
-  const sy = cy + (s.y - 0.5) * H + cloche() * H * 0.25;
-  return acheve({
-    groupe,
-    sx,
-    sy,
+/** Démarrage lent, arrivée lente : la poussière dérive, puis se pose. */
+const douceur = (u: number) => u * u * u * (u * (u * 6 - 15) + 10);
+
+function position(p: Grain, u: number, t: number) {
+  const e = douceur(u);
+  const bx = p.sx + (p.tx - p.sx) * e;
+  const by = p.sy + (p.ty - p.sy) * e;
+  const s = souffle(bx, by, t, p.graine);
+  const force = p.ampleur * (1 - e) ** 1.4;
+  return { x: bx + s.x * force, y: by + s.y * force, e };
+}
+
+/**
+ * Un grain de texte. Le vent souffle de la gauche : les grains partent loin à
+ * gauche et un peu en dessous, et les lettres se posent de gauche à droite.
+ * Plus on descend dans le héros, plus le vent est fort.
+ */
+function grainTexte(c: Cible, z: Zone, L: number): Grain {
+  const largeur = z.droite - z.gauche || 1;
+  const avance = (c.x - z.gauche) / largeur;
+  const bas = (c.y - z.haut) / (z.bas - z.haut || 1);
+  const angle = Math.PI + hasard(-0.55, 0.85);
+  const distance = hasard(0.25, 0.75) * L;
+  return {
+    groupe: 0,
+    sx: c.x + Math.cos(angle) * distance,
+    sy: c.y - Math.sin(angle) * distance * 0.6 + hasard(0, 120),
     tx: c.x,
     ty: c.y,
-    retard: hasard(0, 0.7),
-    duree: hasard(0.9, 1.4),
-    ampleur: hasard(20, 90) * (Math.random() < 0.5 ? -1 : 1),
-    frequence: hasard(2, 5),
-    phase: hasard(0, Math.PI * 2),
-    taille0: brume ? hasard(1.5, 3) : hasard(1, 2),
-    taille1: brume ? hasard(1, 2) : c.pas,
-    couleur: c.couleur,
+    retard: avance * 1.3 + hasard(0, 0.9),
+    duree: hasard(1.7, 2.0),
+    ampleur: hasard(60, 110) * (0.7 + 0.8 * bas),
+    graine: hasard(0, 0.6),
+    avance,
+    cote: c.pas,
+    r: c.r,
+    v: c.v,
+    b: c.b,
     alpha: c.alpha,
-    brume,
-  });
+  };
 }
 
 function grainIcone(c: Cible, groupe: number): Grain {
-  const angle = hasard(0, Math.PI * 2);
-  const distance = hasard(50, 150);
-  return acheve({
+  const angle = Math.PI + hasard(-0.7, 0.7);
+  const distance = hasard(60, 200);
+  return {
     groupe,
     sx: c.x + Math.cos(angle) * distance,
-    sy: c.y + Math.sin(angle) * distance,
+    sy: c.y - Math.sin(angle) * distance * 0.6 + hasard(-20, 40),
     tx: c.x,
     ty: c.y,
-    retard: hasard(0, 0.12),
-    duree: hasard(0.55, 0.75),
-    ampleur: hasard(8, 30) * (Math.random() < 0.5 ? -1 : 1),
-    frequence: hasard(2, 4),
-    phase: hasard(0, Math.PI * 2),
-    taille0: hasard(1, 2),
-    taille1: c.pas,
-    couleur: c.couleur,
+    retard: hasard(0, 0.35),
+    duree: hasard(1.0, 1.25),
+    ampleur: hasard(25, 50),
+    graine: hasard(0, 0.6),
+    avance: 0,
+    cote: c.pas,
+    r: c.r,
+    v: c.v,
+    b: c.b,
     alpha: c.alpha,
-    brume: false,
-  });
+  };
+}
+
+/** Une nappe de brume : grande, floue, pâle, et qui se dissipe avant d'arriver. */
+function nappe(g: Grain): Grain {
+  return {
+    ...g,
+    retard: g.retard * 0.8,
+    duree: g.duree * 1.1,
+    ampleur: g.ampleur * 1.4,
+    cote: hasard(60, 160),
+    alpha: hasard(0.025, 0.055),
+  };
+}
+
+/** Une tache floue par couleur, dessinée une fois puis réutilisée. */
+function fabriqueTache() {
+  const cache = new Map<string, HTMLCanvasElement>();
+  return (p: Grain) => {
+    const cle = `${p.r >> 4},${p.v >> 4},${p.b >> 4}`;
+    let t = cache.get(cle);
+    if (!t) {
+      t = document.createElement('canvas');
+      t.width = t.height = 64;
+      const c = t.getContext('2d')!;
+      const d = c.createRadialGradient(32, 32, 0, 32, 32, 32);
+      d.addColorStop(0, `rgba(${p.r},${p.v},${p.b},1)`);
+      d.addColorStop(0.45, `rgba(${p.r},${p.v},${p.b},0.45)`);
+      d.addColorStop(1, `rgba(${p.r},${p.v},${p.b},0)`);
+      c.fillStyle = d;
+      c.fillRect(0, 0, 64, 64);
+      cache.set(cle, t);
+    }
+    return t;
+  };
 }
