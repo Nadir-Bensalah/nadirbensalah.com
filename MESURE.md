@@ -96,12 +96,13 @@ site ni dans le dépôt : il est écrit au déploiement dans
 `notifier-config.php`, à partir des secrets GitHub `NTFY_SUJET`,
 `RESUME_JETON` et `MES_IP`.
 
-| Signal              | Notification                                                                                                                           |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `lead`              | immédiate, après confirmation de Web3Forms                                                                                             |
-| `cv`                | immédiate                                                                                                                              |
-| `prospect`          | immédiate, à chaque page d'une visite arrivée par `utm_source=prospection` ou `utm_medium=email` (une fois par page et par 10 minutes) |
-| `visite`, `lecture` | comptées une fois par visite, pour le résumé de 19 h                                                                                   |
+| Signal     | Notification                                                                                                                            |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `lead`     | immédiate, après confirmation de Web3Forms                                                                                              |
+| `cv`       | immédiate                                                                                                                               |
+| `prospect` | immédiate, à chaque page d'une visite arrivée par `utm_source=prospection` ou `utm_medium=email` (une fois par page et par 10 minutes)  |
+| `visite`   | immédiate, une fois par visite, à la première page (sauf prospect, qui a déjà la sienne). Se coupe avec le secret `NOTIF_VISITES = off` |
+| `lecture`  | comptée une fois par visite, pour le résumé de 19 h                                                                                     |
 
 Le résumé part chaque soir à 19 h (heure de Paris) par
 `.github/workflows/resume-quotidien.yml`, qu'on peut aussi lancer à la main.
@@ -116,6 +117,3 @@ Banc : `node scripts/tester-notifier.mjs` (il faut PHP), lancé aussi avant
 chaque déploiement.
 
 Pour un lien de prospection : `https://nadirbensalah.com/?utm_source=prospection&utm_campaign=nom-du-prospect`.
-
-| `visite` | immédiate, une fois par visite, à la première page (sauf prospect, qui a déjà la sienne). Se coupe avec le secret `NOTIF_VISITES = off` |
-| `lecture` | comptée une fois par visite, pour le résumé de 19 h |
