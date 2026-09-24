@@ -1,0 +1,31 @@
+name: Tester les notifications
+
+# Envoie une notification de chaque type à travers le VRAI relais du site
+# (public/notifier.php en production), jusqu'au téléphone. Chacune est marquée
+# [TEST] et n'entre pas dans les compteurs du résumé du soir. Le jeton permet
+# de passer l'exclusion de l'IP de Nadir, qui empêcherait sinon tout test.
+on:
+  workflow_dispatch:
+
+jobs:
+  tester:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Une notification de chaque type
+        env:
+          RESUME_JETON: ${{ secrets.RESUME_JETON }}
+        run: |
+          relais="https://nadirbensalah.com/notifier.php"
+          envoie() {
+            reponse=$(curl -s --max-time 30 -X POST -H "X-Jeton: $RESUME_JETON" \
+              -H "Content-Type: application/json" -d "$2" "$relais?action=test")
+            echo "$1 → $reponse"
+            echo "$reponse" | grep -q '"ok":true' || echo "::error::$1 n'est pas parti"
+            sleep 3
+          }
+          envoie "message reçu" '{"type":"lead","formulaire":"contact","canal":"social","source":"linkedin","intention":"recruteur","landing_page":"/cdi"}'
+          envoie "problème soumis" '{"type":"lead","formulaire":"challenge","canal":"recherche","intention":"projet","landing_page":"/expertise-react-native"}'
+          envoie "CV téléchargé" '{"type":"cv","page":"/cdi","canal":"recherche","intention":"recruteur"}'
+          envoie "prospect" '{"type":"prospect","page":"/realisations","canal":"email","source":"prospection","campagne":"ville-albert"}'
+          echo "Résumé du soir :"
+          curl -s --max-time 30 -X POST -H "X-Jeton: $RESUME_JETON" "$relais?action=resume"
