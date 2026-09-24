@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
 import Apparait from '@/components/Apparait';
+import IntroHeros from '@/components/IntroHeros';
 import RangeeApps from '@/components/RangeeApps';
 import CarteApp from '@/components/CarteApp';
 import SelecteurIntention from '@/components/SelecteurIntention';
@@ -126,76 +127,76 @@ export default function Accueil() {
           }}
         >
           <div className="enveloppe">
-            <div style={{ maxWidth: 780, marginInline: 'auto', textAlign: 'center' }}>
-              <Apparait>
+            <IntroHeros>
+              <div style={{ maxWidth: 780, marginInline: 'auto', textAlign: 'center' }}>
                 <RangeeApps />
-              </Apparait>
 
-              <Apparait retard={1}>
-                <p
-                  className="t-petit"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 8,
-                    color: 'var(--texte-2)',
-                    marginTop: 'var(--e-5)',
-                  }}
-                >
-                  <span className="point-vert" aria-hidden />
-                  Huit applications en ligne sur l’App&nbsp;Store, toutes conçues, développées et
-                  publiées par mes soins
-                </p>
-              </Apparait>
-
-              <Apparait retard={1}>
-                <h1 className="t-display" style={{ marginTop: 'var(--e-4)' }}>
-                  Développeur mobile React&nbsp;Native et Swift.
-                  <br />
-                  Voici ce que j’ai déjà construit.
-                </h1>
-              </Apparait>
-
-              <Apparait retard={2}>
-                <p
-                  className="t-lead"
-                  style={{ marginTop: 'var(--e-5)', maxWidth: 620, marginInline: 'auto' }}
-                >
-                  Je conçois et je développe des applications mobiles, de l’idée jusqu’à la mise en
-                  ligne : conception, développement iOS et Android, publication et maintenance après
-                  la sortie. Toutes celles présentées ici sont installables aujourd’hui.
-                </p>
-              </Apparait>
-
-              <Apparait retard={3}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: 'var(--e-3)',
-                    justifyContent: 'center',
-                    marginTop: 'var(--e-6)',
-                  }}
-                >
-                  <Link
-                    prefetch={false}
-                    href="/realisations"
-                    className="btn btn-principal btn-large"
+                <div data-intro>
+                  <p
+                    className="t-petit"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      color: 'var(--texte-2)',
+                      marginTop: 'var(--e-5)',
+                    }}
                   >
-                    Voir mes réalisations
-                  </Link>
-                  <Link prefetch={false} href="/contact" className="btn btn-secondaire btn-large">
-                    Parler d’un projet
-                  </Link>
+                    <span className="point-vert" aria-hidden />
+                    Huit applications en ligne sur l’App&nbsp;Store, toutes conçues, développées et
+                    publiées par mes soins
+                  </p>
                 </div>
-              </Apparait>
 
-              <Apparait retard={4}>
-                <p className="t-petit t-3" style={{ marginTop: 'var(--e-5)' }}>
-                  {profil.ville}, {profil.pays} · {disponibilite.ouvertA.join(' · ')}
-                </p>
-              </Apparait>
-            </div>
+                <div data-intro>
+                  <h1 className="t-display" style={{ marginTop: 'var(--e-4)' }}>
+                    Développeur mobile React&nbsp;Native et Swift.
+                    <br />
+                    Voici ce que j’ai déjà construit.
+                  </h1>
+                </div>
+
+                <div data-intro>
+                  <p
+                    className="t-lead"
+                    style={{ marginTop: 'var(--e-5)', maxWidth: 620, marginInline: 'auto' }}
+                  >
+                    Je conçois et je développe des applications mobiles, de l’idée jusqu’à la mise
+                    en ligne : conception, développement iOS et Android, publication et maintenance
+                    après la sortie. Toutes celles présentées ici sont installables aujourd’hui.
+                  </p>
+                </div>
+
+                <div data-intro>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: 'var(--e-3)',
+                      justifyContent: 'center',
+                      marginTop: 'var(--e-6)',
+                    }}
+                  >
+                    <Link
+                      prefetch={false}
+                      href="/realisations"
+                      className="btn btn-principal btn-large"
+                    >
+                      Voir mes réalisations
+                    </Link>
+                    <Link prefetch={false} href="/contact" className="btn btn-secondaire btn-large">
+                      Parler d’un projet
+                    </Link>
+                  </div>
+                </div>
+
+                <div data-intro>
+                  <p className="t-petit t-3" style={{ marginTop: 'var(--e-5)' }}>
+                    {profil.ville}, {profil.pays} · {disponibilite.ouvertA.join(' · ')}
+                  </p>
+                </div>
+              </div>
+            </IntroHeros>
           </div>
         </section>
 
