@@ -140,6 +140,15 @@ export default function MentionsLegales() {
                       à des fins publicitaires, ni croisées avec d’autres sources.
                     </p>
                     <p>
+                      Trois actions me sont aussi signalées sur mon téléphone, par l’intermédiaire
+                      de mon hébergeur et du service de notification ntfy : l’envoi d’un message, le
+                      téléchargement du CV, et l’arrivée par un lien que je vous ai adressé. Ces
+                      signaux ne contiennent ni votre nom, ni votre adresse, ni votre message :
+                      seulement la page consultée et la provenance de la visite. Votre adresse IP
+                      sert uniquement, sur mon hébergement, à limiter les abus : elle n’est jamais
+                      transmise, et seule une empreinte chiffrée en est gardée, vingt-quatre heures.
+                    </p>
+                    <p>
                       Aucune mesure n’a lieu si votre navigateur envoie le signal Global Privacy
                       Control ou « Do Not Track ». Vous pouvez aussi la refuser ici :
                     </p>

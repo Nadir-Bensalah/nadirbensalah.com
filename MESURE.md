@@ -87,3 +87,32 @@ POSTHOG_CLE_PERSO=phx_... POSTHOG_PROJET=<id> node scripts/posthog-tableaux.mjs
 
 Acquisition (8 graphiques), Engagement (9), Conversion (16, dont 7
 entonnoirs). Requêtes validées contre le schéma publié par PostHog.
+
+## Les notifications sur le téléphone (ntfy)
+
+Le site signale quatre choses à `public/notifier.php`, un relais sur
+l'hébergement, qui transmet à ntfy.sh. Le nom du canal n'est jamais dans le
+site ni dans le dépôt : il est écrit au déploiement dans
+`notifier-config.php`, à partir des secrets GitHub `NTFY_SUJET`,
+`RESUME_JETON` et `MES_IP`.
+
+| Signal              | Notification                                                                                                                           |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `lead`              | immédiate, après confirmation de Web3Forms                                                                                             |
+| `cv`                | immédiate                                                                                                                              |
+| `prospect`          | immédiate, à chaque page d'une visite arrivée par `utm_source=prospection` ou `utm_medium=email` (une fois par page et par 10 minutes) |
+| `visite`, `lecture` | comptées une fois par visite, pour le résumé de 19 h                                                                                   |
+
+Le résumé part chaque soir à 19 h (heure de Paris) par
+`.github/workflows/resume-quotidien.yml`, qu'on peut aussi lancer à la main.
+
+Les visites depuis les adresses de `MES_IP` ne comptent pas et ne sonnent pas.
+Une entrée finissant par `:` est un préfixe (l'IPv6 de Free change de fin).
+Le téléphone en 4G/5G n'est pas reconnu. Le refus de la mesure, GPC et DNT
+coupent aussi les signaux. Les visites `utm_source=verification_…` sont
+ignorées.
+
+Banc : `node scripts/tester-notifier.mjs` (il faut PHP), lancé aussi avant
+chaque déploiement.
+
+Pour un lien de prospection : `https://nadirbensalah.com/?utm_source=prospection&utm_campaign=nom-du-prospect`.

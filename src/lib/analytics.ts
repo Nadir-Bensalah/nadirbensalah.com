@@ -207,6 +207,9 @@ type ContexteSession = {
   landing_type: string;
   intention_declaree?: Intention;
   intention_deduite?: Intention;
+  /** Déjà signalés au relais de notifications pour cette visite. */
+  visite_signalee?: boolean;
+  lecture_signalee?: boolean;
 };
 
 const CLE_SESSION = 'nbs:mesure';
@@ -311,6 +314,8 @@ export function memoriseOrigine(): ContexteSession {
     landing_type: landing.page_type,
     intention_declaree: existant?.intention_declaree,
     intention_deduite: existant?.intention_deduite,
+    visite_signalee: existant?.visite_signalee,
+    lecture_signalee: existant?.lecture_signalee,
   };
   contexteMemoire = nouveau;
   ecrisSession(nouveau);
@@ -375,6 +380,81 @@ export function nettoie(props: Properties): Properties {
   return props;
 }
 
+/* ------------------------------------------------------------------------ */
+/* Le relais de notifications (public/notifier.php → ntfy)                  */
+/* ------------------------------------------------------------------------ */
+
+type Signal = 'visite' | 'lecture' | 'cv' | 'lead' | 'prospect';
+
+/** Les visites arrivées par un e-mail de prospection ou une page nominative. */
+const CANAUX_PROSPECTION = new Set(['email', 'prospection']);
+
+/**
+ * Prévient le relais du site, qui transmet à ntfy. Indépendant de PostHog :
+ * un visiteur dont le bloqueur de publicité écarte PostHog est tout de même
+ * compté et signalé. Le refus de la mesure, GPC et DNT coupent aussi ceci.
+ * Rien de personnel ne part : le type, la page, la provenance, l'intention.
+ */
+function signale(type: Signal, page: string, extra: Proprietes = {}): void {
+  try {
+    const c = contexte();
+    void fetch('/notifier.php', {
+      method: 'POST',
+      keepalive: true,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type,
+        page,
+        canal: c?.canal,
+        source: c?.source,
+        campagne: c?.campagne,
+        landing_page: c?.landing_page,
+        ...intentionCourante(c),
+        ...extra,
+      }),
+    }).catch(() => {});
+  } catch {
+    /* un relais muet ne doit jamais gêner la visite */
+  }
+}
+
+/** Déduit l'intention de la page, si le visiteur n'en a pas déclaré une. */
+function deduitIntention(c: ContexteSession, page: ContextePage): void {
+  if (page.signal && !c.intention_deduite) {
+    c.intention_deduite = page.signal;
+    contexteMemoire = c;
+    ecrisSession(c);
+  }
+}
+
+/**
+ * Appelé à chaque page affichée (Mesure.tsx). Compte la visite et la lecture
+ * des réalisations une seule fois par visite, pour le résumé du soir ; signale
+ * chaque page d'un prospect arrivé par un lien de prospection.
+ */
+export function signalePage(chemin: string): void {
+  if (!MESURE_ACTIVE || typeof window === 'undefined' || mesureRefusee()) return;
+  const c = contexte() ?? memoriseOrigine();
+  const page = contextePage(chemin);
+  deduitIntention(c, page);
+  const propre = chemin.replace(/\.html$/, '') || '/';
+
+  if (!c.visite_signalee) {
+    c.visite_signalee = true;
+    ecrisSession(c);
+    signale('visite', propre);
+  }
+  if (
+    (page.page_type === 'realisations' || page.page_type === 'etude_de_cas') &&
+    !c.lecture_signalee
+  ) {
+    c.lecture_signalee = true;
+    ecrisSession(c);
+    signale('lecture', propre);
+  }
+  if (CANAUX_PROSPECTION.has(c.canal)) signale('prospect', propre);
+}
+
 /**
  * Appliqué à CHAQUE événement avant l'envoi, y compris les pages vues
  * automatiques : c'est ici que la page, l'origine et l'intention rejoignent
@@ -397,11 +477,7 @@ function enrichit(evenement: CaptureResult | null): CaptureResult | null {
 
   // La première page qui trahit une intention la fixe pour la session, tant
   // que le visiteur n'en a pas déclaré une lui-même.
-  if (c && evenement.event === '$pageview' && page.signal && !c.intention_deduite) {
-    c.intention_deduite = page.signal;
-    contexteMemoire = c;
-    ecrisSession(c);
-  }
+  if (c && evenement.event === '$pageview') deduitIntention(c, page);
 
   evenement.properties = nettoie({
     ...props,
@@ -594,6 +670,12 @@ export function initialiseMesure(): Promise<PostHog | null> {
  */
 export function suit(evenement: NomEvenement, proprietes?: Proprietes): void {
   if (!MESURE_ACTIVE || typeof window === 'undefined' || mesureRefusee()) return;
+  const ici = window.location.pathname.replace(/\.html$/, '') || '/';
+  if (evenement === EVENEMENTS.cv) signale('cv', ici, { emplacement: proprietes?.emplacement });
+  // Le lead n'arrive ici qu'après la confirmation de Web3Forms (Formulaire.tsx).
+  if (evenement === EVENEMENTS.leadContact || evenement === EVENEMENTS.leadChallenge) {
+    signale('lead', ici, { formulaire: proprietes?.formulaire });
+  }
   try {
     if (client) client.capture(evenement, proprietes);
     else {

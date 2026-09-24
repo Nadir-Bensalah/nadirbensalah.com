@@ -7,6 +7,7 @@ import {
   MESURE_ACTIVE,
   contextePage,
   initialiseMesure,
+  signalePage,
   suit,
   type NomEvenement,
   type Proprietes,
@@ -171,6 +172,12 @@ export default function Mesure() {
     document.addEventListener('click', auClic, true);
     return () => document.removeEventListener('click', auClic, true);
   }, []);
+
+  // Chaque page affichée prévient le relais de notifications (visite,
+  // lecture des réalisations, prospect), que PostHog soit chargé ou non.
+  useEffect(() => {
+    if (chemin) signalePage(chemin);
+  }, [chemin]);
 
   // Profondeur de lecture, page par page, seulement sur les pages de lecture.
   useEffect(() => {

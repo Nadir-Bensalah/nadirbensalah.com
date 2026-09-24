@@ -38,6 +38,12 @@ jobs:
       - name: Installer les dépendances
         run: npm install
 
+      - name: Tester le relais de notifications
+        # public/notifier.php sous `php -S`, ntfy remplacé par un faux serveur :
+        # exclusion de l'IP de Nadir, refus des appels d'ailleurs, masquage des
+        # coordonnées, limite anti-abus, résumé du soir. Rien n'atteint ntfy.
+        run: node scripts/tester-notifier.mjs
+
       - name: Construire le site
         env:
           NEXT_PUBLIC_SITE_URL: https://nadirbensalah.com
@@ -61,6 +67,15 @@ jobs:
           npx --yes http-server ./out -p 8899 --silent &
           npx --yes wait-on http://127.0.0.1:8899/index.html -t 30000
           node scripts/audit-responsive.mjs http://127.0.0.1:8899
+
+      - name: Configurer le relais de notifications
+        # Écrit out/notifier-config.php depuis les secrets. Jamais versionné :
+        # le dépôt est public et ce fichier contient le canal ntfy.
+        env:
+          NTFY_SUJET: ${{ secrets.NTFY_SUJET }}
+          MES_IP: ${{ secrets.MES_IP }}
+          RESUME_JETON: ${{ secrets.RESUME_JETON }}
+        run: node scripts/configurer-notifier.mjs
 
       - name: Déployer par FTP chez Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -88,6 +103,10 @@ jobs:
         # des mois alors que robots.txt en annonçait quatre.
         run: |
           sleep 25
+          # Le relais doit répondre et pouvoir écrire ses compteurs.
+          etat=$(curl -s --max-time 20 "https://nadirbensalah.com/notifier.php?action=etat")
+          echo "relais : $etat"
+          echo "$etat" | grep -q '"stockage":true' || { echo "ÉCHEC : le relais de notifications ne répond pas correctement"; exit 1; }
           for chemin in "" "realisations" "cdi" "freelance" "contact" "expertise-react-native" "a-propos" "sitemap.xml" "robots.txt"; do
             code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 20 "https://nadirbensalah.com/$chemin")
             echo "$code  /$chemin"

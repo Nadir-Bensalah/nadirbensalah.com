@@ -56,6 +56,12 @@ RewriteRule ^en-fr/(.*)$ /developpeur-application-mobile-amiens [R=301,L]
 RewriteRule ^fr-tn/(.*)$ /freelance [R=301,L]
 RewriteRule ^en-tn/(.*)$ /freelance [R=301,L]
 
+# Le relais de notifications : sa configuration contient le canal ntfy et le
+# jeton du resume. Executee, elle n'affiche rien ; son acces direct est
+# interdit quand meme. Meme syntaxe que les regles ci-dessus, deja eprouvee
+# par ce serveur.
+RewriteRule ^notifier-config\.php$ - [F,L]
+
 # Sitemaps annonces par l'ancien robots.txt et jamais generes
 RewriteRule ^sitemap-(fr|en|ar)\.xml$ /sitemap.xml [R=301,L]
 

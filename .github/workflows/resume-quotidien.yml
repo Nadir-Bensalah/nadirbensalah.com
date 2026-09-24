@@ -1,0 +1,33 @@
+name: Résumé quotidien sur ntfy
+
+# Chaque soir à 19 h, heure de Paris, le relais du site envoie le résumé de
+# la journée sur le téléphone de Nadir. Deux déclenchements (17 h et 18 h
+# UTC) : un seul tombe à 19 h à Paris, été comme hiver, le relais ignore
+# l'autre. GitHub peut retarder un déclenchement programmé de quelques
+# minutes, et le suspend si le dépôt reste soixante jours sans activité.
+on:
+  schedule:
+    - cron: '0 17 * * *'
+    - cron: '0 18 * * *'
+  workflow_dispatch:
+    inputs:
+      maintenant:
+        description: 'Envoyer tout de suite, sans attendre 19 h'
+        type: boolean
+        default: true
+
+jobs:
+  resume:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Demander le résumé au relais
+        env:
+          RESUME_JETON: ${{ secrets.RESUME_JETON }}
+          MAINTENANT: ${{ inputs.maintenant }}
+        run: |
+          condition="&si_heure=19"
+          [ "$MAINTENANT" = "true" ] && condition=""
+          reponse=$(curl -s --max-time 30 -X POST -H "X-Jeton: $RESUME_JETON" \
+            "https://nadirbensalah.com/notifier.php?action=resume$condition")
+          echo "$reponse"
+          echo "$reponse" | grep -q '"ok":true'

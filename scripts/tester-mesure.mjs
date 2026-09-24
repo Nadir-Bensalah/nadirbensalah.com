@@ -221,14 +221,34 @@ async function scenario(cdp, nom, options, parcours) {
 
   const evenements = [];
   const replays = [];
+  // Les signaux envoyés au relais de notifications (public/notifier.php).
+  const notifications = [];
   const requetes = { posthog: 0, posthogOk: 0, web3forms: 0, bloquees: [] };
   const ecoute = async (m) => {
     if (m.sessionId !== s) return;
     if (m.method === 'Fetch.requestPaused') {
       const { requestId, request } = m.params;
       const u = new URL(request.url);
+      if (
+        (u.hostname === '127.0.0.1' || u.hostname === 'localhost') &&
+        u.pathname === '/notifier.php'
+      ) {
+        try {
+          notifications.push({ ...JSON.parse(request.postData ?? '{}'), t: Date.now() });
+        } catch {
+          notifications.push({ illisible: true });
+        }
+        return cdp
+          .envoie('Fetch.fulfillRequest', { requestId, responseCode: 202, body: '' }, s)
+          .catch(() => {});
+      }
       if (u.hostname === '127.0.0.1' || u.hostname === 'localhost') {
         return cdp.envoie('Fetch.continueRequest', { requestId }, s).catch(() => {});
+      }
+      if (u.hostname.endsWith('posthog.com') && options.bloquePosthog) {
+        return cdp
+          .envoie('Fetch.failRequest', { requestId, errorReason: 'BlockedByClient' }, s)
+          .catch(() => {});
       }
       if (u.hostname.endsWith('posthog.com')) {
         requetes.posthog++;
@@ -411,7 +431,7 @@ async function scenario(cdp, nom, options, parcours) {
   await cdp.envoie('Target.closeTarget', { targetId }).catch(() => {});
   await cdp.envoie('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
 
-  return { nom, erreur, evenements, replays, requetes, csp, stockage };
+  return { nom, erreur, evenements, replays, requetes, csp, stockage, notifications };
 }
 
 /* ------------------------------------------------------------------ */
@@ -434,6 +454,7 @@ const P = (ev) => ev.properties ?? {};
 const tous = (r, nom) => r.evenements.filter((ev) => ev.event === nom);
 const un = (r, nom, test = () => true) => tous(r, nom).some((ev) => test(P(ev)));
 const combien = (r, nom) => tous(r, nom).length;
+const signaux = (r, type) => r.notifications.filter((x) => x.type === type);
 
 const PARCOURS = SANS_CLE
   ? [
@@ -544,6 +565,17 @@ const PARCOURS = SANS_CLE
             ),
           ],
           ['aucun échec d’envoi', combien(r, 'form_submit_failed') === 0],
+          ['relais : UNE visite signalée pour toute la session', signaux(r, 'visite').length === 1],
+          ['relais : la lecture des réalisations, une fois', signaux(r, 'lecture').length === 1],
+          [
+            'relais : CV signalé avec l’intention',
+            signaux(r, 'cv').length === 1 && signaux(r, 'cv')[0].intention === 'recruteur',
+          ],
+          [
+            'relais : UN message signalé',
+            signaux(r, 'lead').length === 1 && signaux(r, 'lead')[0].formulaire === 'contact',
+          ],
+          ['relais : pas de prospect pour une visite directe', signaux(r, 'prospect').length === 0],
         ],
       ],
       [
@@ -632,6 +664,7 @@ const PARCOURS = SANS_CLE
             'AUCUN lead compté',
             combien(r, 'challenge_submit') === 0 && combien(r, 'submit_contact') === 0,
           ],
+          ['relais : aucun message signalé quand l’envoi échoue', signaux(r, 'lead').length === 0],
         ],
       ],
       [
@@ -685,6 +718,31 @@ const PARCOURS = SANS_CLE
         ],
       ],
       [
+        'prospect_par_email_bloqueur_posthog',
+        { bloquePosthog: true },
+        async (p) => {
+          await p.va('/?utm_source=prospection&utm_medium=email&utm_campaign=ville-albert');
+          await p.clic('[data-porte-intention="portfolio"]');
+          await p.clic('a[href^="/realisations/"]');
+        },
+        (r) => [
+          ['PostHog bloqué (comme par un bloqueur de publicité)', r.requetes.posthog === 0],
+          ['relais : la visite est comptée quand même', signaux(r, 'visite').length === 1],
+          ['relais : un signal par page du prospect', signaux(r, 'prospect').length === 3],
+          [
+            'relais : le prospect nommé par sa campagne',
+            signaux(r, 'prospect').every(
+              (x) => x.campagne === 'ville-albert' && x.canal === 'email'
+            ),
+          ],
+          [
+            'relais : ses pages dans l’ordre',
+            JSON.stringify(signaux(r, 'prospect').map((x) => x.page.split('/')[1] ?? '')) ===
+              '["","realisations","realisations"]',
+          ],
+        ],
+      ],
+      [
         'anglais_et_404',
         { referrer: 'https://chatgpt.com/' },
         async (p) => {
@@ -711,7 +769,10 @@ const PARCOURS = SANS_CLE
         'gpc_refus_navigateur',
         { gpc: true },
         async (p) => p.va('/contact'),
-        (r) => [['aucune requête vers PostHog', r.requetes.posthog === 0]],
+        (r) => [
+          ['aucune requête vers PostHog', r.requetes.posthog === 0],
+          ['aucun signal au relais', r.notifications.length === 0],
+        ],
       ],
       [
         'refus_par_le_bouton',
@@ -727,6 +788,10 @@ const PARCOURS = SANS_CLE
           [
             'plus rien après le refus',
             !un(r, '$pageview', (p) => p.page_type === 'accueil' || p.page_type === 'realisations'),
+          ],
+          [
+            'relais : plus aucun signal après le refus',
+            !r.notifications.some((x) => x.page === '/' || x.page === '/realisations'),
           ],
         ],
       ],
@@ -770,6 +835,7 @@ for (const r of resultats) {
   for (const [ou, contenu] of [
     ['événements', aplatit(r.evenements)],
     ['replay', aplatit(r.replays)],
+    ['relais de notifications', aplatit(r.notifications)],
   ]) {
     for (const secret of SECRETS) {
       const i = contenu.indexOf(secret);
