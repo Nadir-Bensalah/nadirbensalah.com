@@ -98,22 +98,28 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
       const L = window.innerWidth;
       const H = window.innerHeight;
       const mobile = L < 700;
+      // Tout est calculé à la résolution réelle de l'écran : sur un écran
+      // Retina, un grain fait un vrai pixel, pas un carré de quatre.
+      const dpr = Math.min(Math.round(window.devicePixelRatio || 1), 2);
+      const Ld = L * dpr;
+      const Hd = H * dpr;
 
       // 1. Le dessin hors écran : texte, pastilles et boutons à leur place.
       const hors = document.createElement('canvas');
-      hors.width = L;
-      hors.height = H;
+      hors.width = Ld;
+      hors.height = Hd;
       const hc = hors.getContext('2d', { willReadFrequently: true })!;
+      hc.scale(dpr, dpr);
 
       const blocs = Array.from(racine!.querySelectorAll<HTMLElement>('[data-intro]'));
       blocs.forEach((b) => dessineBloc(hc, b));
-      const texte = echantillonne(hc, L, H, mobile ? 9000 : 26000);
+      const texte = echantillonne(hc, Ld, Hd, dpr, mobile ? 14000 : 36000);
       const zone = etendue(texte);
 
       const icones = tuiles.map((t, i) => {
         hc.clearRect(0, 0, L, H);
         if (images[i]) dessineTuile(hc, t, images[i]!);
-        return echantillonne(hc, L, H, mobile ? 500 : 1100);
+        return echantillonne(hc, Ld, Hd, dpr, mobile ? 900 : 1800);
       });
 
       // 2. Les groupes : le texte d'abord, puis chaque icône, l'une après l'autre.
@@ -149,8 +155,8 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
       // d'en animer des dizaines de milliers sans ralentir.
       canevas = document.createElement('canvas');
       canevas.setAttribute('aria-hidden', 'true');
-      canevas.width = L;
-      canevas.height = H;
+      canevas.width = Ld;
+      canevas.height = Hd;
       Object.assign(canevas.style, {
         position: 'fixed',
         inset: '0',
@@ -161,7 +167,7 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
       });
       document.body.appendChild(canevas);
       const ctx = canevas.getContext('2d')!;
-      const pixels = ctx.createImageData(L, H);
+      const pixels = ctx.createImageData(Ld, Hd);
       const mots = new Uint32Array(pixels.data.buffer);
       const tache = fabriqueTache();
 
@@ -217,18 +223,19 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
           }
           const { x, y, e } = position(p, Math.min(u, 1), t);
           alpha *= Math.min(1, u * 3) * (0.45 + 0.55 * e);
-          const px = x | 0;
-          const py = y | 0;
-          // Un grain fait un pixel en vol, et deux une fois posé pour remplir la lettre.
-          const cote = e > 0.92 ? p.cote : 1;
+          const px = (x * dpr) | 0;
+          const py = (y * dpr) | 0;
+          // Un grain fait un pixel en vol, et au plus deux une fois posé : la
+          // lettre reste une poussière fine jusqu'à ce que le vrai texte la remplace.
+          const cote = e > 0.92 ? Math.min(p.cote, 2) : 1;
           const a = (alpha * 255) | 0;
           for (let dy = 0; dy < cote; dy++) {
             const yy = py + dy;
-            if (yy < 0 || yy >= H) continue;
+            if (yy < 0 || yy >= Hd) continue;
             for (let dx = 0; dx < cote; dx++) {
               const xx = px + dx;
-              if (xx < 0 || xx >= L) continue;
-              const i = (yy * L + xx) * 4;
+              if (xx < 0 || xx >= Ld) continue;
+              const i = (yy * Ld + xx) * 4;
               if (d[i + 3] >= a) continue;
               d[i] = p.r;
               d[i + 1] = p.v;
@@ -238,6 +245,7 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
           }
         }
         ctx.putImageData(pixels, 0, 0);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         for (const p of nappes) {
           const g = groupes[p.groupe];
@@ -249,6 +257,7 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
           ctx.drawImage(tache(p), x - taille / 2, y - taille / 2, taille, taille);
         }
         ctx.globalAlpha = 1;
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
 
         if (t >= finTotale) {
           window.clearTimeout(secours);
@@ -371,6 +380,7 @@ function echantillonne(
   c: CanvasRenderingContext2D,
   L: number,
   H: number,
+  dpr: number,
   maximum: number
 ): Cible[] {
   const { data } = c.getImageData(0, 0, L, H);
@@ -382,9 +392,12 @@ function echantillonne(
     for (let x = 0; x < L; x += pas) {
       const i = (y * L + x) * 4;
       if (data[i + 3] <= 90) continue;
+      // Les cibles sont en pixels CSS, le pas en pixels de l'écran. Chaque
+      // cible est décalée au hasard dans sa case : sans ça, les lettres posées
+      // montrent une trame régulière, comme une image imprimée.
       cibles.push({
-        x,
-        y,
+        x: (x + Math.random() * (pas - 1)) / dpr,
+        y: (y + Math.random() * (pas - 1)) / dpr,
         r: data[i],
         v: data[i + 1],
         b: data[i + 2],
