@@ -265,7 +265,8 @@ function dessineBloc(c: CanvasRenderingContext2D, bloc: HTMLElement) {
     c.fillStyle = s.color;
     c.textBaseline = 'alphabetic';
     const texte = noeud.data;
-    for (let i = 0; i < texte.length; ) {
+    let i = 0;
+    while (i < texte.length) {
       const code = texte.codePointAt(i)!;
       const long = code > 0xffff ? 2 : 1;
       const lettre = texte.slice(i, i + long);
