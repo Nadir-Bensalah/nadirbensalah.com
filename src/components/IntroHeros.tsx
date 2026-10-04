@@ -37,7 +37,7 @@ type Groupe = {
  * L'animation entière est écrite à vitesse lente, puis accélérée de ce
  * facteur : toutes les durées ci-dessous sont en secondes « lentes ».
  */
-const VITESSE = 4;
+const VITESSE = 2;
 /** Durée du fondu entre les grains et le vrai texte, en secondes. */
 const FONDU = 0.5;
 /**
