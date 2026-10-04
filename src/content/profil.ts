@@ -9,7 +9,8 @@
 
 export const profil = {
   nom: 'Nadir Ben Salah',
-  titre: 'Développeur mobile & full-stack',
+  /** Le titre exact du profil LinkedIn : les deux doivent rester identiques. */
+  titre: 'Lead React Native Developer · Product Engineer',
   ville: 'Amiens',
   region: 'Hauts-de-France',
   pays: 'France',
@@ -28,8 +29,9 @@ export const profil = {
 
 export const disponibilite = {
   /** Ce qui est ouvert, sans hiérarchie implicite. */
-  ouvertA: ['Mission freelance', 'CDI', 'Collaboration produit'],
-  mobilite: 'Amiens et à distance. Mobilité géographique envisageable pour un CDI pertinent.',
+  ouvertA: ['CDI', 'Mission freelance', 'Remote ou déplacements'],
+  distanceParis: 'à 1 h 20 de Paris',
+  mobilite: 'Amiens, à 1 h 20 de Paris. Remote ou déplacements.',
   delaiReponse: '24 h',
 } as const;
 
@@ -45,7 +47,7 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
-    poste: 'Développeur full-stack & mobile · indépendant',
+    poste: 'Développeur React Native & Product Engineer · indépendant',
     entreprise: 'Capmedia Digital',
     debut: 'Juillet 2024',
     fin: 'Aujourd’hui',
@@ -57,6 +59,7 @@ export const experiences: Experience[] = [
       'Développement de plateformes web, de solutions SaaS et d’applications métier sur mesure.',
       'Création d’API REST et de services backend avec Node.js, Firebase et Supabase.',
       'Prise en charge complète du cycle : cadrage, architecture, développement, tests, revue Apple, mise en production et maintenance.',
+      'Développement propulsé par l’IA : des agents (Claude Code, Codex) interviennent sur l’implémentation, l’analyse, les tests et la documentation, dans un périmètre que je définis. Je relis et je valide chaque livraison.',
     ],
   },
   {
@@ -172,14 +175,19 @@ export const competences: GroupeCompetences[] = [
     titre: 'Livraison',
     ceQueCaPermet:
       'Amener le produit jusqu’aux utilisateurs : signature, revue Apple, publication, mises à jour et suivi après la mise en ligne.',
-    outils: [
-      'App Store Connect',
-      'Google Play Console',
-      'CI/CD',
-      'GitHub Actions',
-      'Tests',
-      'Revue de code',
-    ],
+    outils: ['App Store Connect', 'Google Play Console', 'CI/CD', 'GitHub Actions', 'Monitoring'],
+  },
+  {
+    titre: 'Qualité',
+    ceQueCaPermet:
+      'Prouver qu’une version fonctionne avant qu’un utilisateur ne la touche : tests automatiques, parcours complets, vrais téléphones.',
+    outils: ['Jest', 'Playwright', 'Maestro', 'XCTest', 'Revue de code'],
+  },
+  {
+    titre: 'Développement propulsé par l’IA',
+    ceQueCaPermet:
+      'Des agents prennent en charge une partie de l’exécution. Je fixe leur périmètre et leurs contraintes, puis je relis et je valide.',
+    outils: ['Claude Code', 'Codex', 'Agents spécialisés'],
   },
 ];
 

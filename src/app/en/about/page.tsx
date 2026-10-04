@@ -9,13 +9,13 @@ import { alternatives } from '@/lib/langues';
 import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
-  title: 'About Nadir Ben Salah — React Native Developer',
+  title: 'About Nadir Ben Salah · Lead React Native Developer & Product Engineer',
   description:
     'Independent developer in France. How I work, my hours relative to London and New York, and what I take on. English and French.',
   alternates: alternatives('/en/about'),
   openGraph: {
     title: 'How I work',
-    description: 'Independent React Native developer in France, working remotely.',
+    description: 'Lead React Native Developer and Product Engineer in France, working remotely.',
     url: '/en/about',
     images: ['/assets/images/og.png'],
     locale: 'en_GB',

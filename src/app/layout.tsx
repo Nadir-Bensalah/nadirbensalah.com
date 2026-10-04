@@ -51,11 +51,11 @@ const inter = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Nadir Ben Salah · Développeur mobile & full-stack à Amiens',
+    default: 'Nadir Ben Salah · Lead React Native Developer & Product Engineer · Amiens',
     template: '%s · Nadir Ben Salah',
   },
   description:
-    'Développeur mobile et full-stack à Amiens. React Native, TypeScript, iOS et Android, de la conception à la publication sur les stores.',
+    'Lead React Native Developer et Product Engineer à Amiens. Produits iOS, Android et web livrés de bout en bout, de la définition du besoin à la mise en production. Huit applications publiées sur l’App Store.',
   applicationName: profil.nom,
   authors: [{ name: profil.nom, url: siteUrl }],
   creator: profil.nom,
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nadir Ben Salah · Développeur mobile & full-stack',
+    title: 'Nadir Ben Salah · Lead React Native Developer & Product Engineer',
     description: 'Applications iOS et Android conçues, développées et publiées de bout en bout.',
     images: ['/assets/images/og.png'],
   },

@@ -50,6 +50,10 @@ const questions = [
     r: 'Parce que je veux travailler sur un produit plus gros que ce qu’une personne seule peut porter, et avec des gens qui relisent mon code. Construire seul apprend beaucoup, mais personne ne me contredit et personne ne me montre une autre façon de faire. Ce que je cherche en équipe, c’est exactement ce qui me manque aujourd’hui : de la revue, des arbitrages discutés, et une échelle d’utilisateurs que je n’atteins pas seul. Je souhaite conserver mes projets personnels, et définir clairement leur place avec mon futur employeur.',
   },
   {
+    q: 'Comment utilise-t-il l’IA ?',
+    r: 'Comme un multiplicateur d’exécution, pas comme un pilote automatique. Claude Code, Codex et des agents spécialisés prennent en charge une partie de l’implémentation, de l’analyse, des tests et de la documentation. Je fixe leur périmètre, leurs contraintes et leurs objectifs, puis je relis et je valide. Ce qui part en production passe les mêmes tests que le reste, et c’est moi qui en réponds.',
+  },
+  {
     q: 'Est-ce qu’il code encore, ou est-ce qu’il gère ?',
     r: 'Je code tous les jours. La dernière mise à jour publiée sur l’App Store date du 10 septembre 2026.',
   },
@@ -150,15 +154,15 @@ export default function Cdi() {
                 }}
               >
                 {[
-                  ['Poste', 'Développeur mobile & full-stack'],
-                  ['Spécialité', 'React Native, TypeScript, iOS & Android'],
+                  ['Poste', profil.titre],
+                  ['Spécialité', 'React Native, TypeScript, iOS, Android & web'],
                   [
                     'Parcours',
                     'Premières missions en 2015, activité régulière depuis 2020, mobile React Native depuis 2022',
                   ],
                   ['Disponibilité', 'Immédiate, sans préavis'],
                   ['Localisation', `${profil.ville}, ${profil.region}`],
-                  ['Mobilité', 'À distance, ou géographique pour un poste pertinent'],
+                  ['Mobilité', disponibilite.mobilite],
                   ['Ouvert à', disponibilite.ouvertA.join(', ')],
                   ['Formation', 'Master MIAGE · UPJV Amiens'],
                   ['Réponse', `Sous ${disponibilite.delaiReponse}`],

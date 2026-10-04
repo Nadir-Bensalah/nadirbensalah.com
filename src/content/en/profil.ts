@@ -13,11 +13,12 @@
 
 export const profileEn = {
   name: 'Nadir Ben Salah',
-  role: 'React Native developer',
+  /** Same title as the LinkedIn profile, word for word. */
+  role: 'Lead React Native Developer · Product Engineer',
   city: 'Amiens',
   country: 'France',
   /** What a remote buyer actually needs to know about working with someone in France. */
-  timezone: 'CET — same hours as London plus one, four hours of overlap with New York',
+  timezone: 'CET: same hours as London plus one, four hours of overlap with New York',
   email: 'contact@nadirbensalah.com',
   linkedin: 'https://www.linkedin.com/in/nadir-ben-salah/',
   github: 'https://github.com/Nadir-Bensalah',

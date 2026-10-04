@@ -15,12 +15,12 @@ import { alternatives } from '@/lib/langues';
 import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
-  title: 'Nadir Ben Salah · Développeur mobile & full-stack à Amiens',
+  title: 'Nadir Ben Salah · Lead React Native Developer & Product Engineer · Amiens',
   description:
-    'Développeur mobile et full-stack à Amiens. React Native, TypeScript, iOS et Android, de la conception à la publication sur l’App Store.',
+    'Lead React Native Developer et Product Engineer à Amiens. Produits iOS, Android et web livrés de bout en bout, de la définition du besoin à la mise en production. Huit applications publiées sur l’App Store.',
   alternates: alternatives('/'),
   openGraph: {
-    title: 'Nadir Ben Salah · Développeur mobile & full-stack',
+    title: 'Nadir Ben Salah · Lead React Native Developer & Product Engineer',
     description:
       'Applications iOS et Android conçues, développées et publiées de bout en bout. React Native, TypeScript, Swift.',
     url: '/',
@@ -89,7 +89,9 @@ export default function Accueil() {
           'PostgreSQL',
           'Développement iOS',
           'Développement Android',
+          'Next.js',
           'Publication App Store',
+          'Développement assisté par IA',
         ],
         worksFor: {
           '@type': 'Organization',
@@ -103,7 +105,7 @@ export default function Accueil() {
       '@type': 'WebSite',
       '@id': `${profil.site}/#site`,
       url: profil.site,
-      name: `${profil.nom} · Développeur mobile`,
+      name: `${profil.nom} · Lead React Native Developer`,
       inLanguage: 'fr-FR',
       publisher: { '@id': `${profil.site}/#personne` },
     },
@@ -150,9 +152,8 @@ export default function Accueil() {
 
                 <div data-intro>
                   <h1 className="t-display" style={{ marginTop: 'var(--e-4)' }}>
-                    Développeur mobile React&nbsp;Native et Swift.
-                    <br />
-                    Voici ce que j’ai déjà construit.
+                    Lead React&nbsp;Native Developer
+                    <br />& Product&nbsp;Engineer.
                   </h1>
                 </div>
 
@@ -161,9 +162,10 @@ export default function Accueil() {
                     className="t-lead"
                     style={{ marginTop: 'var(--e-5)', maxWidth: 620, marginInline: 'auto' }}
                   >
-                    Je conçois et je développe des applications mobiles, de l’idée jusqu’à la mise
-                    en ligne : conception, développement iOS et Android, publication et maintenance
-                    après la sortie. Toutes celles présentées ici sont installables aujourd’hui.
+                    Je conçois et je livre des produits iOS, Android et web de bout en bout, du
+                    besoin jusqu’à la mise en production. J’intègre des agents IA à mon
+                    développement, sous ma supervision. Les huit applications présentées ici sont
+                    installables aujourd’hui.
                   </p>
                 </div>
 
@@ -192,7 +194,8 @@ export default function Accueil() {
 
                 <div data-intro>
                   <p className="t-petit t-3" style={{ marginTop: 'var(--e-5)' }}>
-                    {profil.ville}, {profil.pays} · {disponibilite.ouvertA.join(' · ')}
+                    {profil.ville}, {disponibilite.distanceParis} ·{' '}
+                    {disponibilite.ouvertA.join(' · ')}
                   </p>
                 </div>
               </div>

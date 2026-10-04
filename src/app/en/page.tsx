@@ -12,12 +12,12 @@ import { alternatives } from '@/lib/langues';
 import LienEvitement from '@/components/LienEvitement';
 
 export const metadata: Metadata = {
-  title: 'React Native Developer Who Writes the Swift Too',
+  title: 'Lead React Native Developer Who Writes the Swift Too',
   description:
     'Live Activities, App Intents, widgets and Watch apps added to React Native projects. Eight apps on the App Store. Remote from France, UK hours.',
   alternates: alternatives('/en'),
   openGraph: {
-    title: 'React Native developer who writes the Swift too',
+    title: 'Lead React Native Developer who writes the Swift too',
     description:
       'Native iOS features in React Native apps: Live Activities, App Intents, widgets, Watch. Shipped in production.',
     url: '/en',
@@ -121,7 +121,8 @@ export default function EnHome() {
                 >
                   Live Activities, the Dynamic Island, App Intents, widgets, a Watch companion. None
                   of them have a JavaScript equivalent, and that is usually where a project stalls.
-                  I write the Swift, bridge it properly, and ship it through App Review.
+                  I write the Swift, bridge it properly, and ship it through App Review. AI agents
+                  speed up the work; I scope them, and I sign off on every change.
                 </p>
               </Apparait>
 

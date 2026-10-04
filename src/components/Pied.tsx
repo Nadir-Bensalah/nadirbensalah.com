@@ -83,8 +83,7 @@ export default function Pied() {
               {profil.nom}
             </div>
             <p className="t-petit t-2" style={{ maxWidth: 260 }}>
-              Développeur mobile et full-stack à {profil.ville}. React Native, TypeScript, iOS et
-              Android.
+              Lead React Native Developer & Product Engineer à {profil.ville}. iOS, Android et web.
             </p>
             <div style={{ display: 'flex', gap: 'var(--e-3)', marginTop: 'var(--e-4)' }}>
               <a

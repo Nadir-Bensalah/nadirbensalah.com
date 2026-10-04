@@ -73,7 +73,8 @@ export default function Footer() {
               {profileEn.name}
             </div>
             <p className="t-petit t-2" style={{ maxWidth: 270 }}>
-              React Native developer who writes the Swift too. Based in France, working remotely.
+              Lead React Native Developer & Product Engineer. I write the Swift too. Based in
+              France, working remotely.
             </p>
             <div style={{ display: 'flex', gap: 'var(--e-3)', marginTop: 'var(--e-4)' }}>
               <a
