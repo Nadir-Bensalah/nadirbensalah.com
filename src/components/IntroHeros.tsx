@@ -33,6 +33,11 @@ type Groupe = {
   pose: boolean;
 };
 
+/**
+ * L'animation entière est écrite à vitesse lente, puis accélérée de ce
+ * facteur : toutes les durées ci-dessous sont en secondes « lentes ».
+ */
+const VITESSE = 4;
 /** Durée du fondu entre les grains et le vrai texte, en secondes. */
 const FONDU = 0.5;
 /**
@@ -192,7 +197,7 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
 
       const trame = () => {
         if (arrete) return;
-        const t = (performance.now() - t0) / 1000;
+        const t = ((performance.now() - t0) / 1000) * VITESSE;
 
         if (t < REVELE + BALAYAGE + 0.2) revele(t);
         else if (blocs[0].style.getPropertyValue('mask-image')) blocs.forEach((b) => masque(b, ''));
@@ -285,7 +290,7 @@ export default function IntroHeros({ children }: { children: React.ReactNode }) 
         .heros-intro [data-intro],
         .heros-intro .tuile-app { opacity: 0; }
         .heros-intro [data-intro].pose,
-        .heros-intro .tuile-app.pose { opacity: 1; transition: opacity ${FONDU * 1000}ms ease; }
+        .heros-intro .tuile-app.pose { opacity: 1; transition: opacity ${(FONDU * 1000) / VITESSE}ms ease; }
         @media (prefers-reduced-motion: reduce) {
           .heros-intro [data-intro],
           .heros-intro .tuile-app { opacity: 1; }

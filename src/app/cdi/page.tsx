@@ -26,36 +26,36 @@ export const metadata: Metadata = {
 /** Les questions qu'un recruteur se pose vraiment, dans l'ordre où elles viennent. */
 const questions = [
   {
-    q: 'Pourquoi est-il indépendant aujourd’hui ?',
+    q: 'Pourquoi êtes-vous indépendant aujourd’hui ?',
     r: 'Parce que j’ai voulu vérifier que je savais mener un produit seul, du premier écran jusqu’à la revue Apple. Huit applications plus tard, la réponse est documentée. Ce n’est pas une position de repli : c’est une période où j’ai appris ce qu’un poste salarié ne m’aurait pas appris aussi vite, notamment la publication, la maintenance et l’arbitrage de périmètre.',
   },
   {
-    q: 'Quel est son niveau d’autonomie ?',
-    r: 'Sur mes propres applications, il n’y a personne d’autre : pas de designer, pas de chef de projet, pas de DevOps. Cadrage, interface, développement mobile et backend, publication, correctifs. Ce que ça prouve, c’est que je sais avancer sans qu’on me débloque. Ce que ça ne prouve pas, c’est que je sais travailler à cinq sur la même base de code : pour ça, il faut regarder les deux ans chez Decayeux, pas les huit applications.',
+    q: 'Pouvez-vous prendre les rênes d’un produit ?',
+    r: 'C’est ce que je fais sur chacune de mes applications : il n’y a personne d’autre, ni designer, ni chef de projet, ni DevOps. Cadrage, architecture, interface, développement mobile et backend, publication, correctifs : toutes les décisions techniques et produit passent par moi, et j’en assume les conséquences en production. C’est le cœur d’un rôle de lead. Le travail à plusieurs sur une même base de code, je l’ai pratiqué deux ans chez Decayeux.',
   },
   {
-    q: 'A-t-il déjà travaillé en équipe et en entreprise ?',
+    q: 'Avez-vous déjà travaillé en équipe et en entreprise ?',
     r: 'Oui, deux ans chez Decayeux à Abbeville, dans une équipe de cinq, sur l’application Android qui tourne sur les écrans tactiles posés dans les halls d’immeubles, à côté des boîtes aux lettres connectées du fabricant. On y consulte la météo et les informations de la résidence, on ouvre sa boîte, on dépose ou on récupère un colis. Mon principal apport a été la refonte : le produit fonctionnait mais était lent et daté, et un écran mural ne pardonne pas l’attente, personne ne patiente devant un hall. J’ai repris l’interface et la fluidité de bout en bout, puis assuré le suivi en production. C’est un exercice très différent de celui de mes propres applications, où je suis à la fois celui qui demande et celui qui décide.',
   },
   {
-    q: 'Qu’est-ce qui change quand il rejoint une équipe déjà constituée ?',
-    r: 'Trois choses, et je préfère les dire franchement. Je pose beaucoup de questions au début, parce que reprendre une base de code sans en comprendre l’historique est la meilleure façon de casser quelque chose. J’écris les décisions, parce qu’un arbitrage qui reste dans une conversation est un arbitrage qu’on refera dans six mois. Et je demande une revue sur ce que j’écris : travailler seul pendant deux ans m’a surtout appris ce que je perds à ne pas en avoir.',
+    q: 'Comment arrivez-vous dans une équipe déjà constituée ?',
+    r: 'Avec trois habitudes. Je commence par comprendre l’historique de la base de code avant d’y toucher, parce que c’est la meilleure façon de ne rien casser. J’écris les décisions, parce qu’un arbitrage qui reste dans une conversation est un arbitrage qu’on refera dans six mois. Et je mets en place la revue de code dans les deux sens : relire le travail des autres, et faire relire le mien.',
   },
   {
-    q: 'Est-il disponible, et où ?',
-    r: `Disponible immédiatement : je suis indépendant, il n’y a aucun préavis à purger. Basé à ${profil.ville}, à l’aise à distance, et la mobilité géographique est envisageable pour un poste qui le justifie.`,
+    q: 'Êtes-vous disponible, et où ?',
+    r: `Disponible immédiatement : je suis indépendant, il n’y a aucun préavis à purger. Basé à ${profil.ville}, ${disponibilite.distanceParis}, en remote ou en déplacement.`,
   },
   {
-    q: 'Pourquoi un CDI, après avoir monté sa propre structure ?',
+    q: 'Pourquoi un CDI, après avoir monté votre propre structure ?',
     r: 'Parce que je veux travailler sur un produit plus gros que ce qu’une personne seule peut porter, et avec des gens qui relisent mon code. Construire seul apprend beaucoup, mais personne ne me contredit et personne ne me montre une autre façon de faire. Ce que je cherche en équipe, c’est exactement ce qui me manque aujourd’hui : de la revue, des arbitrages discutés, et une échelle d’utilisateurs que je n’atteins pas seul. Je souhaite conserver mes projets personnels, et définir clairement leur place avec mon futur employeur.',
   },
   {
-    q: 'Comment utilise-t-il l’IA ?',
+    q: 'Comment utilisez-vous l’IA ?',
     r: 'Comme un multiplicateur d’exécution, pas comme un pilote automatique. Claude Code, Codex et des agents spécialisés prennent en charge une partie de l’implémentation, de l’analyse, des tests et de la documentation. Je fixe leur périmètre, leurs contraintes et leurs objectifs, puis je relis et je valide. Ce qui part en production passe les mêmes tests que le reste, et c’est moi qui en réponds.',
   },
   {
-    q: 'Est-ce qu’il code encore, ou est-ce qu’il gère ?',
-    r: 'Je code tous les jours. La dernière mise à jour publiée sur l’App Store date du 10 septembre 2026.',
+    q: 'Codez-vous encore, ou gérez-vous ?',
+    r: 'Je code tous les jours. Les applications présentées ici, leur backend et leurs mises à jour, c’est moi qui les écris.',
   },
 ];
 

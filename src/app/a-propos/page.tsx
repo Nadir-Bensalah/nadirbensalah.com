@@ -5,7 +5,7 @@ import Entete from '@/components/Entete';
 import Pied from '@/components/Pied';
 import Apparait from '@/components/Apparait';
 import BoutonCv from '@/components/BoutonCv';
-import { experiences, formations, profil } from '@/content/profil';
+import { disponibilite, experiences, formations, profil } from '@/content/profil';
 import { alternatives } from '@/lib/langues';
 import LienEvitement from '@/components/LienEvitement';
 
@@ -71,12 +71,12 @@ export default function APropos() {
                 réellement pendant la revue.
               </p>
               <p>
-                Les sept suivantes sont sorties entre le 7 août et le 2 septembre 2026, après onze
-                mois passés à les construire en parallèle. Chacune a été choisie pour m’imposer une
-                contrainte que les précédentes n’avaient pas. Un calculateur de vol qui ne doit
-                passer <strong>aucun appel réseau</strong>, parce qu’en vol il n’y a pas de réseau.
-                Un horodateur qui doit vivre dans la Dynamic Island, donc en Swift natif, et tenir
-                en 3,3 Mo. Un carnet de santé animal dont on doit pouvoir vérifier, en mode avion,
+                Les sept suivantes sont sorties entre le 7 août et le 2 septembre 2026, onze mois
+                après la première. Chacune a été choisie pour m’imposer une contrainte que les
+                précédentes n’avaient pas. Un calculateur de vol qui ne doit passer{' '}
+                <strong>aucun appel réseau</strong>, parce qu’en vol il n’y a pas de réseau. Un
+                horodateur qui doit vivre dans la Dynamic Island, donc en Swift natif, et tenir en
+                3,3 Mo. Un carnet de santé animal dont on doit pouvoir vérifier, en mode avion,
                 qu’il n’envoie rien nulle part.
               </p>
               <p>
@@ -116,10 +116,9 @@ export default function APropos() {
 
               <h2>Où j’en suis</h2>
               <p>
-                Je suis indépendant aujourd’hui, et ouvert à trois choses : une mission freelance,
-                un CDI qui a du sens, ou une collaboration produit. Je suis basé à {profil.ville},
-                parfaitement à l’aise en travail à distance, et la mobilité géographique est
-                envisageable pour un poste qui le justifie.
+                Je suis indépendant aujourd’hui, et ouvert à un CDI ou à une mission freelance. Je
+                suis basé à {profil.ville}, {disponibilite.distanceParis}, en remote ou en
+                déplacement.
               </p>
             </section>
 

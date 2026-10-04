@@ -438,9 +438,9 @@ export default function Accueil() {
                   Si vous cherchez quelqu’un comme moi, parlons-en.
                 </h2>
                 <p className="t-lead" style={{ marginBottom: 'var(--e-5)' }}>
-                  Ouvert à une mission freelance, à un CDI pertinent ou à une collaboration produit.
-                  Basé à {profil.ville}, à distance sans difficulté, et mobile si le poste le
-                  justifie. Je réponds sous {disponibilite.delaiReponse}.
+                  Ouvert à un CDI ou à une mission freelance. Basé à {profil.ville},{' '}
+                  {disponibilite.distanceParis}, en remote ou en déplacement. Je réponds sous{' '}
+                  {disponibilite.delaiReponse}.
                 </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--e-3)' }}>
                   <Link prefetch={false} href="/contact" className="btn btn-principal btn-large">
